@@ -142,8 +142,8 @@ public class GameField {
 				win = win && house[player][idx].color == color[player];
 			if(win)
 				return true;
-			else
-				win = true;
+//			else
+//				win = true;
 		}
 		return false;
 	}
