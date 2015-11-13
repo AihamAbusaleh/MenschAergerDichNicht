@@ -1,5 +1,5 @@
 package de.htwg.menschaergerdichnicht.model;
-
+import de.htwg.menschaergerdichnicht.model.Player;
 
 public class GameField {
 
@@ -69,7 +69,7 @@ public class GameField {
 		return true;
 	}
 	
-	public int throwPlayer(int idx, char color) { // which player is on th idx
+	public int whichPlayerOnIdx(int idx, char color) { // which player is on the idx
 		idx = idx % POSITIONS;
 
 		for(int i = 0; i < PLAYER; i++)
@@ -79,10 +79,17 @@ public class GameField {
 		return -1;				
 	}
 	
-	public int throwPlayerStart(int player, char color) { //getestet wer steth wird geschmißen
+	@SuppressWarnings("unused")
+	public int returnEnemyFromStartToBlock(int player, char color) { //getestet wer steht wird geschmißen
+	//	Player p;
+		char enemy;
+	//	getStoneColor(p.getIdx());
+	//	int enemy = whichPlayerOnIdx(p.getIdx(), p.getColor());
 		if(gamefield[startposition[player]].color != color){
 			for(int i = 0; i < PLAYER; i++){
-				gamefield[startposition[player]].color = color;//spieler herausfinden(wer steht damit er ins Block zuruckgeht)
+				enemy = gamefield[startposition[player]].color;
+				gamefield[startposition[player]].color = color; //spieler herausfinden(wer steht damit er ins Block zureuckgeht)
+				setStoneBackInBlock(enemy);
 					return i;
 			}
 		}	
@@ -105,6 +112,7 @@ public class GameField {
 		for(int i = 3; i >= 0; i--) {
 			if(block[player][i].color != color[player]) {
 				block[player][i].color = color[player];
+				color[player] = 'x';
 				return true;
 			}
 		}

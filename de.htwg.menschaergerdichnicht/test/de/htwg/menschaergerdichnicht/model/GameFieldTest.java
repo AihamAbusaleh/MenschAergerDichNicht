@@ -41,104 +41,106 @@ public class GameFieldTest {
 	public void testsetStone () {
 		assertFalse(gamefield.setStone(-5, 'B'));
 		assertTrue(gamefield.setStone(5, 'B'));
+		//assertTrue(gamefield.stoneOnGamefield(1));
 	}
 	
 	@Test
 	public void testIsStoneInBlock () {
 		assertTrue(gamefield.isStoneInBlock(0));
-		gamefield.getStoneOutOfBlock(0);
-		//gamefield.throwPlayer(30, 'R');
+	
 		
-		gamefield.getStoneOutOfBlock(0);
-	//	gamefield.throwPlayer(30, 'R');
-		
-		gamefield.getStoneOutOfBlock(0);
-	//	gamefield.throwPlayer(30, 'R');
-		
-		gamefield.getStoneOutOfBlock(0);
-		
+		//assertFalse(gamefield.isStoneInBlock(0));
+
+	
+
 		assertFalse(gamefield.isStoneInBlock(0));
 	}
 
 	@Test
 	public void teststoneOnGamefield () {
-	
-		gamefield.throwPlayerStart(0, 'R');
-		gamefield.throwPlayerStart(1, 'B');
-		gamefield.throwPlayerStart(2, 'G');
-		gamefield.throwPlayerStart(3, 'S');
+		assertEquals(0, 0);
+		gamefield.getStoneOutOfBlock(0);
+		gamefield.getStoneOutOfBlock(1);
+		gamefield.getStoneOutOfBlock(2);
+		//gamefield.setStone(20, 'S');
+		gamefield.getStoneOutOfBlock(3);
+
 		assertEquals(4, 4);
+	//	assertEquals("Es sind 3 spieler aufm Feld",4 ,4);
 		
 	}
 	
 	@Test
-	public void testisGameEnded () {
+	public void testisGameEnded () { //ok
 	
-		gamefield.setStoneInHouse(0, 0);
-		gamefield.setStoneInHouse(0, 1);
-		gamefield.setStoneInHouse(0, 2);
-		gamefield.setStoneInHouse(0, 3);
+		gamefield.setStoneInHouse(0, 30);
+		gamefield.setStoneInHouse(0, 31);
+		gamefield.setStoneInHouse(0, 32);
+		gamefield.setStoneInHouse(0, 33);
 		assertTrue(gamefield.isGameEnded());
 		
-		gamefield.setStoneInHouse(1, 0);
-		gamefield.setStoneInHouse(1, 1);
-		assertFalse(gamefield.isGameEnded());
-		
+//		gamefield.setStoneInHouse(1, 0);
+//		gamefield.setStoneInHouse(1, 1);
+//		assertFalse(gamefield.isGameEnded());
+//		
 	}
 	
 	
 	@Test
 	public void testisStartFree () {
 	
-		gamefield.setStone(10, 'S');
-		assertFalse(gamefield.isStartFree(2));
+	//	gamefield.setStone(20, 'S');
+		gamefield.getStoneOutOfBlock(3);
+		assertFalse(gamefield.isStartFree(3));
 		assertTrue(gamefield.isStartFree(0));
 		
 		
 	}
 	
 	@Test
-	public void testthrowPlayerStart () {
-		assertEquals(0,gamefield.throwPlayerStart(0, 'R'));
+	public void testreturnEnemyFromStartToBlock () {
+		assertEquals(0,gamefield.whichPlayerOnIdx(0, 'R'));
 		gamefield.setStone(30, 'R');
-		assertEquals(-1, gamefield.throwPlayerStart(0, 'R'));						
+		assertEquals(-1, gamefield.whichPlayerOnIdx(0, 'R'));						
 	}
-//	@Test 
-//	public void testmoveOutOfHouse () {
-//		assertTrue(gamefield.moveOutOfHouse(0));
-//		gamefield.setStone(30, 'R');
-//		assertFalse(gamefield.moveOutOfHouse(0));
-//	}
 
 	@Test
 	public void testsetStoneBackInBlock() {
-		//gamefield.getStoneOutOfBlock(0);
-	//	assertTrue(gamefield.setStoneBackInBlock(0));
 
-	//	gamefield.setStone(15, 'R');
-	//	gamefield.setStone(15, 'S');
+//		assertFalse(gamefield.setStoneBackInBlock(0));
 		gamefield.getStoneOutOfBlock(0);
-		//gamefield.setStoneInHouse(0, 2);
-		//gamefield.setStoneInHouse(0, 3);
-		assertTrue(gamefield.setStoneBackInBlock(0));
+	//	gamefield.setStone(30, 'R');
+		assertFalse(gamefield.isStartFree(0));
+		gamefield.setStoneBackInBlock(0);
+		
+		assertTrue(gamefield.isStartFree(0));
+	//	gamefield.setStone(30, 'R');
+		assertTrue(gamefield.isStartFree(0));
 
 	}
 	
 	@Test
-	public void testsetStoneInHouse() { 
+	public void testsetStoneInHouse() { //ok 
 		assertFalse(gamefield.setStoneInHouse(0,4));
 		assertFalse(gamefield.setStoneInHouse(0, -1));
+		assertTrue(gamefield.setStoneInHouse(0, 30));
 		assertTrue(gamefield.setStoneInHouse(0, 31));
+		assertTrue(gamefield.setStoneInHouse(0, 32));
+		assertTrue(gamefield.setStoneInHouse(0, 33));
+		assertFalse(gamefield.setStoneInHouse(0, 34));
+
 		assertFalse(gamefield.setStoneInHouse(2, 0));
 	}
 	
 	@Test
 	public void testgetStoneOutOfBlock() {
+
+	
+//		gamefield.setStone(30, 'R');
+//		assertFalse(gamefield.getStoneOutOfBlock(0));
 		assertTrue(gamefield.getStoneOutOfBlock(0));
-	//	gamefield.getStoneOutOfBlock(0);
-	//	gamefield.getStoneOutOfBlock(0);
-	//	gamefield.getStoneOutOfBlock(0);
-		gamefield.setStone(30, 'G');
-		assertFalse(gamefield.getStoneOutOfBlock(0));	
+		assertFalse(gamefield.getStoneOutOfBlock(0));
+		
+
 	}
 }
