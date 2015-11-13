@@ -48,17 +48,17 @@ public class GameField {
 		}
 	}
 	
-	public char getStoneColor(int idx) {		
+	public char getStoneColor(int idx) {		//getestet
 		return gamefield[idx].color;
 	}
-	public char getStoneColorBlock(int player, int idx) {
+	public char getStoneColorBlock(int player, int idx) { //getestet
 		return block[player][idx].color;
 	}
-	public char getStoneColorHouse(int player, int idx) {
+	public char getStoneColorHouse(int player, int idx) { //getestet
 		return house[player][idx].color;
 	}
 	
-	public boolean setStone(int idx, char color) {
+	public boolean setStone(int idx, char color) { //getestet
 		idx = idx % POSITIONS;
 		
 		if(0 > idx || gamefield[idx].color == color)
@@ -69,7 +69,7 @@ public class GameField {
 		return true;
 	}
 	
-	public int throwPlayer(int idx, char color) {
+	public int throwPlayer(int idx, char color) { // which player is on th idx
 		idx = idx % POSITIONS;
 
 		for(int i = 0; i < PLAYER; i++)
@@ -79,16 +79,18 @@ public class GameField {
 		return -1;				
 	}
 	
-	public int throwPlayerStart(int player, char color) {
-		if(gamefield[startposition[player]].color != color)
-			for(int i = 0; i < PLAYER; i++)
-				if(gamefield[startposition[player]].color == color)
+	public int throwPlayerStart(int player, char color) { //getestet wer steth wird geschmißen
+		if(gamefield[startposition[player]].color != color){
+			for(int i = 0; i < PLAYER; i++){
+				gamefield[startposition[player]].color = color;//spieler herausfinden(wer steht damit er ins Block zuruckgeht)
 					return i;
+			}
+		}	
 		
 		return -1;
 	}
 	
-	public boolean getStoneOutOfBlock(int player) {
+	public boolean getStoneOutOfBlock(int player) { //getestet
 		for(int i = 0; i < BLOCKSIZE; i++) {
 			if(block[player][i].color == color[player] && gamefield[startposition[player]].color != color[player]) {
 				block[player][i].color = ' ';
@@ -99,7 +101,7 @@ public class GameField {
 		return false;
 	}
 	
-	public boolean setStoneBackInBlock(int player) {
+	public boolean setStoneBackInBlock(int player) { //getestet
 		for(int i = 3; i >= 0; i--) {
 			if(block[player][i].color != color[player]) {
 				block[player][i].color = color[player];
@@ -109,7 +111,7 @@ public class GameField {
 		return false;
 	}
 	
-	public boolean setStoneInHouse(int player, int idx) {
+	public boolean setStoneInHouse(int player, int idx) { //getestet
 		idx = (idx - startposition[player]) % 40;
 		
 		if(0 > idx || idx > 3 || house[player][idx].color == color[player])
@@ -119,7 +121,7 @@ public class GameField {
 		return true;		
 	}
 	
-	public int stoneOnGamefield(int player) {
+	public int stoneOnGamefield(int player) { //getestet
 		int count = 0;
 		for(int idx = 0; idx < POSITIONS; idx++) 
 			if(gamefield[idx].color == color[player])
@@ -128,22 +130,20 @@ public class GameField {
 		return count;
 	}
 	
-	public boolean isStoneInBlock(int player) {
+	public boolean isStoneInBlock(int player) { //getestet
 		boolean stone = false;
 		for(int i = 0; i < BLOCKSIZE;i++)
 			stone = stone || block[player][i].color == color[player];
 		return stone;
 	}
 
-	public boolean isGameEnded() {
+	public boolean isGameEnded() { //getestet
 		boolean win = true;
 		for(int player = 0; player < PLAYER; player++) {
 			for(int idx = 0; idx < HOUSESIZE; idx++)
 				win = win && house[player][idx].color == color[player];
 			if(win)
 				return true;
-//			else
-//				win = true;
 		}
 		return false;
 	}
@@ -153,7 +153,7 @@ public class GameField {
 	}
 
 	
-	public boolean isStartFree(int player) {
+	public boolean isStartFree(int player) { //getestet
 		return gamefield[startposition[player]].color != color[player];
 	}
 
