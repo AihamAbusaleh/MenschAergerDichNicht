@@ -1,5 +1,4 @@
 package de.htwg.menschaergerdichnicht.model;
-import de.htwg.menschaergerdichnicht.model.Player;
 
 public class GameField {
 
