@@ -34,10 +34,10 @@ public class Controller implements IController, IObservable {
 	public boolean moveStart() {
 		// Raus kommen
 		if(gamefield.isStartFree(currentplayer.getIdx()) && gamefield.isStoneInBlock(currentplayer.getIdx()) && dice == 6) {
-			int player = gamefield.throwPlayerStart(currentplayer.getIdx(), currentplayer.getColor());
+			int enemy = gamefield.enemyInStart(currentplayer.getIdx(), currentplayer.getColor());
 			
-			if(player != currentplayer.getIdx() && player >= 0)
-				gamefield.setStoneBackInBlock(player);
+			if(enemy != currentplayer.getIdx() && enemy >= 0)
+				gamefield.setStoneBackInBlock(enemy);
 						
 			gamefield.getStoneOutOfBlock(currentplayer.getIdx());
 			updateObservers();
@@ -69,7 +69,7 @@ public class Controller implements IController, IObservable {
 		}
 		
 		// Steine schlagen
-		int player = gamefield.throwPlayer(idx + dice, currentplayer.getColor());
+		int player = gamefield.whichPlayerOnIdx(idx + dice, currentplayer.getColor());
 		
 		if(player == currentplayer.getIdx())
 			return false;

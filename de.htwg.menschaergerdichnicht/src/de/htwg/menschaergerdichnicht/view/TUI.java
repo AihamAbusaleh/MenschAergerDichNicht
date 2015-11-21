@@ -57,6 +57,6 @@ public class TUI implements IObserver {
 	}
 
 	public void showDice(Player currentplayer, int dice) {
-		System.out.println(currentplayer.getName() + " hat eine " + dice + " gewürfelt");		
+		System.out.println(currentplayer.getName() + " hat eine " + dice + " gewÃ¼rfelt");		
 	}
 }
