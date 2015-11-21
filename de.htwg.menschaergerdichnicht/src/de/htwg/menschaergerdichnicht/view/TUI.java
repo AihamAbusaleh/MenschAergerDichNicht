@@ -8,8 +8,9 @@ public class TUI implements IObserver {
 
 	private Controller c;
 	
-	public TUI(Controller c) {
+	public TUI(Controller c ) {
 		this.c = c;
+	
 		c.registerObserver(this);
 		display();
 	}
