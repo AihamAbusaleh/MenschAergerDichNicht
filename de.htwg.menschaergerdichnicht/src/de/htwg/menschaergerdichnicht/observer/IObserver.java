@@ -11,5 +11,6 @@ public interface IObserver {
 	void update(Player currentPlayer, boolean gameEnded);
 
 	void showDice(Player currentplayer, int dice);
+	
 
 }

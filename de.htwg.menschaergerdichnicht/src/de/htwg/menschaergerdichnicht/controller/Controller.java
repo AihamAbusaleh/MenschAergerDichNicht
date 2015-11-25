@@ -43,11 +43,11 @@ public class Controller extends Observable implements IController {
 			return true;
 		}
 
-//		// Man kann nicht fahren
-//		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
-//			updateObservers();
-//			return false;
-//		}
+		// // Man kann nicht fahren
+		// if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
+		// updateObservers();
+		// return false;
+		// }
 
 		return false;
 	}
@@ -140,6 +140,7 @@ public class Controller extends Observable implements IController {
 		}
 
 	}
+
 
 	public char getTokenColor(int idx) {
 		return gamefield.getStoneColor(idx);
