@@ -46,7 +46,7 @@ public class Controller extends Observable implements IController {
 		// Man kann nicht fahren
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
 			updateObservers();
-			return true;
+			return false;
 		}
 
 		return false;
@@ -55,6 +55,7 @@ public class Controller extends Observable implements IController {
 	public boolean move(int idx) {
 		// Falscher Stein
 		if (!gamefield.color(currentplayer.getIdx(), idx)) {
+			System.out.println("wrong idx! no match");
 			return false;
 		}
 
@@ -71,7 +72,7 @@ public class Controller extends Observable implements IController {
 		int player = gamefield.whichPlayerOnIdx(idx + dice, currentplayer.getColor());
 
 		if (player == currentplayer.getIdx()) {
-			System.out.println("coz my stone is on this idx, can not move there, choose another stone to move\n");
+			System.out.println(" choose another stone to move\n");
 			return false;
 		}
 		if (player >= 0)
@@ -90,8 +91,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		// dice = r.nextInt(6) + 1;
-		dice = 6;
+		dice = r.nextInt(6) + 1;
+		// dice = 3;
 	}
 
 	public boolean isGameEnded() {
@@ -124,6 +125,10 @@ public class Controller extends Observable implements IController {
 
 		for (IObserver observer : observers) {
 			observer.update(currentplayer, this.isGameEnded());
+			if (isGameEnded()) {
+				unregisterObserver(observer);
+				System.exit(0);
+			}
 		}
 
 		if (dice != 6)
@@ -134,8 +139,6 @@ public class Controller extends Observable implements IController {
 			observer.showDice(currentplayer, this.dice);
 		}
 
-		if (isGameEnded())
-			System.exit(0);
 	}
 
 	public char getTokenColor(int idx) {

@@ -47,19 +47,15 @@ public class GameFieldTest {
 	public void testIsStoneInBlock() { // false wenn alle draußen sind
 		assertTrue(gamefield.isStoneInBlock(0));
 
-		//assertFalse(gamefield.isStoneInBlock(0));
+		// assertFalse(gamefield.isStoneInBlock(0));
 	}
 
 	@Test
 	public void teststoneOnGamefield() {
 		assertEquals(0, 0);
 		gamefield.getStoneOutOfBlock(0);
-		gamefield.getStoneOutOfBlock(1);
-		gamefield.getStoneOutOfBlock(2);
-		// gamefield.setStone(20, 'S');
-		gamefield.getStoneOutOfBlock(3);
 
-		assertEquals(4, 4);
+		assertEquals(1, 1);
 		// assertEquals("Es sind 3 spieler aufm Feld",4 ,4);
 
 	}
@@ -100,15 +96,9 @@ public class GameFieldTest {
 	@Test
 	public void testsetStoneBackInBlock() {
 
-		// assertFalse(gamefield.setStoneBackInBlock(0));
+		assertFalse(gamefield.setStoneBackInBlock(0));
 		gamefield.getStoneOutOfBlock(0);
-		// gamefield.setStone(30, 'R');
-		assertFalse(gamefield.isStartFree(0));
-		gamefield.setStoneBackInBlock(0);
-
-		assertTrue(gamefield.isStartFree(0));
-		// gamefield.setStone(30, 'R');
-		assertTrue(gamefield.isStartFree(0));
+		assertTrue(gamefield.setStoneBackInBlock(0));
 
 	}
 

@@ -116,7 +116,7 @@ public class GameField {
 		for (int i = 3; i >= 0; i--) {
 			if (block[player][i].color != color[player]) {
 				block[player][i].color = color[player];
-				color[player] = 'x';
+				//color[player] = 'x';
 				return true;
 			}
 		}
@@ -126,11 +126,12 @@ public class GameField {
 	public boolean setStoneInHouse(int player, int idx) { // getestet
 		idx = (idx - startposition[player]) % 40;
 
-		if (0 > idx || idx > 3 || house[player][idx].color == color[player])
-			return false;
+		if (0 > idx || idx > 3 || house[player][idx].color == color[player]){
+		//	System.out.println("hier stimmt was nicht");
+			return false;}
 
 		house[player][idx].color = color[player];
-		return true;
+		return true; 
 	}
 
 	public int stoneOnGamefield(int player) { // getestet
