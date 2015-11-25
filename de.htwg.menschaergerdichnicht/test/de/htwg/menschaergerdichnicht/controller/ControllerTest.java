@@ -13,7 +13,7 @@ public class ControllerTest {
 	private Controller controller;
 
 	@Before
-	public void setUp()throws Exception {
+	public void setUp() throws Exception {
 		controller = new Controller();
 	}
 
@@ -24,7 +24,8 @@ public class ControllerTest {
 
 	@Test
 	public void testmove() {
-		controller.dice();
+		controller.moveStart();
+
 		if (controller.moveStart()) {
 			if (controller.getTokenColor(0) == 'R') {
 				assertTrue(controller.move(30));
@@ -54,18 +55,51 @@ public class ControllerTest {
 
 	@Test
 	public void testmoveStart() {
-		controller.dice();
-		if (controller.moveStart()) {
-			assertTrue(controller.moveStart());
-		} else {
-			assertFalse(controller.moveStart());
+		if (controller.moveStart() == true) {
+			if (controller.moveStart() == true)
+				assertEquals(true,controller.moveStart());
+			if (controller.moveStart() == false)
+				assertEquals(false,controller.moveStart());
 		}
+		assertEquals(false,controller.moveStart());
+
 
 	}
 
 	@Test
 	public void testgetTokenColor() {
 		assertEquals('x', controller.getTokenColor(0));
+	}
+
+	@Test
+	public void testsetNextPlayer() {
+		controller.dice();
+		if (controller.moveStart()) {
+			if (controller.getTokenColor(0) == 'R') {
+				controller.setNextPlayer();
+				assertEquals('B', controller.getTokenColor(1));
+
+			}
+
+			if (controller.getTokenColor(1) == 'B') {
+				controller.setNextPlayer();
+				assertEquals('G', controller.getTokenColor(2));
+			}
+
+			if (controller.getTokenColor(2) == 'G') {
+				controller.setNextPlayer();
+				assertEquals('S', controller.getTokenColor(3));
+			}
+
+			if (controller.getTokenColor(3) == 'S') {
+				controller.setNextPlayer();
+				assertEquals('R', controller.getTokenColor(0));
+			}
+
+		} else {
+			assertFalse(controller.moveStart());
+
+		}
 	}
 
 	@Test
