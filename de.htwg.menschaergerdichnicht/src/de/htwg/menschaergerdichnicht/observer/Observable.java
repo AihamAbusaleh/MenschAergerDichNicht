@@ -1,7 +1,5 @@
 package de.htwg.menschaergerdichnicht.observer;
 
-
-
 public  class Observable {
 
 	public void registerObserver(IObserver observer) {

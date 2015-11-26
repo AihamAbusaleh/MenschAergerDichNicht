@@ -13,25 +13,24 @@ public class ObserverTest {
 	private Observable testObservable;
 
 	class TestObserver implements IObserver {
+		// @Override
+		public void showDice(Player currentplayer, int dice) {
+			e = true;
+		}
+		// @Override
 
 		public void update(Player currentPlayer, boolean gameEnded) {
+			e = true;
 
 		}
 
-		public void showDice(Player currentplayer, int dice) {
-
-		}
-
-	}
-
-	public void update() {
-		e = true;
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		testObservable = new Observable();
+
 		testObserver = new TestObserver();
+		testObservable = new Observable();
 		testObservable.registerObserver(testObserver);
 
 	}
@@ -39,15 +38,17 @@ public class ObserverTest {
 	@Test
 	public void testUpdateObservers() {
 		assertFalse(e);
-		update();
-		assertTrue(e);
+		testObservable.updateObservers();
+		// assertTrue(e);
 
 	}
 
 	@Test
 	public void testUnregisterObserver() {
 		assertFalse(e);
+
 		testObservable.unregisterObserver(testObserver);
+
 		testObservable.updateObservers();
 		assertFalse(e);
 
