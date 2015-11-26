@@ -30,7 +30,17 @@ public class Controller extends Observable implements IController {
 	}
 
 	public boolean moveStart() {
+
 		// Raus kommen
+		stonCanOut();
+
+		// Man kann nicht fahren wenn true, nextPlayer ist dran
+		isFieldEmpty();
+
+		return false;
+	}
+
+	public void stonCanOut() {
 		if (gamefield.isStartFree(currentplayer.getIdx()) && gamefield.isStoneInBlock(currentplayer.getIdx())
 				&& dice == 6) {
 			int enemy = gamefield.enemyInStart(currentplayer.getIdx(), currentplayer.getColor());
@@ -40,15 +50,14 @@ public class Controller extends Observable implements IController {
 
 			gamefield.getStoneOutOfBlock(currentplayer.getIdx());
 			updateObservers();
+		}
+	}
+
+	public boolean isFieldEmpty() {
+		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
+			updateObservers();
 			return true;
 		}
-
-		// // Man kann nicht fahren
-		// if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
-		// updateObservers();
-		// return false;
-		// }
-
 		return false;
 	}
 
@@ -91,8 +100,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		dice = r.nextInt(6) + 1;
-		// dice = 3;
+		 dice = r.nextInt(6) + 1;
+		//dice = 5;
 	}
 
 	public boolean isGameEnded() {
@@ -140,7 +149,6 @@ public class Controller extends Observable implements IController {
 		}
 
 	}
-
 
 	public char getTokenColor(int idx) {
 		return gamefield.getStoneColor(idx);

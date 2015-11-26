@@ -24,9 +24,8 @@ public class ControllerTest {
 
 	@Test
 	public void testmove() {
-		controller.moveStart();
-
-		if (controller.moveStart()) {
+		controller.dice();
+		if (!controller.isFieldEmpty()) {
 			if (controller.getTokenColor(0) == 'R') {
 				assertTrue(controller.move(30));
 				assertFalse(controller.move(20));
@@ -46,23 +45,15 @@ public class ControllerTest {
 				assertTrue(controller.move(20));
 				assertFalse(controller.move(10));
 			}
-
-		} else {
-			assertFalse(controller.moveStart());
-
 		}
 	}
 
 	@Test
 	public void testmoveStart() {
-		if (controller.moveStart() == true) {
-			if (controller.moveStart() == true)
-				assertEquals(true,controller.moveStart());
-			if (controller.moveStart() == false)
-				assertEquals(false,controller.moveStart());
-		}
-		assertEquals(false,controller.moveStart());
-
+		controller.dice();
+		if (!controller.isFieldEmpty())
+			assertFalse(controller.moveStart());
+		
 
 	}
 
@@ -74,7 +65,6 @@ public class ControllerTest {
 	@Test
 	public void testsetNextPlayer() {
 		controller.dice();
-		if (controller.moveStart()) {
 			if (controller.getTokenColor(0) == 'R') {
 				controller.setNextPlayer();
 				assertEquals('B', controller.getTokenColor(1));
@@ -96,15 +86,14 @@ public class ControllerTest {
 				assertEquals('R', controller.getTokenColor(0));
 			}
 
-		} else {
-			assertFalse(controller.moveStart());
-
-		}
+		
 	}
 
 	@Test
 	public void testgetTokenColorBlock() {
-		assertEquals('R', controller.getTokenColorBlock(0, 0));
+		controller.dice();
+		if (controller.isFieldEmpty())
+			assertEquals('R', controller.getTokenColorBlock(0, 0));
 	}
 
 	@Test
@@ -112,10 +101,14 @@ public class ControllerTest {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
 	}
 
-	@Test
-	public void testgetOutOfBlock() {
-		assertTrue(controller.getOutOfBlock());
-		assertFalse(controller.getOutOfBlock());
-	}
+//	@Test
+//	public void testgetOutOfBlock() {
+//		if (controller.getTokenColor(0) == 'R') {
+//			if (controller.moveStart()) {
+//				assertTrue(controller.getOutOfBlock());
+//				assertFalse(controller.getOutOfBlock());
+//			}
+//		}
+//	}
 
 }
