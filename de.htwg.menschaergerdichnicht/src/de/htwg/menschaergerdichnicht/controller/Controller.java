@@ -3,6 +3,11 @@ package de.htwg.menschaergerdichnicht.controller;
 import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.menschaergerdichnicht.observer.Observable;
+import de.htwg.menschaergerdichnicht.state.State;
+import de.htwg.menschaergerdichnicht.state.StatePlayer0;
+import de.htwg.menschaergerdichnicht.state.StatePlayer1;
+import de.htwg.menschaergerdichnicht.state.StatePlayer2;
+import de.htwg.menschaergerdichnicht.state.StatePlayer3;
 import de.htwg.menschaergerdichnicht.observer.IObserver;
 
 import java.util.ArrayList;
@@ -12,7 +17,8 @@ import java.util.Random;
 public class Controller extends Observable implements IController {
 
 	private GameField gamefield;
-	private Player player0, player1, player2, player3, currentplayer;
+	private Player currentplayer  = new Player();
+	private State state;
 	private Random r;
 	private int dice;
 	private final List<IObserver> observers = new ArrayList<IObserver>();
@@ -20,16 +26,15 @@ public class Controller extends Observable implements IController {
 	public Controller() {
 		gamefield = new GameField();
 		r = new Random();
-		player0 = new Player(0, "Rudolf", 'R');
-		player1 = new Player(1, "Bastian", 'B');
-		player2 = new Player(2, "Gert", 'G');
-		player3 = new Player(3, "Sascha", 'S');
+		state= new StatePlayer0();
+//		currentplayer = new Player();
+//		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
-		currentplayer = player0;
 		dice();
 	}
 
 	public boolean moveStart() {
+		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		// Raus kommen
 		stonCanOut();
@@ -100,8 +105,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		 dice = r.nextInt(6) + 1;
-		//dice = 5;
+		//dice = r.nextInt(6) + 1;
+		 dice = 5;
 	}
 
 	public boolean isGameEnded() {
@@ -109,14 +114,17 @@ public class Controller extends Observable implements IController {
 	}
 
 	public void setNextPlayer() {
-		if (currentplayer == player0)
-			currentplayer = player1;
-		else if (currentplayer == player1)
-			currentplayer = player2;
-		else if (currentplayer == player2)
-			currentplayer = player3;
-		else if (currentplayer == player3)
-			currentplayer = player0;
+
+		if (currentplayer.getState().toString() == "Player0")
+			//currentplayer.setState(new StatePlayer1()); 
+			state = new StatePlayer1(); 
+		else if (currentplayer.getState().toString() == "Player1")
+			state = new StatePlayer2(); 
+		else if (currentplayer.getState().toString() == "Player2")
+			state = new StatePlayer3(); 
+		else { 
+			state = new StatePlayer0(); 
+		}
 	}
 
 	@Override

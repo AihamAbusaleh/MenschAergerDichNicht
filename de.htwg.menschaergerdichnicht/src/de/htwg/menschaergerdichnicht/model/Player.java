@@ -1,29 +1,54 @@
 package de.htwg.menschaergerdichnicht.model;
 
+import de.htwg.menschaergerdichnicht.state.State;
+import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 
-
-public class Player implements IPlayer {
+public class Player implements IPlayer, State {
 
 	private int idx;
 	private String name;
 	private char color;
-	
+	private State state;
+
+	public Player() {
+		state = new StatePlayer0();
+	}
+
+	public Player setcurrentplayer() {
+		return state.currentPlayer(this);
+
+	}
+
 	public Player(int idx, String name, char color) {
 		this.idx = idx;
 		this.name = name;
 		this.color = color;
+
 	}
-	
+
 	public int getIdx() {
 		return idx;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 
 	public char getColor() {
 		return color;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	@Override
+	public Player currentPlayer(Player player) {
+		return player;
 	}
 
 }
