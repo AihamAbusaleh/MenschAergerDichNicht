@@ -12,7 +12,7 @@ public class TUI implements IObserver {
 		this.c = c;
 
 		c.registerObserver(this);
-		display();
+		// display();
 	}
 
 	public void display() {
@@ -67,12 +67,28 @@ public class TUI implements IObserver {
 		return c.moveStart();
 	}
 
-	public boolean handleInput(int token) {
-		return c.move(token);
+	public boolean handleInput(String token) {
+
+		try {
+			int index = Integer.parseInt(token);
+			return c.move(index);
+		} catch (NumberFormatException e) {
+			if (token.equals("r")) {
+				c.redo();
+				return true;
+			} else if (token.equals("u")) {
+				c.undo();
+				return true;
+			} else {
+				System.out.println("\n please type a number, r , u!");
+				return false;
+			}
+		}
+
 	}
 
 	public void update(Player currentPlayer, boolean gameEnded) {
-		
+
 		if (gameEnded) {
 			System.out.println(currentPlayer.getName() + " hat gewonnen!");
 
@@ -84,4 +100,5 @@ public class TUI implements IObserver {
 	public void showDice(Player currentplayer, int dice) {
 		System.out.println(currentplayer.getName() + " hat eine " + dice + " gewürfelt");
 	}
+
 }

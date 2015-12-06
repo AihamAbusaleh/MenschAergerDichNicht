@@ -1,5 +1,7 @@
 package de.htwg.menschaergerdichnicht.controller;
 
+import de.htwg.menschaergerdichnicht.model.GameField;
+
 public interface IController {
 
 	/*
@@ -41,5 +43,9 @@ public interface IController {
 	 * This function check if the stone from currentPlayer can leave the block
 	 */
 	void stonCanOut();
+	
+	void undo();
+	void redo();
+	GameField createCommand();
 
 }
