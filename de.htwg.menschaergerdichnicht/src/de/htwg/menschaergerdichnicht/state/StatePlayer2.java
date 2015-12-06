@@ -2,7 +2,7 @@ package de.htwg.menschaergerdichnicht.state;
 
 import de.htwg.menschaergerdichnicht.model.Player;
 
-public class StatePlayer2 implements State{
+public class StatePlayer2 implements IState{
 
 	@Override
 	public Player currentPlayer(Player player) {

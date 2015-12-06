@@ -21,7 +21,7 @@ public class Main {
 		do {
 			while (tui.noInput())
 				;
-			tui.handleInput(sc.nextInt());
+			tui.handleInput(sc.next());
 		} while (true);
 	}
 

@@ -1,14 +1,14 @@
 package de.htwg.menschaergerdichnicht.model;
 
-import de.htwg.menschaergerdichnicht.state.State;
+import de.htwg.menschaergerdichnicht.state.IState;
 import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 
-public class Player implements IPlayer, State {
+public class Player implements IPlayer, IState {
 
 	private int idx;
 	private String name;
 	private char color;
-	private State state;
+	private IState state;
 
 	public Player() {
 		state = new StatePlayer0();
@@ -38,11 +38,11 @@ public class Player implements IPlayer, State {
 		return color;
 	}
 
-	public State getState() {
+	public IState getState() {
 		return state;
 	}
 
-	public void setState(State state) {
+	public void setState(IState state) {
 		this.state = state;
 	}
 

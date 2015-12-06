@@ -30,7 +30,7 @@ public class GameField {
 		fillHouse();
 		fillBlock();
 	}
-
+	
 	private void fillBlock() {
 		for (int i = 0; i < PLAYER; i++)
 			for (int k = 0; k < BLOCKSIZE; k++)
