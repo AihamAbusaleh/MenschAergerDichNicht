@@ -1,5 +1,6 @@
 package de.htwg.menschaergerdichnicht.command;
 
+
 import java.util.Stack;
 
 

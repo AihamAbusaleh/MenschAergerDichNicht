@@ -13,16 +13,23 @@ public class Main {
 	public static void main(String[] args) {
 		sc = new Scanner(System.in);
 
-	
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
-
+		// while(true){
+		// while (!tui.noInput())
+		// ;
+		// while(!tui.handleInput(sc.next()))
+		// ;
+		// }
 		do {
-			while (tui.noInput())
+			while (!tui.noInput())
 				;
 			tui.handleInput(sc.next());
+			if(!tui.handleInput(sc.next()))
+				tui.handleInput(sc.next());
 		} while (true);
+	
 	}
 
 }

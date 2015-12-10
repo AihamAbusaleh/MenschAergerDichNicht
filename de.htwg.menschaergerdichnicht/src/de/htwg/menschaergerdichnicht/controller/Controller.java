@@ -20,6 +20,7 @@ public class Controller extends Observable implements IController {
 	private GameField gamefield;
 	private Player currentplayer = new Player();
 	private CommandManager manager = new CommandManager();
+	// private CreateCommand create = new CreateCommand(gamefield);
 	private IState state;
 	private Random r;
 	private int dice;
@@ -27,28 +28,27 @@ public class Controller extends Observable implements IController {
 
 	public Controller() {
 		gamefield = new GameField();
-		createCommand();
-		// createCommand();
+
+		 createCommand();
 		r = new Random();
 		state = new StatePlayer0();
-		// currentplayer = new Player();
-		// currentplayer =
-		// state.currentPlayer(currentplayer.setcurrentplayer());
-
 		dice();
 	}
 
 	public boolean moveStart() {
-
 		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		// Raus kommen
 		stonCanOut();
 
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
-		isFieldEmpty();
+		if (isFieldEmpty()) {
 
-		return false;
+			return false;
+		}
+		updateObservers();
+	//	createCommand();
+		return true;
 	}
 
 	public void stonCanOut() {
@@ -77,6 +77,7 @@ public class Controller extends Observable implements IController {
 		// Falscher Stein
 		if (!gamefield.color(currentplayer.getIdx(), idx)) {
 			System.out.println("wrong idx! no match");
+			
 			return false;
 		}
 
@@ -86,7 +87,8 @@ public class Controller extends Observable implements IController {
 				return false;
 			gamefield.setStone(idx, 'x');
 			updateObservers();
-			createCommand();
+			// createCommand();
+
 			return true;
 		}
 
@@ -104,7 +106,7 @@ public class Controller extends Observable implements IController {
 		gamefield.setStone(idx, 'x');
 		gamefield.setStone(idx + dice, currentplayer.getColor());
 		updateObservers();
-		createCommand();
+		//createCommand();
 		return true;
 	}
 
@@ -113,8 +115,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		// dice = r.nextInt(6) + 1;
-		dice = 6;
+		 //dice = r.nextInt(6) + 1;
+		dice = 3;
 	}
 
 	public boolean isGameEnded() {
@@ -124,7 +126,6 @@ public class Controller extends Observable implements IController {
 	public void setNextPlayer() {
 
 		if (currentplayer.getState().toString() == "Player0")
-			// currentplayer.setState(new StatePlayer1());
 			state = new StatePlayer1();
 		else if (currentplayer.getState().toString() == "Player1")
 			state = new StatePlayer2();
@@ -148,6 +149,11 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void updateObservers() {
 
+		if (dice != 6)
+			setNextPlayer();
+
+		
+
 		for (IObserver observer : observers) {
 			observer.update(currentplayer, this.isGameEnded());
 			if (isGameEnded()) {
@@ -155,15 +161,12 @@ public class Controller extends Observable implements IController {
 				System.exit(0);
 			}
 		}
-
-		if (dice != 6)
-			setNextPlayer();
-		dice();
-
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
 		}
 
+		dice();
+	//	createCommand();
 	}
 
 	public char getTokenColor(int idx) {
@@ -178,22 +181,23 @@ public class Controller extends Observable implements IController {
 		return gamefield.getStoneColorHouse(player, idx);
 	}
 
-	@Override
+	// @Override
 	public void undo() {
 		manager.undoCommand();
-		updateObservers();
+	//	updateObservers();
 	}
 
-	@Override
+	// @Override
 	public void redo() {
 		manager.redoCommand();
 		updateObservers();
 	}
 
-	@Override
-	public GameField createCommand() {
+	// @Override
+	public void createCommand() {
+		// CommandManager manager = new CommandManager();
+
 		manager.doCommand(new CreateCommand(gamefield));
-		return gamefield;
 
 	}
 

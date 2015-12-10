@@ -6,6 +6,7 @@ public class Organisator {
 	private Memento memento;
 
 	public void set(GameField gamefield) {
+		
 		this.memento = new Memento(gamefield);
 	}
 

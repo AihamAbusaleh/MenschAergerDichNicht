@@ -1,6 +1,5 @@
 package de.htwg.menschaergerdichnicht.controller;
 
-import de.htwg.menschaergerdichnicht.model.GameField;
 
 public interface IController {
 
@@ -46,6 +45,6 @@ public interface IController {
 	
 	void undo();
 	void redo();
-	GameField createCommand();
+	void createCommand();
 
 }

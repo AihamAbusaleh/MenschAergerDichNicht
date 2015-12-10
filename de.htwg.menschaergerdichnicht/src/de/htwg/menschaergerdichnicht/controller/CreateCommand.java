@@ -8,19 +8,16 @@ public class CreateCommand extends Organisator implements IDoUndoCommand {
 	GameField gamefield;
 
 	public CreateCommand(GameField gamefield) {
-
 		this.gamefield = gamefield;
 	}
 
 	@Override
-	public GameField doCommand() {
+	public void doCommand() {
 		set(gamefield);
-		return gamefield;
 	}
 
 	@Override
 	public void undoCommand() {
-
 		restorState();
 	}
 
