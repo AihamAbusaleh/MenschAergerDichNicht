@@ -1,8 +1,8 @@
 package de.htwg.menschaergerdichnicht.controller;
 
-import de.htwg.menschaergerdichnicht.command.IDoUndoCommand;
-import de.htwg.menschaergerdichnicht.memento.Organisator;
 import de.htwg.menschaergerdichnicht.model.GameField;
+import de.htwg.util.command.IDoUndoCommand;
+import de.htwg.util.memento.Organisator;
 
 public class CreateCommand extends Organisator implements IDoUndoCommand {
 	GameField gamefield;

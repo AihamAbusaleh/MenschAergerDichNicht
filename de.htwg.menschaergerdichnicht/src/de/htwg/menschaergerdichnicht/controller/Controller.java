@@ -1,6 +1,5 @@
 package de.htwg.menschaergerdichnicht.controller;
 
-import de.htwg.menschaergerdichnicht.command.CommandManager;
 import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.menschaergerdichnicht.observer.Observable;
@@ -9,6 +8,7 @@ import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 import de.htwg.menschaergerdichnicht.state.StatePlayer1;
 import de.htwg.menschaergerdichnicht.state.StatePlayer2;
 import de.htwg.menschaergerdichnicht.state.StatePlayer3;
+import de.htwg.util.command.CommandManager;
 import de.htwg.menschaergerdichnicht.observer.IObserver;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class Controller extends Observable implements IController {
 			return false;
 		}
 		updateObservers();
-	//	createCommand();
+		createCommand();
 		return true;
 	}
 
@@ -115,8 +115,11 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		 //dice = r.nextInt(6) + 1;
-		dice = 3;
+	    dice = r.nextInt(6) + 1;
+	}
+	
+	void dice(int dice) {
+		dice = 6;
 	}
 
 	public boolean isGameEnded() {

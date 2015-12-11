@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
+import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.menschaergerdichnicht.model.Player;
+import de.htwg.util.command.CommandManager;
 
 public class ControllerTest {
 
@@ -99,6 +101,22 @@ public class ControllerTest {
 	@Test
 	public void testgetTokenColorHouse() {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
+	}
+	
+	@Test
+	public void testMoveSeveralSteps() {
+		controller.dice(6);
+		controller.move(30);
+		assertEquals(1,CommandManager.undo.size());
+		controller.dice(2);
+		controller.move(30);
+		assertEquals(2,CommandManager.undo.size());
+		
+		controller.dice(6);
+		controller.move(30);
+		assertEquals(3,CommandManager.undo.size());
+		GameField field = (GameField) CommandManager.undo.pop();
+		assertEquals("R",field.color(0, 30) );
 	}
 
 //	@Test
