@@ -35,7 +35,7 @@ public class TUI implements IObserver {
 				+ c.getTokenColor(33) + "_" + c.getTokenColor(34) + "|" + c.getTokenColorHouse(1, 3) + "|"
 				+ c.getTokenColor(4) + "_" + c.getTokenColor(5) + "_" + c.getTokenColor(6) + "_" + c.getTokenColor(7)
 				+ "_" + c.getTokenColor(8) + "|");
-		System.out.println("  	    |30-31-32-33-34  4 -5 -6 -7 -8 |");
+		System.out.println("  	    |30-31-32-33-34  04-05-06-07-08|");
 		System.out.print("|" + c.getTokenColor(29) + "_" + c.getTokenColorHouse(0, 0) + "_" + c.getTokenColorHouse(0, 1)
 				+ "_" + c.getTokenColorHouse(0, 2) + "_" + c.getTokenColorHouse(0, 3) + "   "
 				+ c.getTokenColorHouse(3, 0) + "_" + c.getTokenColorHouse(3, 1) + "_" + c.getTokenColorHouse(3, 2) + "_"

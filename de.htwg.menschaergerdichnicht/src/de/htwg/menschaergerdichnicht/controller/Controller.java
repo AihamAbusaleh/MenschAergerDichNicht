@@ -35,18 +35,19 @@ public class Controller extends Observable implements IController {
 	}
 
 	public boolean moveStart() {
+		
 		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		// Raus kommen
 		stonCanOut();
+
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
 		if (isFieldEmpty()) {
-			dice();
+			// dice();
 			return false;
 		}
-		dice();
-		updateObservers();
 
+	
 		return true;
 	}
 
@@ -66,16 +67,16 @@ public class Controller extends Observable implements IController {
 
 	public boolean isFieldEmpty() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
-			
+
 			updateObservers();
-			setNextPlayer();
+			// setNextPlayer();
 			return true;
 		}
 		return false;
 	}
 
 	public boolean move(int idx) {
-
+		// updateObservers();
 		// Falscher Stein
 		if (!gamefield.color(currentplayer.getIdx(), idx)) {
 			System.out.println("wrong idx! no match");
@@ -88,7 +89,8 @@ public class Controller extends Observable implements IController {
 				return false;
 			gamefield.setStone(idx, 'x');
 			updateObservers();
-			dice();
+
+			// dice();
 
 			return true;
 		}
@@ -107,11 +109,10 @@ public class Controller extends Observable implements IController {
 		gamefield.setStone(idx, 'x');
 		gamefield.setStone(idx + dice, currentplayer.getColor());
 
-		if (dice != 6) {
-			setNextPlayer();
-		}
+	
 		updateObservers();
-		dice();
+	
+
 		return true;
 	}
 
@@ -120,7 +121,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		dice = r.nextInt(6) + 1;
+		// dice = r.nextInt(6) + 1;
+		dice = 3;
 	}
 
 	void dice(int dice) {
@@ -160,7 +162,6 @@ public class Controller extends Observable implements IController {
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
 		}
-
 		for (IObserver observer : observers) {
 			observer.update(currentplayer, this.isGameEnded());
 			if (isGameEnded()) {
@@ -168,6 +169,10 @@ public class Controller extends Observable implements IController {
 				System.exit(0);
 			}
 		}
+		if (dice != 6)
+			setNextPlayer();
+		dice();
+		
 
 	}
 
