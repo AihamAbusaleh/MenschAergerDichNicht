@@ -2,14 +2,14 @@ package de.htwg.menschaergerdichnicht.controller;
 
 import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.menschaergerdichnicht.model.Player;
-import de.htwg.menschaergerdichnicht.observer.Observable;
 import de.htwg.menschaergerdichnicht.state.IState;
 import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 import de.htwg.menschaergerdichnicht.state.StatePlayer1;
 import de.htwg.menschaergerdichnicht.state.StatePlayer2;
 import de.htwg.menschaergerdichnicht.state.StatePlayer3;
 import de.htwg.util.command.CommandManager;
-import de.htwg.menschaergerdichnicht.observer.IObserver;
+import de.htwg.util.observer.IObserver;
+import de.htwg.util.observer.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,6 @@ public class Controller extends Observable implements IController {
 	private GameField gamefield;
 	private Player currentplayer = new Player();
 	private CommandManager manager = new CommandManager();
-	// private CreateCommand create = new CreateCommand(gamefield);
 	private IState state;
 	private Random r;
 	private int dice;
@@ -29,7 +28,7 @@ public class Controller extends Observable implements IController {
 	public Controller() {
 		gamefield = new GameField();
 
-		 createCommand();
+		createSteps();
 		r = new Random();
 		state = new StatePlayer0();
 		dice();
@@ -40,14 +39,14 @@ public class Controller extends Observable implements IController {
 
 		// Raus kommen
 		stonCanOut();
-
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
 		if (isFieldEmpty()) {
-
+			dice();
 			return false;
 		}
+		dice();
 		updateObservers();
-		createCommand();
+
 		return true;
 	}
 
@@ -67,17 +66,19 @@ public class Controller extends Observable implements IController {
 
 	public boolean isFieldEmpty() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
+			
 			updateObservers();
+			setNextPlayer();
 			return true;
 		}
 		return false;
 	}
 
 	public boolean move(int idx) {
+
 		// Falscher Stein
 		if (!gamefield.color(currentplayer.getIdx(), idx)) {
 			System.out.println("wrong idx! no match");
-			
 			return false;
 		}
 
@@ -87,7 +88,7 @@ public class Controller extends Observable implements IController {
 				return false;
 			gamefield.setStone(idx, 'x');
 			updateObservers();
-			// createCommand();
+			dice();
 
 			return true;
 		}
@@ -105,8 +106,12 @@ public class Controller extends Observable implements IController {
 		// normales Fahren
 		gamefield.setStone(idx, 'x');
 		gamefield.setStone(idx + dice, currentplayer.getColor());
+
+		if (dice != 6) {
+			setNextPlayer();
+		}
 		updateObservers();
-		//createCommand();
+		dice();
 		return true;
 	}
 
@@ -115,9 +120,9 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-	    dice = r.nextInt(6) + 1;
+		dice = r.nextInt(6) + 1;
 	}
-	
+
 	void dice(int dice) {
 		dice = 6;
 	}
@@ -152,10 +157,9 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void updateObservers() {
 
-		if (dice != 6)
-			setNextPlayer();
-
-		
+		for (IObserver observer : observers) {
+			observer.showDice(currentplayer, this.dice);
+		}
 
 		for (IObserver observer : observers) {
 			observer.update(currentplayer, this.isGameEnded());
@@ -164,12 +168,7 @@ public class Controller extends Observable implements IController {
 				System.exit(0);
 			}
 		}
-		for (IObserver observer : observers) {
-			observer.showDice(currentplayer, this.dice);
-		}
 
-		dice();
-	//	createCommand();
 	}
 
 	public char getTokenColor(int idx) {
@@ -184,23 +183,17 @@ public class Controller extends Observable implements IController {
 		return gamefield.getStoneColorHouse(player, idx);
 	}
 
-	// @Override
 	public void undo() {
 		manager.undoCommand();
-	//	updateObservers();
 	}
 
-	// @Override
 	public void redo() {
 		manager.redoCommand();
 		updateObservers();
 	}
 
-	// @Override
-	public void createCommand() {
-		// CommandManager manager = new CommandManager();
-
-		manager.doCommand(new CreateCommand(gamefield));
+	public void createSteps() {
+		manager.doCommand(new SaveSteps(gamefield));
 
 	}
 

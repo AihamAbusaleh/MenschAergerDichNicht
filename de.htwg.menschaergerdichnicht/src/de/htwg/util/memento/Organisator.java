@@ -10,8 +10,8 @@ public class Organisator {
 		this.memento = new Memento(gamefield);
 	}
 
-	public GameField restorState() {
-		return memento.getMySavedState();
+	public GameField restorMyLastStep() {
+		return memento.getMySavedStep();
 	}
 
 }

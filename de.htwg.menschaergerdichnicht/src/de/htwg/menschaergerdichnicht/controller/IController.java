@@ -45,6 +45,6 @@ public interface IController {
 	
 	void undo();
 	void redo();
-	void createCommand();
+	void createSteps();
 
 }

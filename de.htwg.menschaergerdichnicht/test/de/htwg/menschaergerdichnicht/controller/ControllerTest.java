@@ -17,6 +17,7 @@ public class ControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		controller = new Controller();
+
 	}
 
 	@Test
@@ -52,10 +53,15 @@ public class ControllerTest {
 
 	@Test
 	public void testmoveStart() {
-		controller.dice();
-		if (!controller.isFieldEmpty())
-			assertFalse(controller.moveStart());
-		
+		if (!controller.isFieldEmpty()) {
+			controller.moveStart();
+			assertTrue(controller.moveStart());
+			controller.move(30);
+			controller.setNextPlayer();
+			controller.moveStart();
+			controller.move(0);
+
+		} 
 
 	}
 
@@ -67,28 +73,27 @@ public class ControllerTest {
 	@Test
 	public void testsetNextPlayer() {
 		controller.dice();
-			if (controller.getTokenColor(0) == 'R') {
-				controller.setNextPlayer();
-				assertEquals('B', controller.getTokenColor(1));
+		if (controller.getTokenColor(0) == 'R') {
+			controller.setNextPlayer();
+			assertEquals('B', controller.getTokenColor(1));
 
-			}
+		}
 
-			if (controller.getTokenColor(1) == 'B') {
-				controller.setNextPlayer();
-				assertEquals('G', controller.getTokenColor(2));
-			}
+		if (controller.getTokenColor(1) == 'B') {
+			controller.setNextPlayer();
+			assertEquals('G', controller.getTokenColor(2));
+		}
 
-			if (controller.getTokenColor(2) == 'G') {
-				controller.setNextPlayer();
-				assertEquals('S', controller.getTokenColor(3));
-			}
+		if (controller.getTokenColor(2) == 'G') {
+			controller.setNextPlayer();
+			assertEquals('S', controller.getTokenColor(3));
+		}
 
-			if (controller.getTokenColor(3) == 'S') {
-				controller.setNextPlayer();
-				assertEquals('R', controller.getTokenColor(0));
-			}
+		if (controller.getTokenColor(3) == 'S') {
+			controller.setNextPlayer();
+			assertEquals('R', controller.getTokenColor(0));
+		}
 
-		
 	}
 
 	@Test
@@ -102,31 +107,21 @@ public class ControllerTest {
 	public void testgetTokenColorHouse() {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
 	}
-	
-	@Test
-	public void testMoveSeveralSteps() {
-		controller.dice(6);
-		controller.move(30);
-		assertEquals(1,CommandManager.undo.size());
-		controller.dice(2);
-		controller.move(30);
-		assertEquals(2,CommandManager.undo.size());
-		
-		controller.dice(6);
-		controller.move(30);
-		assertEquals(3,CommandManager.undo.size());
-		GameField field = (GameField) CommandManager.undo.pop();
-		assertEquals("R",field.color(0, 30) );
-	}
 
-//	@Test
-//	public void testgetOutOfBlock() {
-//		if (controller.getTokenColor(0) == 'R') {
-//			if (controller.moveStart()) {
-//				assertTrue(controller.getOutOfBlock());
-//				assertFalse(controller.getOutOfBlock());
-//			}
-//		}
-//	}
+	// @Test
+	// public void testMoveSeveralSteps() {
+	// // controller.dice(6);
+	// // controller.move(30);
+	// assertEquals(false,CommandManager.undo.isEmpty());
+	// // controller.dice(2);
+	// // controller.move(30);
+	// assertEquals(2,CommandManager.undo.);
+	//
+	// controller.dice(6);
+	// controller.move(30);
+	// assertEquals(3,CommandManager.undo.size());
+	// GameField field = (GameField) CommandManager.undo.pop();
+	// assertEquals("R",field.color(0, 30) );
+	// }
 
 }

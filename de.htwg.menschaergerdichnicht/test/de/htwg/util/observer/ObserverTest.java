@@ -1,4 +1,4 @@
-package de.htwg.menschaergerdichnicht.observer;
+package de.htwg.util.observer;
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.menschaergerdichnicht.model.Player;
+import de.htwg.util.observer.IObserver;
+import de.htwg.util.observer.Observable;
 
 public class ObserverTest {
 	private TestObserver testObserver;
@@ -39,7 +41,6 @@ public class ObserverTest {
 	public void testUpdateObservers() {
 		assertFalse(e);
 		testObservable.updateObservers();
-		// assertTrue(e);
 
 	}
 

@@ -2,7 +2,7 @@ package de.htwg.menschaergerdichnicht.view;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.model.Player;
-import de.htwg.menschaergerdichnicht.observer.IObserver;
+import de.htwg.util.observer.IObserver;
 
 public class TUI implements IObserver {
 
@@ -12,7 +12,7 @@ public class TUI implements IObserver {
 		this.c = c;
 
 		c.registerObserver(this);
-		// display();
+		 display();
 	}
 
 	public void display() {

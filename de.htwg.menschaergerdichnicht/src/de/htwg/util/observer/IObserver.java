@@ -1,4 +1,4 @@
-package de.htwg.menschaergerdichnicht.observer;
+package de.htwg.util.observer;
 
 import de.htwg.menschaergerdichnicht.model.Player;
 

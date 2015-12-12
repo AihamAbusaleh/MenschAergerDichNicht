@@ -9,7 +9,7 @@ public class Memento {
 		this.gamefield =  gamefield;
 	}
 
-	public GameField getMySavedState() {
+	public GameField getMySavedStep() {
 		return gamefield;
 	}
 

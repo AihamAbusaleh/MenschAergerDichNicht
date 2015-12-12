@@ -4,25 +4,25 @@ import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.util.command.IDoUndoCommand;
 import de.htwg.util.memento.Organisator;
 
-public class CreateCommand extends Organisator implements IDoUndoCommand {
+public class SaveSteps extends Organisator implements IDoUndoCommand {
 	GameField gamefield;
 
-	public CreateCommand(GameField gamefield) {
+	public SaveSteps(GameField gamefield) {
 		this.gamefield = gamefield;
 	}
 
 	@Override
-	public void doCommand() {
+	public void saveMySteps() {
 		set(gamefield);
 	}
 
 	@Override
-	public void undoCommand() {
-		restorState();
+	public void undoMyStep() {
+		restorMyLastStep();
 	}
 
 	@Override
-	public void redoCommand() { // save the current gamefield
+	public void redoMyStep() { // save the current gamefield
 		set(gamefield);
 
 	}
