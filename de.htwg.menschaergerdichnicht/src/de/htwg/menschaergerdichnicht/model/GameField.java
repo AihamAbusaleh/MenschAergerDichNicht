@@ -13,7 +13,7 @@ public class GameField {
 	private final int HOUSESIZE = 4;
 	private final int BLOCKSIZE = 4;
 
-	private class token {
+	public class token {
 		public char color;
 
 		public token(char color) {

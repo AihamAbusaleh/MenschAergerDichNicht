@@ -51,4 +51,8 @@ public class Player implements IPlayer, IState {
 		return player;
 	}
 
+ 
+
+	
+
 }

@@ -5,11 +5,13 @@ import de.htwg.util.command.IDoUndoCommand;
 import de.htwg.util.memento.Organisator;
 
 public class SaveSteps extends Organisator implements IDoUndoCommand {
-	GameField gamefield;
+	private GameField gamefield;
 
 	public SaveSteps(GameField gamefield) {
 		this.gamefield = gamefield;
 	}
+
+	
 
 	@Override
 	public void saveMySteps() {

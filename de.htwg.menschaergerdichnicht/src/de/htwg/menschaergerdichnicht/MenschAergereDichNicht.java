@@ -3,7 +3,7 @@ package de.htwg.menschaergerdichnicht;
 import java.util.Scanner;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
-
+import de.htwg.menschaergerdichnicht.view.GUI;
 import de.htwg.menschaergerdichnicht.view.TUI;
 
 public class MenschAergereDichNicht {
@@ -16,13 +16,14 @@ public class MenschAergereDichNicht {
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
+		new GUI(c);
 
 		do {
 			while (!tui.noInput())
 				;
 			tui.handleInput(sc.next());
-			if(!tui.handleInput(sc.next()))
-				tui.handleInput(sc.next());
+		//	if(!tui.handleInput(sc.next()))
+			//	tui.handleInput(sc.next());
 		} while (true);
 	
 	}

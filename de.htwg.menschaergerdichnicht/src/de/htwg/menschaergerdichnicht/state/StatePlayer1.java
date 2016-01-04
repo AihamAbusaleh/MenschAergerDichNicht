@@ -15,6 +15,6 @@ public class StatePlayer1 implements IState {
 
 	@Override
 	public String toString() {
-		return "Player1";
+		return "Blau";
 	}
 }

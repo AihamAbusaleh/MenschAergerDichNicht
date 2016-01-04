@@ -27,15 +27,14 @@ public class Controller extends Observable implements IController {
 
 	public Controller() {
 		gamefield = new GameField();
-
-		createSteps();
+	
 		r = new Random();
 		state = new StatePlayer0();
 		dice();
 	}
 
 	public boolean moveStart() {
-		
+
 		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		// Raus kommen
@@ -43,12 +42,9 @@ public class Controller extends Observable implements IController {
 
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
 		if (isFieldEmpty()) {
-			// dice();
 			return false;
 		}
-
-	
-		return true;
+ 		return true;
 	}
 
 	public void stonCanOut() {
@@ -67,31 +63,26 @@ public class Controller extends Observable implements IController {
 
 	public boolean isFieldEmpty() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
-
 			updateObservers();
-			// setNextPlayer();
 			return true;
 		}
 		return false;
 	}
 
 	public boolean move(int idx) {
-		// updateObservers();
 		// Falscher Stein
 		if (!gamefield.color(currentplayer.getIdx(), idx)) {
 			System.out.println("wrong idx! no match");
 			return false;
 		}
 
+	
 		// Steine ins Haus bringen
 		if (gamefield.isRounded(currentplayer.getIdx(), idx, dice)) {
 			if (!gamefield.setStoneInHouse(currentplayer.getIdx(), idx + dice))
 				return false;
 			gamefield.setStone(idx, 'x');
 			updateObservers();
-
-			// dice();
-
 			return true;
 		}
 
@@ -108,11 +99,7 @@ public class Controller extends Observable implements IController {
 		// normales Fahren
 		gamefield.setStone(idx, 'x');
 		gamefield.setStone(idx + dice, currentplayer.getColor());
-
-	
 		updateObservers();
-	
-
 		return true;
 	}
 
@@ -121,8 +108,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	void dice() {
-		// dice = r.nextInt(6) + 1;
-		dice = 3;
+		dice = r.nextInt(6) + 1;
+		//dice = 6;
 	}
 
 	void dice(int dice) {
@@ -135,11 +122,11 @@ public class Controller extends Observable implements IController {
 
 	public void setNextPlayer() {
 
-		if (currentplayer.getState().toString() == "Player0")
+		if (currentplayer.getState().toString() == "Rot")
 			state = new StatePlayer1();
-		else if (currentplayer.getState().toString() == "Player1")
+		else if (currentplayer.getState().toString() == "Blau")
 			state = new StatePlayer2();
-		else if (currentplayer.getState().toString() == "Player2")
+		else if (currentplayer.getState().toString() == "Gelb")
 			state = new StatePlayer3();
 		else {
 			state = new StatePlayer0();
@@ -159,9 +146,7 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void updateObservers() {
 
-		for (IObserver observer : observers) {
-			observer.showDice(currentplayer, this.dice);
-		}
+		
 		for (IObserver observer : observers) {
 			observer.update(currentplayer, this.isGameEnded());
 			if (isGameEnded()) {
@@ -169,10 +154,17 @@ public class Controller extends Observable implements IController {
 				System.exit(0);
 			}
 		}
-		if (dice != 6)
+		if (dice != 6) {
 			setNextPlayer();
+			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+
+		}
 		dice();
-		
+
+		for (IObserver observer : observers) {
+			observer.showDice(currentplayer, this.dice);
+		}
+		createSteps();
 
 	}
 
@@ -190,6 +182,7 @@ public class Controller extends Observable implements IController {
 
 	public void undo() {
 		manager.undoCommand();
+		updateObservers();
 	}
 
 	public void redo() {
@@ -201,5 +194,9 @@ public class Controller extends Observable implements IController {
 		manager.doCommand(new SaveSteps(gamefield));
 
 	}
+	public String myTurn(){
+ 
+	 	return currentplayer.getState().toString();
 
+ 	}
 }

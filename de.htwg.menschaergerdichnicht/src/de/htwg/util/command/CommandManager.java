@@ -1,17 +1,18 @@
 package de.htwg.util.command;
 
-
 import java.util.Deque;
 import java.util.LinkedList;
 
+import de.htwg.menschaergerdichnicht.controller.SaveSteps;
 
-public class CommandManager    {
+public class CommandManager {
 
-	public static Deque<IDoUndoCommand> undo = new LinkedList<IDoUndoCommand>();
-	private static Deque<IDoUndoCommand> redo = new LinkedList<IDoUndoCommand>();
-	private static IDoUndoCommand top;
+	public Deque<IDoUndoCommand> undo = new LinkedList<IDoUndoCommand>();
+	public Deque<IDoUndoCommand> redo = new LinkedList<IDoUndoCommand>();
+	private IDoUndoCommand top;
 
 	public void doCommand(IDoUndoCommand newCommand) {
+
 		newCommand.saveMySteps();
 		undo.push(newCommand);
 	}
@@ -34,7 +35,5 @@ public class CommandManager    {
 	public void reset() {
 		undo.clear();
 	}
-
-	
 
 }
