@@ -2,33 +2,21 @@ package de.htwg.menschaergerdichnicht.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-
 import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.util.observer.IObserver;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame implements  IObserver{
 
 	 
@@ -81,36 +69,36 @@ public class GUI extends JFrame implements  IObserver{
 	@SuppressWarnings("serial")
 	private class SpielFeldGUI extends JPanel implements MouseListener {
 		private byte [][] feld = null;
-		private Point[] figurenPositionen = null;
+		private MyPoint[] figurenPositionen = null;
  		
 		public SpielFeldGUI(){
 			this.setBackground(Color.WHITE);
 	 
 			
 			this.feld = new byte[][] { 
-					{ 2, 2, 0, 0, 1, 1, 3, 0, 0, 3, 3 },
-					{ 2, 2, 0, 0, 1, 3, 1, 0, 0, 3, 3 },
-					{ 0, 0, 0, 0, 1, 3, 1, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 1, 3, 1, 0, 0, 0, 0 },
-					{ 2, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1 },
-					{ 1, 2, 2, 2, 2, 0, 4, 4, 4, 4, 1 },
-					{ 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 4 },
-					{ 0, 0, 0, 0, 1, 5, 1, 0, 0, 0, 0 },
-					{ 0, 0, 0, 0, 1, 5, 1, 0, 0, 0, 0 },
-					{ 5, 5, 0, 0, 1, 5, 1, 0, 0, 4, 4 },
-					{ 5, 5, 0, 0, 5, 1, 1, 0, 0, 4, 4 } };
+					{ 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
+					{ 'R', 'R', '0', '0', 'x', ' ', 'x', '0', '0', 'B', 'B' },
+					{ '0', '0', '0', '0', 'x', ' ', 'x', '0', '0', '0', '0' },
+					{ '0', '0', '0', '0', 'x', ' ', 'x', '0', '0', '0', '0' },
+					{ 'x', 'x', 'x', 'x', 'x', ' ', 'x', 'x', 'x', 'x', 'x' },
+					{ 'x', ' ', ' ', ' ', ' ', '0', ' ', ' ', ' ', ' ', 'x' },
+					{ 'x', 'x', 'x', 'x', 'x', ' ', 'x', 'x', 'x', 'x', 'x' },
+					{ '0', '0', '0', '0', 'x', ' ', 'x', '0', '0', '0', '0' },
+					{ '0', '0', '0', '0', 'x', ' ', 'x', '0', '0', '0', '0' },
+					{ 'P', 'P', '0', '0', 'x', ' ', 'x', '0', '0', 'G', 'G' },
+					{ 'P', 'P', '0', '0', 'x', 'x', 'x', '0', '0', 'G', 'G' } };
 			
-			this.figurenPositionen = new Point[]{
-					new Point(4,0),new Point(4,1),new Point(4,2),new Point(4,3),new Point(4,4),new Point(3,4),
-					new Point(2,4),new Point(1,4),new Point(0,4),new Point(0,5),new Point(0,6),new Point(1,6),
-					new Point(2,6),new Point(3,6),new Point(4,6),new Point(4,7),new Point(4,8),new Point(4,9),
-					new Point(4,10),new Point(5,10),new Point(6,10),new Point(6,9),new Point(6,8),new Point(6,7),
-					new Point(6,6),new Point(7,6),new Point(8,6),new Point(9,6),new Point(10,6),new Point(10,5),
-					new Point(10,4),new Point(9,4),new Point(8,4),new Point(7,4),new Point(6,4),new Point(6,3),
-					new Point(6,2),new Point(6,1),new Point(6,0),new Point(5,0),new Point(5,1),new Point(5,2),
-					new Point(5,3),new Point(5,4),new Point(1,5),new Point(2,5),new Point(3,5), new Point(4,5),
-					new Point(5,6), new Point(5,7),new Point(5,8), new Point(5,9),new Point(6,5), new Point(7,5),
-					new Point(8,5), new Point(9,5)
+			this.figurenPositionen = new MyPoint[]{
+					new MyPoint(4,0,30),new MyPoint(4,1,31),new MyPoint(4,2,32),new MyPoint(4,3,33),new MyPoint(4,4,34),new MyPoint(3,4,35),
+					new MyPoint(2,4,36),new MyPoint(1,4,37),new MyPoint(0,4,38),new MyPoint(0,5,39),new MyPoint(0,6,0),new MyPoint(1,6,1),
+					new MyPoint(2,6,2),new MyPoint(3,6,3),new MyPoint(4,6,4),new MyPoint(4,7,5),new MyPoint(4,8,6),new MyPoint(4,9,7),
+					new MyPoint(4,10,8),new MyPoint(5,10,9),new MyPoint(6,10,10),new MyPoint(6,9,11),new MyPoint(6,8,12),new MyPoint(6,7,13),
+					new MyPoint(6,6,14),new MyPoint(7,6,15),new MyPoint(8,6,16),new MyPoint(9,6,17),new MyPoint(10,6,18),new MyPoint(10,5,19),
+					new MyPoint(10,4,20),new MyPoint(9,4,21),new MyPoint(8,4,22),new MyPoint(7,4,23),new MyPoint(6,4,24),new MyPoint(6,3,25),
+					new MyPoint(6,2,26),new MyPoint(6,1,27),new MyPoint(6,0,28),new MyPoint(5,0,29),new MyPoint(5,1,0),new MyPoint(5,2,0),
+					new MyPoint(5,3,0),new MyPoint(5,4,0),new MyPoint(1,5,0),new MyPoint(2,5,0),new MyPoint(3,5,0), new MyPoint(4,5,0),
+					new MyPoint(5,6,0), new MyPoint(5,7,0),new MyPoint(5,8,0), new MyPoint(5,9,0),new MyPoint(6,5,0), new MyPoint(7,5,0),
+					new MyPoint(8,5,0), new MyPoint(9,5,0)
 			};
 			
  			this.addMouseListener(this);
@@ -132,61 +120,91 @@ public class GUI extends JFrame implements  IObserver{
 					g2.drawOval(j*laenge+laenge/10, i*laenge+laenge/10, laenge-laenge/5, laenge-laenge/5);			
 				}
 			}
-			
-
-			for(int i  = 0 ; i< 4; i++){
-				Color currentColor = feldColors(i+2);
-				g2.setColor(currentColor.darker().darker());
-				int zaehler = 0;
-			
-				for(int figur =0 ; figur < 4; figur++){
-						Point position = new Point();				
-							switch(i){
-							case 0:
-								position.x = 0;
-								position.y = 0;
-								break;
-							case 1:
-								position.x = 9;
-								position.y = 0;
-								break;
-							case 2:
-								position.x = 9;
-								position.y = 9;
-								break;
-							case 3:
-							default:
-								position.x = 0;
-								position.y = 9;
-								break;
-							}
-							switch(zaehler){
-							case 3:
-								position.y++;
-								break;
-							case 1:
-								position.x++;
-								break;
-							case 2:
-								position.x++;
-								position.y++;
-								break;
-							
-							case 0:
-							default:
-								break;
-							}
-							zaehler++;
-						
-						position.x = position.x*laenge;
-						position.y = position.y*laenge;
-						g2.setColor(currentColor.darker().darker());
-						g2.fillOval(position.x+laenge/4, position.y+laenge/4, laenge/2, laenge/2);
-						g2.setColor(currentColor.darker());
-						g2.fillOval(position.x+laenge/3, position.y+laenge/3, laenge/3, laenge/3);
-					
-				}
-			}	
+ 
+//			for(int i = 0; i< this.feld.length;i++){
+//				MyPoint position = new MyPoint();
+//				for(int j = 0; j < feld[i].length; j++){
+//					//Color currentColor= feldColors(feld[i][j]);
+//					if(c.getTokenColor(feld[i][j]) == 'R'){
+//						
+//					}
+//						if(currentColor == Color.RED){
+//							g2.setColor(Color.RED.darker().darker());
+//							
+//						}
+//						
+//				}
+//				position.x = position.x*laenge;
+//				position.y = position.y*laenge;
+//				g2.fillOval(position.x+laenge/4, position.y+laenge/4, laenge/2, laenge/2);
+//				g2.fillOval(position.x+laenge/3, position.y+laenge/3, laenge/3, laenge/3);
+//				
+//			}
+//
+//			for(int i  = 0 ; i< 4; i++){
+//	 
+//				int zaehler = 0;
+//			
+//				for(int figur =0 ; figur < 4; figur++){
+//						MyPoint position = new MyPoint();				
+//							switch(i){
+//							case 0:
+//								position.x = 0;
+//								position.y = 0;
+//							//	position.idx=000;
+//								 g2.setColor(Color.RED.darker().darker());
+//
+//								break;
+//							case 1:
+//								position.x = 9;
+//								position.y = 0;
+//							//	position.idx=100;
+//								 g2.setColor(Color.BLUE.darker().darker());
+//
+//
+//								break;
+//							case 2:
+//								position.x = 9;
+//								position.y = 9;
+//							//	position.idx=200;
+//								 g2.setColor(Color.YELLOW.darker());
+//
+//
+//								break;
+//							case 3:
+//							default:
+//								position.x = 0;
+//								position.y = 9;
+//							//	position.idx=300;
+//								 g2.setColor(Color.PINK.darker());
+//
+//								break;
+//							}
+//							switch(zaehler){
+//							case 3:
+//								position.y++;
+//								break;
+//							case 1:
+//								position.x++;
+//								break;
+//							case 2:
+//								position.x++;
+//								position.y++;
+//								break;
+//							
+//							case 0:
+//							default:
+//								break;
+//							}
+//							zaehler++;
+//						
+//						position.x = position.x*laenge;
+//						position.y = position.y*laenge;
+// 						g2.fillOval(position.x+laenge/4, position.y+laenge/4, laenge/2, laenge/2);
+// 						g2.fillOval(position.x+laenge/3, position.y+laenge/3, laenge/3, laenge/3);
+//					
+//				}
+//			}	
 			g2.setColor(tmpColor);	
 
 		}
@@ -196,25 +214,28 @@ public class GUI extends JFrame implements  IObserver{
 			
   			
 				int size = this.getWidth();
-				Point position = new Point(e.getX()*11/size, e.getY()*11/size); // point wo angeklickt wurde
-				position.setLocation(position.y, position.x);
+				MyPoint clickedPoint =  new MyPoint(e.getY()*11/size,e.getX()*11/size);
+				int l = e.getY()*11/size;
+				int m = e.getX()*11/size;
 				
-				if(c.myTurn().equals("Rot")){
- 					if(this.feld[e.getX()*11/size][e.getY()*11/size] == 2){
- 			
- 						position.move(this.figurenPositionen[c.dice()].x, this.figurenPositionen[c.dice()].y);// oder translate() ?!
- 						position.setLocation(getLocation());
- 					//	int l = figurenPositionen.hashCode() % 57 ;
- 					
- 						c.moveStart();
- 					//	c.move();
- 						frame.repaint();
- 						 
- 					}
- 					else{
- 					
- 					}
+				for (int i = 0; i < this.figurenPositionen.length; i++) {					 
+					if(l == this.figurenPositionen[i].x && m == this.figurenPositionen[i].y){
+						
+						clickedPoint.setIdx(this.figurenPositionen[i].getIdx()); 	
+					 
+						  if(c.moveStart()){
+							  frame.repaint();
+			  					if(c.myTurn().equals("Rot")  ){
+ 			 						c.move(this.figurenPositionen[clickedPoint.getIdx()].idx+10);
+ 			 						repaint();
+			 					}
+			 			  }
+
+						break;
+					}
 				}
+				
+				
 
 		}
 			
@@ -243,39 +264,46 @@ public class GUI extends JFrame implements  IObserver{
 			// TODO Auto-generated method stub
 			
 		}
-
+	 
 		
 		}
 
 		private Color feldColors(int i) {
 			Color currentColor = null;
-			switch(i){
-			case 0:
+ 			switch(i){
+			case '0':
 				break;
-			case 2:
+			case 'R':
 				currentColor = Color.RED;
 				break;
-			case 3:
+			case 'B':
 				currentColor = Color.BLUE;
 				break;
-			case 4:
+			case 'G':
 				currentColor = Color.YELLOW;
 				break;
-			case 5:
+			case 'P':
 				currentColor = Color.PINK;
 				break;
-			case 1:
-			default:
+			case 'x':
 				currentColor = Color.WHITE;
 				break;
+			case ' ':
+				currentColor = Color.BLACK;
+			default:
+				break;
 			}
+		
 			return currentColor;
+			
+			
 		}
 		
 	 
 		@Override
 		public void update(Player currentPlayer, boolean gameEnded) {
-			// TODO Auto-generated method stub
+				frame.repaint();
+				
 			
 		}
 		@Override
@@ -284,7 +312,6 @@ public class GUI extends JFrame implements  IObserver{
 	 
 			
 		}
-	
 	 
 	
 }

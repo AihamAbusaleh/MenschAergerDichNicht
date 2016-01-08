@@ -127,8 +127,8 @@ public class GameField {
 		idx = (idx - startposition[player]) % 40;
 
 		if (0 > idx || idx > 3 || house[player][idx].color == color[player]){
-		//	System.out.println("hier stimmt was nicht");
-			return false;}
+			return false;
+			}
 
 		house[player][idx].color = color[player];
 		return true; 
