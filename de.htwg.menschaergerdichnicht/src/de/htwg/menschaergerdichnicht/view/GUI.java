@@ -198,14 +198,16 @@ public class GUI extends JFrame implements  IObserver{
 				int size = this.getWidth();
 				Point position = new Point(e.getX()*11/size, e.getY()*11/size); // point wo angeklickt wurde
 				position.setLocation(position.y, position.x);
-			
+				
 				if(c.myTurn().equals("Rot")){
  					if(this.feld[e.getX()*11/size][e.getY()*11/size] == 2){
  			
  						position.move(this.figurenPositionen[c.dice()].x, this.figurenPositionen[c.dice()].y);// oder translate() ?!
  						position.setLocation(getLocation());
  					//	int l = figurenPositionen.hashCode() % 57 ;
- 					//	System.out.print("Das l ist " + l);
+ 					
+ 						c.moveStart();
+ 					//	c.move();
  						frame.repaint();
  						 
  					}
