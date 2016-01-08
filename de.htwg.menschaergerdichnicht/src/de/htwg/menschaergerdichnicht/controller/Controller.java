@@ -107,14 +107,12 @@ public class Controller extends Observable implements IController {
 		return gamefield.getStoneOutOfBlock(currentplayer.getIdx());
 	}
 
-	void dice() {
-		dice = r.nextInt(6) + 1;
-		//dice = 6;
+	public int dice() {
+		// return dice = r.nextInt(6) + 1;
+		return dice = 6;
 	}
 
-	void dice(int dice) {
-		dice = 6;
-	}
+
 
 	public boolean isGameEnded() {
 		return gamefield.isGameEnded();
@@ -197,6 +195,11 @@ public class Controller extends Observable implements IController {
 	public String myTurn(){
  
 	 	return currentplayer.getState().toString();
+
+ 	}
+	public String wuerfeln(){
+		 
+	 	return currentplayer.getState().toString() + " hat eine " + this.dice + " gewürfelt";
 
  	}
 }

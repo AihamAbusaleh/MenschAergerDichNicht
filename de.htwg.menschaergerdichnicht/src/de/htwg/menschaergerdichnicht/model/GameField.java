@@ -5,7 +5,7 @@ public class GameField {
 	private token[] gamefield;
 	private token[][] block;
 	private token[][] house;
-	private final char color[] = { 'R', 'B', 'G', 'S' };
+	private final char color[] = { 'R', 'B', 'G', 'P' };
 	private final int startposition[] = { 30, 0, 10, 20 };
 
 	private final int POSITIONS = 40;
@@ -93,7 +93,7 @@ public class GameField {
 					return 1;
 				if(gamefield[startposition[player]].color == 'G')
 					return 2;
-				if(gamefield[startposition[player]].color == 'S')
+				if(gamefield[startposition[player]].color == 'P')
 					return 3;
 				
 			}

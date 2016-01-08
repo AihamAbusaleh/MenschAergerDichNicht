@@ -1,5 +1,6 @@
 package de.htwg.menschaergerdichnicht.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -20,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -30,72 +32,50 @@ import de.htwg.util.observer.IObserver;
 public class GUI extends JFrame implements  IObserver{
 
 	 
- 	private JFrame frame = null;	 
- 	private SpielFeldGUI spielfeld = null;
-	private JPanel  myPanel  = null;
-	private JPanel  wurfelPanel  = null;
-	private JButton wurfeln = null;
-	private JLabel  Myturn = null;
-	private Controller c;
+ 	private JFrame frame;	 
+ 	private JPanel  wurfelPanel;
+ 	private JLabel  Myturn  ;
+ 	private Controller c;
 
 
 	public GUI(Controller c) {
 		this.c = c;
 		c.registerObserver(this);
-//		
-//		this.frame = new JFrame("Mensch ärgere dich nicht");
-//		this.frame.setMinimumSize(new Dimension(800, 600));
-//		this.setBackground(Color.WHITE); 
-//		this.setLayout(new FlowLayout());
-//		this.frame.setUndecorated(false);
-//		this.frame.setLocationByPlatform(true);
-//        
-//		this.myPanel = new JPanel();
-////		Border b = BorderFactory.createTitledBorder("SpielFeld");
-////		myPanel.setBorder(b);
-////		myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.LINE_AXIS));		
-////		 
-//		this.wurfelPanel = new JPanel();
-////		Border border = BorderFactory.createTitledBorder("Würfeln");
-////	    wurfelPanel.setBorder(border);
-////	    wurfelPanel.setLayout(new BoxLayout(wurfelPanel, BoxLayout.LINE_AXIS));		
-//
-//		this.Myturn = new JLabel();
-//	 
-//	//	wurfelPanel.setBorder(BorderFactory.createEmptyBorder(17, 17, 17, 17));
-//	//	wurfelPanel.setLayout(new BoxLayout(wurfelPanel, BoxLayout.PAGE_AXIS));
-//		
-// 		
+ 		
+ 		frame = new JFrame("Mensch ärgere dich nicht");
+     
+ 		this.wurfelPanel = new JPanel();
+		this.Myturn = new JLabel(c.wuerfeln());
+		 
+		this.wurfelPanel.setBackground(Color.MAGENTA);
+		 
 //		this.wurfeln = new JButton("würfeln");
 //		this.wurfeln.addActionListener( 
 //				new ActionListener() {
 //					@Override
 //					public void actionPerformed(ActionEvent arg0) {
-//						int w = (int) (Math.random() * 6 + 1);
-//						wurfeln.setText("Würfelzahl : " + w);
+// //						int w = (int) (Math.random() * 6 + 1);
+//						wurfeln.setText("Würfelzahl : " + c.dice() );
 //						Myturn.setText(c.myTurn() + " ist an der Reihe" ); // TODO spielen, d.h wuerfeln blockieren 
-//
+////						while(){ TODO
+////						wurfeln.setEnabled(false);
+////						}
 //					}						 
 //				});
 //		
-//		this.spielfeld = new SpielFeldGUI();
-//		this.myPanel.add(this.spielfeld);
-//		this.wurfelPanel.add(wurfeln);
-//		this.wurfelPanel.add(Myturn);
-//		
-//		this.frame.setContentPane(this.myPanel);
-//		this.frame.setContentPane(this.wurfelPanel);
-//		this.frame.getContentPane().add(new SpielFeldGUI());
-// 		this.frame.setResizable(false);
-//		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-//		this.frame.setVisible(true);
-//		this.frame.pack();  
-		JFrame frame = new JFrame();
-	    frame.getContentPane().add(new SpielFeldGUI());
-
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setSize(800,900);
-	    frame.setVisible(true);
+	
+	
+ 		this.wurfelPanel.add(Myturn);
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
+ 		frame.getContentPane().add(new SpielFeldGUI());
+ 	
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+ 		frame.setSize(600, 700);
+		frame.setVisible(true);
+ 		frame.setResizable(false);
+ 
+	   
 	}
 
 	@SuppressWarnings("serial")
@@ -105,6 +85,7 @@ public class GUI extends JFrame implements  IObserver{
  		
 		public SpielFeldGUI(){
 			this.setBackground(Color.WHITE);
+	 
 			
 			this.feld = new byte[][] { 
 					{ 2, 2, 0, 0, 1, 1, 3, 0, 0, 3, 3 },
@@ -133,7 +114,7 @@ public class GUI extends JFrame implements  IObserver{
 			};
 			
  			this.addMouseListener(this);
- 		}
+  		}
 		
 		protected void paintComponent(Graphics g){
 			super.paintComponent(g);
@@ -143,7 +124,7 @@ public class GUI extends JFrame implements  IObserver{
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			for(int i = 0; i< this.feld.length;i++){
 				for(int j = 0; j < feld[i].length; j++){
-					Color currentColor= berechneFarbe(feld[i][j]);
+					Color currentColor= feldColors(feld[i][j]);
 					if(currentColor == null) continue;
 					g2.setColor(currentColor);
  					g2.fillOval(j*laenge+laenge/10, i*laenge+laenge/10, laenge-laenge/5, laenge-laenge/5);
@@ -151,20 +132,91 @@ public class GUI extends JFrame implements  IObserver{
 					g2.drawOval(j*laenge+laenge/10, i*laenge+laenge/10, laenge-laenge/5, laenge-laenge/5);			
 				}
 			}
-//    			for(int i  = 0 ; i< 4; i++){
-//				Color currentColor = berechneFarbe(i+2);
-//				g2.setColor(currentColor.darker().darker());
-//				int amStartZaehler = 0;
-//				 
-//					 
-//				}
-			}
+			
+
+			for(int i  = 0 ; i< 4; i++){
+				Color currentColor = feldColors(i+2);
+				g2.setColor(currentColor.darker().darker());
+				int zaehler = 0;
+			
+				for(int figur =0 ; figur < 4; figur++){
+						Point position = new Point();				
+							switch(i){
+							case 0:
+								position.x = 0;
+								position.y = 0;
+								break;
+							case 1:
+								position.x = 9;
+								position.y = 0;
+								break;
+							case 2:
+								position.x = 9;
+								position.y = 9;
+								break;
+							case 3:
+							default:
+								position.x = 0;
+								position.y = 9;
+								break;
+							}
+							switch(zaehler){
+							case 3:
+								position.y++;
+								break;
+							case 1:
+								position.x++;
+								break;
+							case 2:
+								position.x++;
+								position.y++;
+								break;
+							
+							case 0:
+							default:
+								break;
+							}
+							zaehler++;
+						
+						position.x = position.x*laenge;
+						position.y = position.y*laenge;
+						g2.setColor(currentColor.darker().darker());
+						g2.fillOval(position.x+laenge/4, position.y+laenge/4, laenge/2, laenge/2);
+						g2.setColor(currentColor.darker());
+						g2.fillOval(position.x+laenge/3, position.y+laenge/3, laenge/3, laenge/3);
+					
+				}
+			}	
+			g2.setColor(tmpColor);	
+
+		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			
+  			
+				int size = this.getWidth();
+				Point position = new Point(e.getX()*11/size, e.getY()*11/size); // point wo angeklickt wurde
+				position.setLocation(position.y, position.x);
 			
+				if(c.myTurn().equals("Rot")){
+ 					if(this.feld[e.getX()*11/size][e.getY()*11/size] == 2){
+ 			
+ 						position.move(this.figurenPositionen[c.dice()].x, this.figurenPositionen[c.dice()].y);// oder translate() ?!
+ 						position.setLocation(getLocation());
+ 					//	int l = figurenPositionen.hashCode() % 57 ;
+ 					//	System.out.print("Das l ist " + l);
+ 						frame.repaint();
+ 						 
+ 					}
+ 					else{
+ 					
+ 					}
+				}
+
 		}
+			
+		
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
@@ -193,7 +245,7 @@ public class GUI extends JFrame implements  IObserver{
 		
 		}
 
-		private Color berechneFarbe(int i) {
+		private Color feldColors(int i) {
 			Color currentColor = null;
 			switch(i){
 			case 0:
@@ -208,7 +260,7 @@ public class GUI extends JFrame implements  IObserver{
 				currentColor = Color.YELLOW;
 				break;
 			case 5:
-				currentColor = Color.BLACK;
+				currentColor = Color.PINK;
 				break;
 			case 1:
 			default:
@@ -227,12 +279,10 @@ public class GUI extends JFrame implements  IObserver{
 		@Override
 		public void showDice(Player currentplayer, int dice) {
 			// TODO Auto-generated method stub
+	 
 			
 		}
 	
-		public void repaintSpielfeld() {
-			if (this.spielfeld!=null)
-				this.spielfeld.repaint();
-		}
+	 
 	
 }
