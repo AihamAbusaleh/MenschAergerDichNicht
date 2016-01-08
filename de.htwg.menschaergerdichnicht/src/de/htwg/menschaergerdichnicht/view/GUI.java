@@ -42,7 +42,7 @@ public class GUI extends JFrame implements  IObserver{
 		this.c = c;
 		c.registerObserver(this);
  		
- 		frame = new JFrame("Mensch ärgere dich nicht");
+ 		frame = new JFrame("Mensch Ärgere Dich Nicht");
      
  		this.wurfelPanel = new JPanel();
 		this.Myturn = new JLabel(c.wuerfeln());
@@ -205,7 +205,6 @@ public class GUI extends JFrame implements  IObserver{
  						position.move(this.figurenPositionen[c.dice()].x, this.figurenPositionen[c.dice()].y);// oder translate() ?!
  						position.setLocation(getLocation());
  					//	int l = figurenPositionen.hashCode() % 57 ;
- 					//	System.out.print("Das l ist " + l);
  						frame.repaint();
  						 
  					}
