@@ -80,9 +80,11 @@ public class Controller extends Observable implements IController {
 		// Steine ins Haus bringen
 		if (gamefield.isRounded(currentplayer.getIdx(), idx, dice)) {
 			if (!gamefield.setStoneInHouse(currentplayer.getIdx(), idx + dice)){
-				System.out.println("there is a stone in the field house");
-				return false;
-				}
+ 				System.out.println("there is a stone in the field house");
+ 				System.out.println("hause is full, chose another stone to move");
+ 				return false;
+ 				}
+ 
 			gamefield.setStone(idx, 'x');
 			updateObservers();
 			return true;
