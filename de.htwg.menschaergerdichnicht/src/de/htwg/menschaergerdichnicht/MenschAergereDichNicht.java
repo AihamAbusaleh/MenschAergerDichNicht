@@ -21,8 +21,7 @@ public class MenschAergereDichNicht {
 			while (!tui.noInput())
 				;
 			tui.handleInput(sc.next());
-			if(!tui.handleInput(sc.next()))
-				tui.handleInput(sc.next());
+		
 		} while (true);
 	
 	}

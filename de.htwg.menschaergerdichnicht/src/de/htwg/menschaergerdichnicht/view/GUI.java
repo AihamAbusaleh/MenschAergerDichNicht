@@ -2,18 +2,12 @@ package de.htwg.menschaergerdichnicht.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,7 +50,7 @@ public class GUI implements IObserver {
 		private byte[][] feld = null;
 		private MyPoint[] figurenPositionen = null;
 		private MyPoint[] stoneBlock = null;
-		Point p;
+		MyPoint clickedPoint = null;
 
 		public SpielFeldGUI() {
 			this.setBackground(Color.WHITE);
@@ -79,8 +73,7 @@ public class GUI implements IObserver {
 					new MyPoint(1, 10, 300), new MyPoint(9, 9, 400), new MyPoint(10, 9, 400), new MyPoint(9, 10, 400),
 					new MyPoint(10, 10, 400) };
 
-			this.figurenPositionen = new MyPoint[] {
-					new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
+			this.figurenPositionen = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
 					new MyPoint(4, 2, 32), new MyPoint(4, 3, 33), new MyPoint(4, 4, 34), new MyPoint(3, 4, 35),
 					new MyPoint(2, 4, 36), new MyPoint(1, 4, 37), new MyPoint(0, 4, 38), new MyPoint(0, 5, 39),
 					new MyPoint(0, 6, 0), new MyPoint(1, 6, 1), new MyPoint(2, 6, 2), new MyPoint(3, 6, 3),
@@ -121,7 +114,39 @@ public class GUI implements IObserver {
 
 			MyPoint position = new MyPoint();
 
+			if (clickedPoint != null) {
+				// this.figurenPositionen[clickedPoint.getIdx()].idx + 10
+				position.x = clickedPoint.y * laenge;
+				position.y = clickedPoint.x * laenge;
+
+				if (c.myTurn().equals("Rot")) {
+					g2.setColor(Color.RED.darker());
+					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+					g2.setColor(Color.RED.darker().darker());
+					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+				}
+				if (c.myTurn().equals("Blau")) {
+					g2.setColor(Color.BLUE.darker());
+					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+					g2.setColor(Color.BLUE.darker().darker());
+					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+				}
+				if (c.myTurn().equals("Gelb")) {
+					g2.setColor(Color.YELLOW.darker());
+					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+					g2.setColor(Color.YELLOW.darker().darker());
+					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+				}
+				if (c.myTurn().equals("Pink")) {
+					g2.setColor(Color.PINK.darker());
+					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+					g2.setColor(Color.PINK.darker().darker());
+					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+				}
+			}
+
 			for (int i = 0; i < stoneBlock.length; i++) {
+
 				Color stoneColor = myStoneColor(i);
 				switch (i) {
 				case 0:
@@ -151,8 +176,8 @@ public class GUI implements IObserver {
 				g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
 				g2.setColor(stoneColor.darker().darker());
 				g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
-			}
 
+			}
 			g2.setColor(tmpColor);
 
 		}
@@ -222,17 +247,21 @@ public class GUI implements IObserver {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
-			int size = this.getWidth();
-			MyPoint clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
-			int l = e.getY() * 11 / size;
-			int m = e.getX() * 11 / size;
-
 			for (int i = 0; i < this.figurenPositionen.length; i++) {
+				boolean stoneExist = false;
+				// char stoneColor = c.getTokenColor(clickedPoint.getIdx());
+
+				int size = this.getWidth();
+				clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
+				int l = e.getY() * 11 / size;
+				int m = e.getX() * 11 / size;
 				if (l == this.figurenPositionen[i].x && m == this.figurenPositionen[i].y) {
 					clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
+
 					if (c.moveStart()) {
-						repaint();
-						c.move(this.figurenPositionen[clickedPoint.getIdx()].idx + 10);
+						if (c.move(this.figurenPositionen[clickedPoint.getIdx()].idx + 10))
+							repaint();
+
 					}
 					break;
 				}
@@ -271,7 +300,7 @@ public class GUI implements IObserver {
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-		// TODO Auto-generated method stub
+		//c.updateObservers();
 
 	}
 
