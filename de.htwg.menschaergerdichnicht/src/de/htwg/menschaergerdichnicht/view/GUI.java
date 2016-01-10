@@ -116,8 +116,20 @@ public class GUI implements IObserver {
 
 			if (clickedPoint != null) {
 				// this.figurenPositionen[clickedPoint.getIdx()].idx + 10
-				position.x = clickedPoint.y * laenge;
-				position.y = clickedPoint.x * laenge;
+
+				for (int i = 0; i < this.figurenPositionen.length; i++) {
+
+					if (clickedPoint.x == this.figurenPositionen[i].x
+							&& clickedPoint.y == this.figurenPositionen[i].y) {
+						clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
+						position.x = figurenPositionen[i + c.dice()].y;
+						position.y = figurenPositionen[i + c.dice()].x;
+						break;
+					}
+
+				}
+				position.x = position.x * laenge;
+				position.y = position.y * laenge;
 
 				if (c.myTurn().equals("Rot")) {
 					g2.setColor(Color.RED.darker());
@@ -261,7 +273,6 @@ public class GUI implements IObserver {
 					if (c.moveStart()) {
 						if (c.move(this.figurenPositionen[clickedPoint.getIdx()].idx + 10))
 							repaint();
-
 					}
 					break;
 				}
@@ -300,7 +311,7 @@ public class GUI implements IObserver {
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-		//c.updateObservers();
+		// c.updateObservers();
 
 	}
 
