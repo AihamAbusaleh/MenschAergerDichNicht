@@ -1,25 +1,22 @@
 package de.htwg.menschaergerdichnicht.view;
 
 public class MyPoint {
-	int x,y,idx;
+	int x, y, idx;
 
 	public MyPoint(int x, int y, int idx) {
-		 
+
 		this.x = x;
 		this.y = y;
 		this.idx = idx;
 	}
 
- 
-
 	public MyPoint() {
- 	}
+	}
 
 	public MyPoint(int x, int y) {
 		this.x = x;
 		this.y = y;
- 	}
-
+	}
 
 	public int getX() {
 		return x;
@@ -44,6 +41,8 @@ public class MyPoint {
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}
-	
+ 
+
+	 
 
 }

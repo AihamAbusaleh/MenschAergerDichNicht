@@ -111,8 +111,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	public int dice() {
-		//  return dice = r.nextInt(6) + 1;
-		return dice = 6;
+		 // return dice = r.nextInt(6) + 1;
+		  return dice = 6;
 	}
 
 
@@ -204,4 +204,29 @@ public class Controller extends Observable implements IController {
 	 	return currentplayer.getState().toString() + " hat eine " + this.dice + " gewürfelt";
 
  	}
+	public int meinSpieler(){
+	  int p = -1;
+	  char  c = currentplayer.getColor();
+	  if(c == 'R'){
+		   p = 0;
+		   return p;
+	  }	  
+	  if(c == 'B'){
+		   p = 1;
+		   return p;
+	  }
+	  if(c == 'G'){
+		   p = 2;
+		   return p;
+	  }
+	  if(c == 'P'){
+		   p = 3;
+		   return p;
+	  }
+	  return p;
+	}
+	public int isStoneHere(int idx){
+		 return gamefield.whichPlayerOnIdx(idx,  currentplayer.getColor());
+		 
+	}
 }

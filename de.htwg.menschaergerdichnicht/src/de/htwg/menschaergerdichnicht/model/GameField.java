@@ -82,6 +82,7 @@ public class GameField {
 
 		return -1;
 	}
+	 
 
 	public int enemyInStart(int player, char color) { // getestet wer steht
 														// wird// geschmi�en
@@ -111,7 +112,7 @@ public class GameField {
 		}
 		return false;
 	}
-
+	
 	public boolean setStoneBackInBlock(int player) { // getestet
 		for (int i = 3; i >= 0; i--) {
 			if (block[player][i].color != color[player]) {
