@@ -49,7 +49,10 @@ public class GUI implements IObserver {
 	private class SpielFeldGUI extends JPanel implements MouseListener {
 		private byte[][] feld = null;
 		private MyPoint[] figurenPositionen = null;
-		private MyPoint[] stoneBlock = null;
+		private MyPoint[] stoneBlock0 = null;
+		private MyPoint[] stoneBlock1 = null;
+		private MyPoint[] stoneBlock2 = null;
+		private MyPoint[] stoneBlock3 = null;
 		MyPoint clickedPoint = null;
 
 		public SpielFeldGUI() {
@@ -68,11 +71,15 @@ public class GUI implements IObserver {
 					{ 'P', 'P', '0', '0', 'x', ' ', 'x', '0', '0', 'G', 'G' },
 					{ 'P', 'P', '0', '0', 'x', 'x', 'x', '0', '0', 'G', 'G' } };
 
-			this.stoneBlock = new MyPoint[] { new MyPoint(0, 0, 100), new MyPoint(1, 0, 100), new MyPoint(0, 1, 100),
-					new MyPoint(1, 1, 100), new MyPoint(9, 0, 200), new MyPoint(10, 0, 200), new MyPoint(9, 1, 200),
-					new MyPoint(10, 1, 200), new MyPoint(0, 9, 300), new MyPoint(1, 9, 300), new MyPoint(0, 10, 300),
-					new MyPoint(1, 10, 300), new MyPoint(9, 9, 400), new MyPoint(10, 9, 400), new MyPoint(9, 10, 400),
+			this.stoneBlock0 = new MyPoint[] { new MyPoint(0, 0, 100), new MyPoint(1, 0, 100), new MyPoint(0, 1, 100),
+					new MyPoint(1, 1, 100) };
+			this.stoneBlock1 = new MyPoint[] {  new MyPoint(9, 0, 200), new MyPoint(10, 0, 200), new MyPoint(9, 1, 200),
+					new MyPoint(10, 1, 200) };
+			this.stoneBlock2 = new MyPoint[] {  new MyPoint(9, 9, 400), new MyPoint(10, 9, 400), new MyPoint(9, 10, 400),
 					new MyPoint(10, 10, 400) };
+			this.stoneBlock3 = new MyPoint[] {  new MyPoint(0, 9, 300), new MyPoint(1, 9, 300), new MyPoint(0, 10, 300),
+					new MyPoint(1, 10, 300) };
+			
 
 			this.figurenPositionen = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
 					new MyPoint(4, 2, 32), new MyPoint(4, 3, 33), new MyPoint(4, 4, 34), new MyPoint(3, 4, 35),
@@ -157,21 +164,50 @@ public class GUI implements IObserver {
 					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 				}
 			}
-
+			int red = -1;
+			int blue = -1;
+			int yellow = -1;
+			int pink =-1;
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
 					Color stoneColor = Color.WHITE;
-				//	int e = c.meinSpieler();
 					char s = c.getTokenColorBlock(player, block);
 					char h = c.getTokenColorHouse(player, block);
 					
+					
 					if (s != ' ') {
-//						position.x = position.x * laenge;
-//						position.y = position.y * laenge;
-//						g2.setColor(stoneColor.darker());
-//						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-//						g2.setColor(stoneColor.darker().darker());
-//						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+							switch (s) {
+							case 'R' :	
+								red++;
+							stoneColor = Color.RED;
+							position.x = stoneBlock0[red].x;
+							position.y = stoneBlock0[red].y;
+								break;
+							case 'B' :	
+								blue++;
+							stoneColor = Color.BLUE;
+							position.x = stoneBlock1[blue].x;
+							position.y = stoneBlock1[blue].y;
+								break;
+							case 'G' :	
+								yellow++;
+							stoneColor = Color.YELLOW;
+							position.x = stoneBlock2[yellow].x;
+							position.y = stoneBlock2[yellow].y;
+								break;
+							case 'P' :	
+								pink++;
+							stoneColor = Color.PINK;
+							position.x = stoneBlock3[pink].x;
+							position.y = stoneBlock3[pink].y;
+								break;
+							}
+						position.x = position.x * laenge;
+						position.y = position.y * laenge;
+						g2.setColor(stoneColor.darker());
+						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+						g2.setColor(stoneColor.darker().darker());
+						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 					} else {
 						for (int j = 0; j < 4; j++) {
 
@@ -199,6 +235,9 @@ public class GUI implements IObserver {
 									g2.setColor(stoneColor.darker().darker());
 									g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3,
 											laenge / 3);
+									if(h != ' '){
+										
+									}
 								}
 
 							}

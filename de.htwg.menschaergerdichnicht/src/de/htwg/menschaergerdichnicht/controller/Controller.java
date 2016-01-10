@@ -111,8 +111,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	public int dice() {
-		 // return dice = r.nextInt(6) + 1;
-		  return dice = 6;
+		  return dice = r.nextInt(6) + 1;
+		 // return dice = 6;
 	}
 
 
