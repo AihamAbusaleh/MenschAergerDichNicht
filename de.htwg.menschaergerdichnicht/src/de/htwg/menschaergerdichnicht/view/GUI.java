@@ -21,8 +21,8 @@ import de.htwg.util.observer.IObserver;
 public class GUI implements IObserver {
 
 	private JFrame frame;
-	//private JTextField outputPlayers;
-	//private JPanel wurfelPanel;
+	// private JTextField outputPlayers;
+	// private JPanel wurfelPanel;
 	private Controller c;
 	private JPanel container;
 
@@ -32,14 +32,13 @@ public class GUI implements IObserver {
 
 		frame = new JFrame("Mensch ärgere dich nicht");
 		this.container = new SpielFeldGUI();
-	//	this.wurfelPanel = new JPanel();
-	//	wurfelPanel.setLayout(new GridLayout(2, 2));
+		// this.wurfelPanel = new JPanel();
+		// wurfelPanel.setLayout(new GridLayout(2, 2));
 
-		//this.outputPlayers = new JTextField();
-		 
-	 
+		// this.outputPlayers = new JTextField();
+
 		frame.getContentPane().setLayout(new BorderLayout());
-		//frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
+		// frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
 		frame.getContentPane().add(container);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 700);
@@ -65,7 +64,8 @@ public class GUI implements IObserver {
 		public SpielFeldGUI() {
 			this.setBackground(Color.WHITE);
 
-			this.feld = new byte[][] { { 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
+			this.feld = new byte[][] { 
+					{ 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
 					{ 'R', 'R', '0', '0', 'x', 'B', 'x', '0', '0', 'B', 'B' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
@@ -138,10 +138,10 @@ public class GUI implements IObserver {
 							&& clickedPoint.y == this.figurenPositionen[i].y) {
 						clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
 						indexofcklickedpoint = clickedPoint.getIdx();
-
+						if(!c.rounded(indexofcklickedpoint)){
 						position.x = figurenPositionen[(i + c.dice()) % 40].y;
 						position.y = figurenPositionen[(i + c.dice()) % 40].x;
-
+						}
 						// if (c.playerNr() == 0) {
 						// round = ((indexofcklickedpoint + c.dice()) - 30) %
 						// 40;
@@ -157,16 +157,16 @@ public class GUI implements IObserver {
 				position.x = position.x * laenge;
 				position.y = position.y * laenge;
 				Color stoneColor = Color.WHITE;
-				if (c.playerNr() == 1) {
+				if (c.playerNr() == 0) {
 					stoneColor = Color.RED;
 				}
-				if (c.playerNr() == 2) {
+				if (c.playerNr() == 1) {
 					stoneColor = Color.BLUE;
 				}
-				if (c.playerNr() == 3) {
+				if (c.playerNr() == 2) {
 					stoneColor = Color.YELLOW;
 				}
-				if (c.playerNr() == 0) {
+				if (c.playerNr() == 3) {
 					stoneColor = Color.PINK;
 				}
 				g2.setColor(stoneColor.darker());
@@ -178,43 +178,51 @@ public class GUI implements IObserver {
 			int blue = -1;
 			int yellow = -1;
 			int pink = -1;
+			int red1 = -1;
+			int blue1 = -1;
+			int yellow1 = -1;
+			int pink1 = -1;
 
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
 					Color stoneColor = Color.WHITE;
 					char tokenColorInBlock = c.getTokenColorBlock(player, block);
 					char tokenColorInHouse = c.getTokenColorHouse(player, block);
-					// if (tokenColorInHouse != ' ') {
-					//
-					// switch (tokenColorInHouse) {
-					// case 'R':
-					// stoneColor = Color.RED;
-					//
-					// break;
-					// case 'B':
-					// stoneColor = Color.BLUE;
-					//
-					// break;
-					// case 'G':
-					// stoneColor = Color.YELLOW;
-					//
-					// break;
-					// case 'P':
-					// stoneColor = Color.PINK;
-					//
-					// break;
-					//
-					// }
-					//
-					// position.x = position.x * laenge;
-					// position.y = position.y * laenge;
-					// g2.setColor(stoneColor.darker());
-					// g2.fillOval(position.x + laenge / 4, position.y + laenge
-					// / 4, laenge / 2, laenge / 2);
-					// g2.setColor(stoneColor.darker().darker());
-					// g2.fillOval(position.x + laenge / 3, position.y + laenge
-					// / 3, laenge / 3, laenge / 3);
-					// }
+					if (tokenColorInHouse != ' ') {
+
+						switch (tokenColorInHouse) {
+						case 'R':
+							red1++;
+							stoneColor = Color.RED;
+							position.x = this.stoneHause0[red1].y;
+							position.y = this.stoneHause0[red1].x;
+
+							break;
+						case 'B':
+							blue1++;
+							stoneColor = Color.BLUE;
+							position.x = this.stoneHause1[blue1].y;
+							position.y = this.stoneHause1[blue1].x;
+
+							break;
+						case 'G':
+							stoneColor = Color.YELLOW;
+
+							break;
+						case 'P':
+							stoneColor = Color.PINK;
+
+							break;
+
+						}
+
+						position.x = position.x * laenge;
+						position.y = position.y * laenge;
+						g2.setColor(stoneColor.darker());
+						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+						g2.setColor(stoneColor.darker().darker());
+						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					}
 
 					if (tokenColorInBlock != ' ') {
 						switch (tokenColorInBlock) {
@@ -252,7 +260,7 @@ public class GUI implements IObserver {
 						g2.setColor(stoneColor.darker().darker());
 						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 					} else {
-						for (int j = 0; j < 4; j++) {
+					//	for (int j = 0; j < 4; j++) {
 
 							for (int i = 0; i < figurenPositionen.length; i++) {
 								if (c.isStoneHere(figurenPositionen[i].getIdx()) != -1) {
@@ -278,11 +286,10 @@ public class GUI implements IObserver {
 									g2.setColor(stoneColor.darker().darker());
 									g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3,
 											laenge / 3);
-
 								}
 
 							}
-						}
+						//}
 
 					}
 
@@ -373,30 +380,30 @@ public class GUI implements IObserver {
 
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
-		
-	
-//		if(c.dice() != 6)
-//			c.setNextPlayer();
-//		if(   c.moveStart()) {
-//			this.frame.repaint();
-//		}
-//		if(currentPlayer.getIdx() == 0 && c.dice() != 6){
-//		 
-//			c.setNextPlayer();
-//		}
-//			
-//
-//		 
-//		c.dice();
-//		this.frame.repaint();
+		if (c.moveStart())
+			this.frame.repaint();
 
-		 
+		if (c.dice() != 6)
+			c.setNextPlayer();
+
+		this.frame.repaint();
+
+		// if(currentPlayer.getIdx() == 0 && c.dice() != 6){
+		//
+		// c.setNextPlayer();
+		// }
+		//
+		//
+		//
+		// c.dice();
+		// this.frame.repaint();
+
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-//		c.dice();
-		
+		// c.dice();
+
 	}
 
 }
