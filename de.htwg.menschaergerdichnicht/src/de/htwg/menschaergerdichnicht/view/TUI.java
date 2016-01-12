@@ -38,22 +38,22 @@ public class TUI implements IObserver {
 		System.out.println("  	    |30-31-32-33-34  04-05-06-07-08|");
 		System.out.print("|" + c.getTokenColor(29) + "_" + c.getTokenColorHouse(0, 0) + "_" + c.getTokenColorHouse(0, 1)
 				+ "_" + c.getTokenColorHouse(0, 2) + "_" + c.getTokenColorHouse(0, 3) + "   "
-				+ c.getTokenColorHouse(3, 0) + "_" + c.getTokenColorHouse(3, 1) + "_" + c.getTokenColorHouse(3, 2) + "_"
-				+ c.getTokenColorHouse(3, 3) + "_" + c.getTokenColor(9) + "|");
+				+ c.getTokenColorHouse(2, 0) + "_" + c.getTokenColorHouse(2, 1) + "_" + c.getTokenColorHouse(2, 2) + "_"
+				+ c.getTokenColorHouse(2, 3) + "_" + c.getTokenColor(9) + "|");
 		System.out.println("             |29                          9 |");
 		System.out.print("|" + c.getTokenColor(28) + "_" + c.getTokenColor(27) + "_" + c.getTokenColor(26) + "_"
-				+ c.getTokenColor(25) + "_" + c.getTokenColor(24) + "|" + c.getTokenColorHouse(2, 3) + "|"
+				+ c.getTokenColor(25) + "_" + c.getTokenColor(24) + "|" + c.getTokenColorHouse(3, 3) + "|"
 				+ c.getTokenColor(14) + "_" + c.getTokenColor(13) + "_" + c.getTokenColor(12) + "_"
 				+ c.getTokenColor(11) + "_" + c.getTokenColor(10) + "|");
 		System.out.println("             |28-27-26-25-24  14-13-12-11-10|");
-		System.out.print("        |" + c.getTokenColor(23) + "|" + c.getTokenColorHouse(2, 2) + "|"
+		System.out.print("        |" + c.getTokenColor(23) + "|" + c.getTokenColorHouse(3, 2) + "|"
 				+ c.getTokenColor(15) + "|        ");
 		System.out.println("                         |23  15| ");
-		System.out.print("        |" + c.getTokenColor(22) + "|" + c.getTokenColorHouse(2, 1) + "|"
+		System.out.print("        |" + c.getTokenColor(22) + "|" + c.getTokenColorHouse(3, 1) + "|"
 				+ c.getTokenColor(16) + "|        ");
 		System.out.println("			        |22  16|        ");
 		System.out.print(" " + c.getTokenColorBlock(3, 0) + " " + c.getTokenColorBlock(3, 1) + "    |"
-				+ c.getTokenColor(21) + "|" + c.getTokenColorHouse(2, 0) + "|" + c.getTokenColor(17) + "|    "
+				+ c.getTokenColor(21) + "|" + c.getTokenColorHouse(3, 0) + "|" + c.getTokenColor(17) + "|    "
 				+ c.getTokenColorBlock(2, 0) + " " + c.getTokenColorBlock(2, 1) + " ");
 		System.out.println("			        |21  17|        ");
 		System.out.print(" " + c.getTokenColorBlock(3, 2) + " " + c.getTokenColorBlock(3, 3) + "    |"

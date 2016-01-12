@@ -29,13 +29,13 @@ public class Controller extends Observable implements IController {
 		gamefield = new GameField();
 	
 		r = new Random();
-		state = new StatePlayer0();
+		state = new StatePlayer3();
 		dice();
 	}
 
 	public boolean moveStart() {
 
-		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+	 	currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		// Raus kommen
 		stonCanOut();
@@ -111,8 +111,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	public int dice() {
-		 //  return dice = r.nextInt(6) + 1;
-		  return dice = 6;
+	   //return dice = r.nextInt(6) + 1;
+		 return dice = 6;
 	}
 
 
@@ -231,5 +231,8 @@ public class Controller extends Observable implements IController {
 	}
 	public boolean rounded(int idx){
 		return gamefield.isRounded(currentplayer.getIdx(), idx, dice);
+	}
+	public boolean canInHaus(int idx){
+		return gamefield.setStoneInHouse(currentplayer.getIdx(), idx);
 	}
 }

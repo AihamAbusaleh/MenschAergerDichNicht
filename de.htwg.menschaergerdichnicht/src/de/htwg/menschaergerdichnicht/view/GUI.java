@@ -18,8 +18,6 @@ import de.htwg.util.observer.IObserver;
 public class GUI implements IObserver {
 
 	private JFrame frame;
-	private JPanel wurfelPanel;
-	private JLabel Myturn;
 	private Controller c;
 	private JPanel container;
 
@@ -29,14 +27,9 @@ public class GUI implements IObserver {
 
 		frame = new JFrame("Mensch ärgere dich nicht");
 		this.container = new SpielFeldGUI();
-		this.wurfelPanel = new JPanel();
-		this.Myturn = new JLabel(c.wuerfeln());
-
-		this.wurfelPanel.setBackground(Color.MAGENTA);
-		this.wurfelPanel.add(Myturn);
 
 		frame.getContentPane().setLayout(new BorderLayout());
-		frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
+		// frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
 		frame.getContentPane().add(container);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 700);
@@ -52,12 +45,18 @@ public class GUI implements IObserver {
 		private MyPoint[] stoneBlock1 = null;
 		private MyPoint[] stoneBlock2 = null;
 		private MyPoint[] stoneBlock3 = null;
+		private MyPoint[] stoneHause0 = null;
+		private MyPoint[] stoneHause1 = null;
+		private MyPoint[] stoneHause2 = null;
+		private MyPoint[] stoneHause3 = null;
+
 		MyPoint clickedPoint = null;
 
 		public SpielFeldGUI() {
 			this.setBackground(Color.WHITE);
 
-			this.feld = new byte[][] { { 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
+			this.feld = new byte[][] { 
+					{ 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
 					{ 'R', 'R', '0', '0', 'x', 'B', 'x', '0', '0', 'B', 'B' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
@@ -78,6 +77,16 @@ public class GUI implements IObserver {
 			this.stoneBlock3 = new MyPoint[] { new MyPoint(0, 9, 300), new MyPoint(1, 9, 300), new MyPoint(0, 10, 300),
 					new MyPoint(1, 10, 300) };
 
+			this.stoneHause0 = new MyPoint[] { new MyPoint(5, 1, 1000), new MyPoint(5, 2, 1000), // rot
+					new MyPoint(5, 3, 1000), new MyPoint(5, 4, 1000) };
+			this.stoneHause1 = new MyPoint[] { new MyPoint(1, 5, 2000), new MyPoint(2, 5, 2000), // blau
+					new MyPoint(3, 5, 2000), new MyPoint(4, 5, 2000) };
+
+			this.stoneHause2 = new MyPoint[] { new MyPoint(5, 6, 3000), new MyPoint(5, 7, 3000), // gelb
+					new MyPoint(5, 8, 3000), new MyPoint(5, 9, 3000) };
+			this.stoneHause3 = new MyPoint[] { new MyPoint(6, 5, 4000), new MyPoint(7, 5, 4000), // pink
+					new MyPoint(8, 5, 4000), new MyPoint(9, 5, 4000) };
+
 			this.figurenPositionen = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
 					new MyPoint(4, 2, 32), new MyPoint(4, 3, 33), new MyPoint(4, 4, 34), new MyPoint(3, 4, 35),
 					new MyPoint(2, 4, 36), new MyPoint(1, 4, 37), new MyPoint(0, 4, 38), new MyPoint(0, 5, 39),
@@ -88,11 +97,7 @@ public class GUI implements IObserver {
 					new MyPoint(8, 6, 16), new MyPoint(9, 6, 17), new MyPoint(10, 6, 18), new MyPoint(10, 5, 19),
 					new MyPoint(10, 4, 20), new MyPoint(9, 4, 21), new MyPoint(8, 4, 22), new MyPoint(7, 4, 23),
 					new MyPoint(6, 4, 24), new MyPoint(6, 3, 25), new MyPoint(6, 2, 26), new MyPoint(6, 1, 27),
-					new MyPoint(6, 0, 28), new MyPoint(5, 0, 29), new MyPoint(5, 1, 1000), new MyPoint(5, 2, 1000), // rot
-					new MyPoint(5, 3, 1000), new MyPoint(5, 4, 1000), new MyPoint(1, 5, 2000), new MyPoint(2, 5, 2000), // blau
-					new MyPoint(3, 5, 2000), new MyPoint(4, 5, 2000), new MyPoint(5, 6, 3000), new MyPoint(5, 7, 3000), // gelb
-					new MyPoint(5, 8, 3000), new MyPoint(5, 9, 3000), new MyPoint(6, 5, 4000), new MyPoint(7, 5, 4000), // pink
-					new MyPoint(8, 5, 4000), new MyPoint(9, 5, 4000) };
+					new MyPoint(6, 0, 28), new MyPoint(5, 0, 29) };
 
 			addMouseListener(this);
 		}
@@ -118,97 +123,140 @@ public class GUI implements IObserver {
 			}
 
 			MyPoint position = new MyPoint();
-
+			int indexofcklickedpoint;
 			if (clickedPoint != null) {
 
 				for (int i = 0; i < this.figurenPositionen.length; i++) {
 					if (clickedPoint.x == this.figurenPositionen[i].x
 							&& clickedPoint.y == this.figurenPositionen[i].y) {
 						clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
-						int indexofcklickedpoint = clickedPoint.getIdx();
+						indexofcklickedpoint = clickedPoint.getIdx();
+						if (!c.rounded(indexofcklickedpoint)) {
+							position.x = figurenPositionen[(i + c.dice()) % 40].y;
+							position.y = figurenPositionen[(i + c.dice()) % 40].x;
+							break;
+						} else {
+							int round;
+							if (c.playerNr() == 0) {
+								if (c.rounded(indexofcklickedpoint)) {
+									round = ((indexofcklickedpoint + c.dice()) - 30) % 40;
+									position.x = stoneHause0[round % 4].y;
+									position.y = stoneHause0[round % 4].x;
 
-						position.x = figurenPositionen[(i) + c.dice()].y;// allgemeinfall
-																			// auch
-																			// for
-																			// player0
-						position.y = figurenPositionen[(i) + c.dice()].x;
-
-						if (c.playerNr() == 1) {
-							if (c.rounded(indexofcklickedpoint)) {
-
-								position.x = figurenPositionen[(i + c.dice() + 31)].y;
-								position.y = figurenPositionen[(i + c.dice() + 31)].x;
-								break;
+									break;
+								}
 							}
-						}
-						if (c.playerNr() == 2) {
-							if (c.rounded(indexofcklickedpoint)) {
+							if (c.playerNr() == 1) {
+								if (c.rounded(indexofcklickedpoint)) {
+									round = ((indexofcklickedpoint + c.dice())) % 40;
 
-								position.x = figurenPositionen[(i + c.dice() + 30)].y;
-								position.y = figurenPositionen[(i + c.dice() + 30)].x;
-								break;
+									position.x = stoneHause1[round % 4].y;
+									position.y = stoneHause1[round % 4].x;
+									break;
+								}
 							}
-						}
-						if (c.playerNr() == 3) {
-							if (c.rounded(indexofcklickedpoint)) {
+							if (c.playerNr() == 2) {
+								if (c.rounded(indexofcklickedpoint)) {
+									round = ((indexofcklickedpoint + c.dice()) - 10) % 40;
 
-								position.x = figurenPositionen[(i + c.dice() + 25)].y;
-								position.y = figurenPositionen[(i + c.dice() + 25)].x;
-								break;
+									position.x = stoneHause2[round % 4].y;
+									position.y = stoneHause2[round % 4].x;
+
+									break;
+								}
+							}
+							if (c.playerNr() == 3) {
+								if (c.rounded(indexofcklickedpoint)) {
+									round = ((indexofcklickedpoint + c.dice()) - 20) % 40;
+
+									position.x = stoneHause3[round % 4].y;
+									position.y = stoneHause3[round % 4].x;
+									break;
+								}
 							}
 						}
 						break;
 					}
+
 				}
 
 				position.x = position.x * laenge;
 				position.y = position.y * laenge;
-
+				Color stoneColor = Color.WHITE;
 				if (c.playerNr() == 0) {
-					g2.setColor(Color.RED.darker());
-					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-					g2.setColor(Color.RED.darker().darker());
-					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					stoneColor = Color.RED;
+
 				}
 
 				if (c.playerNr() == 1) {
-					g2.setColor(Color.BLUE.darker());
-					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-					g2.setColor(Color.BLUE.darker().darker());
-					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					stoneColor = Color.BLUE;
+
 				}
 				if (c.playerNr() == 2) {
-					g2.setColor(Color.YELLOW.darker());
-					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-					g2.setColor(Color.YELLOW.darker().darker());
-					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					stoneColor = Color.YELLOW;
 				}
 				if (c.playerNr() == 3) {
-					g2.setColor(Color.PINK.darker());
-					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-					g2.setColor(Color.PINK.darker().darker());
-					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					stoneColor = Color.PINK;
 				}
+				g2.setColor(stoneColor.darker());
+				g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+				g2.setColor(stoneColor.darker().darker());
+				g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 			}
 			int red = -1;
 			int blue = -1;
 			int yellow = -1;
 			int pink = -1;
+
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
 					Color stoneColor = Color.WHITE;
 					char tokenColorInBlock = c.getTokenColorBlock(player, block);
 					char tokenColorInHouse = c.getTokenColorHouse(player, block);
 					if (tokenColorInHouse != ' ') {
-						switch (tokenColorInHouse) {
-						case 'R':
-							stoneColor = Color.RED;
-							position.x = figurenPositionen[42].y;
-							position.y = figurenPositionen[42].x;
-							break;
+						if (clickedPoint != null) {
+							for (int i = 0; i < figurenPositionen.length; i++) {
+								if (clickedPoint.x == this.figurenPositionen[i].x
+										&& clickedPoint.y == this.figurenPositionen[i].y) {
+									clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
+									indexofcklickedpoint = clickedPoint.getIdx();
+									int round;
+									switch (tokenColorInHouse) {
+									case 'R':
+										stoneColor = Color.RED;
+										round = ((indexofcklickedpoint + c.dice()) - 30) % 40;
 
+										position.x = stoneHause0[round % 4].y;
+										position.y = stoneHause0[round % 4].x;
+										break;
+									case 'B':
+										stoneColor = Color.BLUE;
+										round = ((indexofcklickedpoint + c.dice())) % 40;
+
+										position.x = stoneHause1[round % 4].y;
+										position.y = stoneHause1[round % 4].x;
+										break;
+									case 'G':
+										stoneColor = Color.YELLOW;
+										round = ((indexofcklickedpoint + c.dice()) - 10) % 40;
+
+										position.x = stoneHause2[round % 4].y;
+										position.y = stoneHause2[round % 4].x;
+
+										break;
+									case 'P':
+										stoneColor = Color.PINK;
+										round = ((indexofcklickedpoint + c.dice()) - 20) % 40;
+
+										position.x = stoneHause3[round % 4].y;
+										position.y = stoneHause3[round % 4].x;
+										break;
+
+									}
+								}
+
+							}
 						}
-
 						position.x = position.x * laenge;
 						position.y = position.y * laenge;
 						g2.setColor(stoneColor.darker());
@@ -216,6 +264,7 @@ public class GUI implements IObserver {
 						g2.setColor(stoneColor.darker().darker());
 						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 					}
+
 					if (tokenColorInBlock != ' ') {
 						switch (tokenColorInBlock) {
 						case 'R':
@@ -298,6 +347,7 @@ public class GUI implements IObserver {
 			Color currentColor = null;
 			switch (i) {
 			case '0':
+
 				break;
 			case 'R':
 				currentColor = Color.RED;
@@ -314,9 +364,9 @@ public class GUI implements IObserver {
 			case 'x':
 				currentColor = Color.WHITE;
 				break;
-			// case ' ':
-			// currentColor = Color.LIGHT_GRAY;
+
 			default:
+				currentColor = Color.WHITE;
 				break;
 			}
 
@@ -326,11 +376,8 @@ public class GUI implements IObserver {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// boolean figur = false;
-			// int playerNr = c.playerNr();
-			// if(playerNr == 0)
-			if (c.moveStart()) {
 
+			
 				for (int i = 0; i < this.figurenPositionen.length; i++) {
 
 					int size = this.getWidth();
@@ -340,15 +387,18 @@ public class GUI implements IObserver {
 
 					if (l == this.figurenPositionen[i].x && m == this.figurenPositionen[i].y) {
 						clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
-						// if () {
-						if (c.move(this.figurenPositionen[clickedPoint.getIdx()].idx + 10))
+						if (c.playerNr() == 1) {
+							if (c.moveStart() && c.move((this.figurenPositionen[clickedPoint.getIdx()].idx + 10) % 40))
+								repaint();
+						}
+						if (c.moveStart() && c.move(this.figurenPositionen[clickedPoint.getIdx()].idx + 10))
 							repaint();
-						// }
+
 						// break;
 
 					}
 				}
-			}
+			 
 		}
 
 		@Override
