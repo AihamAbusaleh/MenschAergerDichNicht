@@ -29,7 +29,7 @@ public class Controller extends Observable implements IController {
 		gamefield = new GameField();
 	
 		r = new Random();
-		state = new StatePlayer3();
+		state = new StatePlayer0();
 		dice();
 	}
 
@@ -111,8 +111,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	public int dice() {
-	   //return dice = r.nextInt(6) + 1;
-		 return dice = 6;
+	      // return dice = r.nextInt(6) + 1;
+		  return dice = 6;
 	}
 
 
@@ -166,6 +166,7 @@ public class Controller extends Observable implements IController {
 			observer.showDice(currentplayer, this.dice);
 		}
 		createSteps();
+		
 
 	}
 
@@ -196,7 +197,10 @@ public class Controller extends Observable implements IController {
 
 	}
 	public String myTurn(){
- 
+		
+	 	currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+	 	if(dice() != 6)
+			setNextPlayer();
 	 	return currentplayer.getState().toString();
 
  	}
