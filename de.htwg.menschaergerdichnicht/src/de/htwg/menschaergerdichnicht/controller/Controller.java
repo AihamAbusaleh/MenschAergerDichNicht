@@ -86,6 +86,7 @@ public class Controller extends Observable implements IController {
  
 			gamefield.setStone(idx, 'x');
 			updateObservers();
+			
 			return true;
 		}
 
@@ -111,8 +112,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	public int dice() {
-	      // return dice = r.nextInt(6) + 1;
-		  return dice = 6;
+		  return dice = r.nextInt(6) + 1;
+		// return dice = 6;
 	}
 
 
@@ -160,7 +161,7 @@ public class Controller extends Observable implements IController {
 			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		}
-		dice();
+	dice();
 
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
@@ -196,18 +197,18 @@ public class Controller extends Observable implements IController {
 		manager.doCommand(new SaveSteps(gamefield));
 
 	}
-	public String myTurn(){
-		
-	 	currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
-	 	if(dice() != 6)
-			setNextPlayer();
-	 	return currentplayer.getState().toString();
-
- 	}
-	public String wuerfeln(){
-	 	return currentplayer.getState().toString() + " hat eine " + this.dice + " gewürfelt";
-
- 	}
+//	public String myTurn(){
+//		
+//	 	currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+//	 	if(dice() != 6)
+//			setNextPlayer();
+//	 	return currentplayer.getState().toString();
+//
+// 	}
+//	public String wuerfeln(){
+//	 	return currentplayer.getState().toString() + " hat eine " + this.dice + " gewürfelt";
+//
+// 	}
 	public int playerNr(){
 	  int p = -1;
 	  char  c = currentplayer.getColor();
