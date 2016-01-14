@@ -10,6 +10,12 @@ public class SaveSteps implements IDoUndoCommand {
  
 	
 	 
+	@Override
+	public GameField getGamefield() {
+		return gamefield;
+	}
+
+ 
 
 	public SaveSteps(GameField gamefield) { // addCommand
 		

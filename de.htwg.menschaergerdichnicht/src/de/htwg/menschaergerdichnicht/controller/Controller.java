@@ -35,7 +35,7 @@ public class Controller extends Observable implements IController {
 
 	public boolean moveStart() {
 		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
-
+		createSteps();
 		// Raus kommen
 		stonCanOut();
 

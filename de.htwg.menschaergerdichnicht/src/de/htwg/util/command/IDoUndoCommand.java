@@ -5,6 +5,7 @@ import de.htwg.menschaergerdichnicht.model.GameField;
 public interface IDoUndoCommand {
 	public GameField doMyCommand();
 	public GameField undoMyStep();
+	public GameField getGamefield();
   
 
 }

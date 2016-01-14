@@ -9,15 +9,12 @@ import de.htwg.menschaergerdichnicht.model.GameField;
 public class CommandManager {
 
 	public LinkedList<IDoUndoCommand> undo = new LinkedList<IDoUndoCommand>();
- 
-		
- 
-  
-	 
+
 	 
 	public void doCommand(IDoUndoCommand newCommand) {
- 		newCommand.doMyCommand();
-		undo.push(newCommand);
+		IDoUndoCommand temp = new SaveSteps(newCommand.getGamefield());
+		temp.doMyCommand();
+		undo.push(temp);
   	}
  
 	public void undoCommand() {
