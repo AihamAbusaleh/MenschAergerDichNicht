@@ -108,20 +108,27 @@ public class ControllerTest {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
 	}
 
-	// @Test
-	// public void testMoveSeveralSteps() {
-	// // controller.dice(6);
-	// // controller.move(30);
-	// assertEquals(false,CommandManager.undo.isEmpty());
-	// // controller.dice(2);
-	// // controller.move(30);
-	// assertEquals(2,CommandManager.undo.);
-	//
-	// controller.dice(6);
-	// controller.move(30);
-	// assertEquals(3,CommandManager.undo.size());
-	// GameField field = (GameField) CommandManager.undo.pop();
-	// assertEquals("R",field.color(0, 30) );
-	// }
+	@Test
+	public void testIsStoneHere(){
+		if(controller.getTokenColor(30) == 'R')
+		assertEquals(0, controller.isStoneHere(30)); 
+	}
+	@Test
+	public void testRounded(){
+		
+		assertFalse(controller.rounded(11));
+	}
+	@Test
+	public void testIsGameEnded(){
+		assertFalse(controller.isGameEnded()); 
+		
+	}
+	@Test
+	public void testIsFieldEmpty(){
+		assertTrue(controller.isFieldEmpty()); 
+		controller.getOutOfBlock();
+		assertFalse(controller.isFieldEmpty()); 
+
+	}
 
 }

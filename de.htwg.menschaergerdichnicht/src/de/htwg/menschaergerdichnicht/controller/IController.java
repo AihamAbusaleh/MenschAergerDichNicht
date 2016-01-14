@@ -44,7 +44,6 @@ public interface IController {
 	void stonCanOut();
 	
 	void undo();
-	void redo();
-	void createSteps();
+ 	void createSteps();
 
 }

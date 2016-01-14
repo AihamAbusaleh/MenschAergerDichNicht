@@ -78,14 +78,11 @@ public class TUI implements IObserver {
 
 		} catch (NumberFormatException e) {
 
-			if (token.equals("r")) {
-				c.redo();
-				return false;
-			} else if (token.equals("u")) {
+			  if (token.equals("u")) {
 				c.undo();
 				return false;
 			} else {
-				System.out.println("\n please type a number, r , u!");
+				System.out.println("\n please type 'number'  Or  'u'!");
 				return false;
 			}
 		}

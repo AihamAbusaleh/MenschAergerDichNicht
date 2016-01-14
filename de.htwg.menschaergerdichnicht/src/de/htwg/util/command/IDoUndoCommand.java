@@ -1,10 +1,10 @@
 package de.htwg.util.command;
 
+import de.htwg.menschaergerdichnicht.model.GameField;
 
 public interface IDoUndoCommand {
-	public void saveMySteps();
-	public void undoMyStep();
-	public void redoMyStep();
-
+	public GameField doMyCommand();
+	public GameField undoMyStep();
+  
 
 }

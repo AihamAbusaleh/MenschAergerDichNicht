@@ -24,7 +24,6 @@ public class Controller extends Observable implements IController {
 	private Random r;
 	private int dice;
 	private final List<IObserver> observers = new ArrayList<IObserver>();
-	public boolean amZug = false;
 
 	public Controller() {
 		gamefield = new GameField();
@@ -59,6 +58,7 @@ public class Controller extends Observable implements IController {
 
 			gamefield.getStoneOutOfBlock(currentplayer.getIdx());
 			updateObservers();
+		//	createSteps();
 
 		}
 
@@ -89,6 +89,7 @@ public class Controller extends Observable implements IController {
 			}
 
 			gamefield.setStone(idx, 'x');
+		
 			updateObservers();
 
 			return true;
@@ -108,7 +109,7 @@ public class Controller extends Observable implements IController {
 		gamefield.setStone(idx, 'x');
 		gamefield.setStone(idx + dice, currentplayer.getColor());
 		updateObservers();
-
+		createSteps();
 		return true;
 	}
 
@@ -169,7 +170,7 @@ public class Controller extends Observable implements IController {
 			for (IObserver observer : observers) {
 				observer.showDice(currentplayer, this.dice);
 			}
-		createSteps();
+	
 
 	}
 
@@ -189,52 +190,14 @@ public class Controller extends Observable implements IController {
 		manager.undoCommand();
 		updateObservers();
 	}
-
-	public void redo() {
-		manager.redoCommand();
-		updateObservers();
-	}
+ 
 
 	public void createSteps() {
 		manager.doCommand(new SaveSteps(gamefield));
 
 	}
 
-	public String myTurn() {
-
-		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
-		 
-			setNextPlayer();
-		return currentplayer.getState().toString();
-
-	}
-
-	// public String wuerfeln(){
-	// return currentplayer.getState().toString() + " hat eine " + this.dice + "
-	// gewürfelt";
-	//
-	// }
-	public String playerNr() {
-		String p = "";
-
-		if (currentplayer.getIdx() == 0) {
-
-			return "RED";
-		}
-		if (currentplayer.getIdx() == 1) {
-
-			return "BLUE";
-		}
-		if (currentplayer.getIdx() == 2) {
-
-			return "YELLOW";
-		}
-		if (currentplayer.getIdx() == 3) {
-
-			return "PINK";
-		}
-		return p;
-	}
+  
 
 	public int isStoneHere(int idx) {
 		return gamefield.whichPlayerOnIdx(idx, currentplayer.getColor());
@@ -245,7 +208,5 @@ public class Controller extends Observable implements IController {
 		return gamefield.isRounded(currentplayer.getIdx(), idx, dice);
 	}
 
-//	public boolean canInHaus(int idx) {
-//		return gamefield.setStoneInHouse(currentplayer.getIdx(), idx);
-//	}
+ 
 }
