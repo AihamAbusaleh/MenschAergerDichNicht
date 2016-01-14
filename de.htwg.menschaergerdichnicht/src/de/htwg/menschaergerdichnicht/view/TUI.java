@@ -12,7 +12,7 @@ public class TUI implements IObserver {
 		this.c = c;
 
 		c.registerObserver(this);
-		 display();
+		// display();
 	}
 
 	public void display() {

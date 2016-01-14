@@ -6,8 +6,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,9 +25,11 @@ import de.htwg.util.observer.IObserver;
 public class GUI implements IObserver {
 
 	private JFrame frame;
-	// private JTextField outputPlayers;
-	// private JPanel wurfelPanel;
+	private JTextField output;
+
+	private JPanel wurfelPanel;
 	private Controller c;
+	private JButton wurfeln;
 	private JPanel container;
 
 	public GUI(Controller c) {
@@ -32,16 +38,32 @@ public class GUI implements IObserver {
 
 		frame = new JFrame("Mensch ärgere dich nicht");
 		this.container = new SpielFeldGUI();
-		// this.wurfelPanel = new JPanel();
-		// wurfelPanel.setLayout(new GridLayout(2, 2));
+		this.wurfelPanel = new JPanel();
+		wurfelPanel.setLayout(new GridLayout(1, 2));
 
-		// this.outputPlayers = new JTextField();
+		output = new JTextField();
 
+		output.setEditable(false);
+
+		this.wurfeln = new JButton("würfeln");
+		this.wurfeln.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				  if(e.getActionCommand().equals("würfeln")){
+					  	
+ 				 }
+
+			}
+		});
+		this.wurfelPanel.add(wurfeln);
+		this.wurfelPanel.add(output);
 		frame.getContentPane().setLayout(new BorderLayout());
-		// frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
+		frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
 		frame.getContentPane().add(container);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 700);
+
 		frame.setVisible(true);
 		frame.setResizable(false);
 
@@ -64,8 +86,7 @@ public class GUI implements IObserver {
 		public SpielFeldGUI() {
 			this.setBackground(Color.WHITE);
 
-			this.feld = new byte[][] { 
-					{ 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
+			this.feld = new byte[][] { { 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
 					{ 'R', 'R', '0', '0', 'x', 'B', 'x', '0', '0', 'B', 'B' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
@@ -106,7 +127,6 @@ public class GUI implements IObserver {
 					new MyPoint(10, 4, 20), new MyPoint(9, 4, 21), new MyPoint(8, 4, 22), new MyPoint(7, 4, 23),
 					new MyPoint(6, 4, 24), new MyPoint(6, 3, 25), new MyPoint(6, 2, 26), new MyPoint(6, 1, 27),
 					new MyPoint(6, 0, 28), new MyPoint(5, 0, 29) };
-
 			addMouseListener(this);
 		}
 
@@ -131,6 +151,7 @@ public class GUI implements IObserver {
 			}
 
 			MyPoint position = new MyPoint();
+
 			int indexofcklickedpoint = 0;
 			if (clickedPoint != null) {
 				for (int i = 0; i < this.figurenPositionen.length; i++) {
@@ -142,31 +163,12 @@ public class GUI implements IObserver {
 							position.x = figurenPositionen[(i + c.dice()) % 40].y;
 							position.y = figurenPositionen[(i + c.dice()) % 40].x;
 						}
-					
+
 						break;
 					}
 
 				}
 
-				position.x = position.x * laenge;
-				position.y = position.y * laenge;
-				Color stoneColor = Color.WHITE;
-				if (c.playerNr() == 0 && !c.isFieldEmpty()  ) {
-					stoneColor = Color.RED;
-				}
-				if (c.playerNr() == 1 && !c.isFieldEmpty() ) {
-					stoneColor = Color.BLUE;
-				}
-				if (c.playerNr() == 2 && !c.isFieldEmpty() ) {
-					stoneColor = Color.YELLOW;
-				}
-				if (c.playerNr() == 3 && !c.isFieldEmpty()) {
-					stoneColor = Color.PINK;
-				}
-				g2.setColor(stoneColor.darker());
-				g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-				g2.setColor(stoneColor.darker().darker());
-				g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 			}
 			int red = -1;
 			int blue = -1;
@@ -251,7 +253,7 @@ public class GUI implements IObserver {
 							position.y = stoneBlock3[pink].x;
 							break;
 						default:
-						break;
+							break;
 						}
 						position.x = position.x * laenge;
 						position.y = position.y * laenge;
@@ -259,39 +261,39 @@ public class GUI implements IObserver {
 						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
 						g2.setColor(stoneColor.darker().darker());
 						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
-					} else {
-						// for (int j = 0; j < 4; j++) {
+					}
 
-						for (int i = 0; i < figurenPositionen.length; i++) {
-							if (c.isStoneHere(figurenPositionen[i].getIdx()) != -1 ) {
-								if (c.isStoneHere(figurenPositionen[i].idx) == 0 && c.getTokenColor(figurenPositionen[i].idx) == 'R'&& !c.isFieldEmpty() ) {
-									stoneColor = Color.RED;
- 								
-								}
-								if (c.isStoneHere(figurenPositionen[i].idx) == 1&& c.getTokenColor(figurenPositionen[i].idx) == 'B' && !c.isFieldEmpty()) {
-									stoneColor = Color.BLUE;
- 
-								}
-								if (c.isStoneHere(figurenPositionen[i].idx) == 2&& c.getTokenColor(figurenPositionen[i].idx) == 'G'&& !c.isFieldEmpty()) {
-									stoneColor = Color.YELLOW;
- 
-								}
-								if (c.isStoneHere(figurenPositionen[i].idx) == 3&& c.getTokenColor(figurenPositionen[i].idx) == 'P'&& !c.isFieldEmpty()) {
-									stoneColor = Color.PINK;
- 
-								}
-								position.x = figurenPositionen[i].y;
-								position.y = figurenPositionen[i].x;
-								position.x = position.x * laenge;
-								position.y = position.y * laenge;
-								g2.setColor(stoneColor.darker());
-								g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-								g2.setColor(stoneColor.darker().darker());
-								g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					for (int i = 0; i < figurenPositionen.length; i++) {
+						if (c.isStoneHere(figurenPositionen[i].getIdx()) != -1) {
+							if (c.isStoneHere(figurenPositionen[i].idx) == 0
+									&& c.getTokenColor(figurenPositionen[i].idx) == 'R') {
+								stoneColor = Color.RED;
+
 							}
+							if (c.isStoneHere(figurenPositionen[i].idx) == 1
+									&& c.getTokenColor(figurenPositionen[i].idx) == 'B') {
+								stoneColor = Color.BLUE;
 
+							}
+							if (c.isStoneHere(figurenPositionen[i].idx) == 2
+									&& c.getTokenColor(figurenPositionen[i].idx) == 'G') {
+								stoneColor = Color.YELLOW;
+
+							}
+							if (c.isStoneHere(figurenPositionen[i].idx) == 3
+									&& c.getTokenColor(figurenPositionen[i].idx) == 'P') {
+								stoneColor = Color.PINK;
+
+							}
+							position.x = figurenPositionen[i].y;
+							position.y = figurenPositionen[i].x;
+							position.x = position.x * laenge;
+							position.y = position.y * laenge;
+							g2.setColor(stoneColor.darker());
+							g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+							g2.setColor(stoneColor.darker().darker());
+							g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 						}
-						// }
 
 					}
 
@@ -325,9 +327,6 @@ public class GUI implements IObserver {
 				currentColor = Color.WHITE;
 				break;
 
-			default:
-				currentColor = Color.WHITE;
-				break;
 			}
 
 			return currentColor;
@@ -336,66 +335,27 @@ public class GUI implements IObserver {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//repaint();
-			boolean amZug = false;
-			
-		
-			if (!c.isFieldEmpty()) {
+			int indexOfPoint = 0;
+			for (int i = 0; i < this.figurenPositionen.length; i++) {
 
-				for (int i = 0; i < this.figurenPositionen.length; i++) {
-					
-					
-//					if(c.getTokenColor(this.figurenPositionen[i].idx) == 'R'){
-//						amZug = true;						
-//					}
-//					
-					
-					
-					int size = this.getWidth();
-					clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
-					int l = e.getY() * 11 / size;
-					int m = e.getX() * 11 / size;
+				int size = this.getWidth();
+				clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
+				int l = e.getY() * 11 / size;
+				int m = e.getX() * 11 / size;
 
-					if (l == this.figurenPositionen[i].x && m == this.figurenPositionen[i].y) {
-						clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
-						int indexOfPoint = clickedPoint.getIdx();
-						
-						if(c.moveStart())
-							repaint();
-						if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
-							repaint();
-						
-//						if (c.getTokenColor(indexOfPoint) == 'R' && c.playerNr() == 0) {
-//							if(c.moveStart())
-//								repaint();
-//							if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
-//								repaint();
-//						 
-//						}
-//						if (c.getTokenColor(indexOfPoint) == 'B' && c.playerNr() == 1) {
-//							if(c.moveStart())
-//								repaint();
-//							if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
-//								repaint();
-//						}
-//						if (c.getTokenColor(indexOfPoint) == 'G' && c.playerNr() == 2) {
-//							if(c.moveStart())
-//								repaint();
-//							if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
-//								repaint();
-//						}
-//						if (c.getTokenColor(indexOfPoint) == 'P' && c.playerNr() == 3) {
-//							if(c.moveStart())
-//								repaint();
-//							if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
-//								repaint();
-//						}
-						
-						break;
-					}
+				if (l == this.figurenPositionen[i].x && m == this.figurenPositionen[i].y) {
+					clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
+					indexOfPoint = clickedPoint.getIdx();
+
+					break;
 				}
 
 			}
+			if (c.moveStart())
+				repaint();
+
+			c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40);
+			repaint();
 
 		}
 
@@ -423,18 +383,17 @@ public class GUI implements IObserver {
 
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
-		
-//	if(c.dice() == 6)
-//	 	this.frame.repaint();
-// 
- 	//this.frame.repaint();
- 
 
+	 	this.frame.repaint();
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
+		// System.out.println(currentplayer.getName() + " hat eine " + dice + "
+		// gewürfelt");
 
 	}
+
+	
 
 }

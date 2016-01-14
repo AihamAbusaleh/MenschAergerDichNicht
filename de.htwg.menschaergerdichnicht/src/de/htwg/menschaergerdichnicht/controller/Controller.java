@@ -24,18 +24,18 @@ public class Controller extends Observable implements IController {
 	private Random r;
 	private int dice;
 	private final List<IObserver> observers = new ArrayList<IObserver>();
+	public boolean amZug = false;
 
 	public Controller() {
 		gamefield = new GameField();
-	
+
 		r = new Random();
 		state = new StatePlayer0();
 		dice();
 	}
 
 	public boolean moveStart() {
-
-	 	currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		// Raus kommen
 		stonCanOut();
@@ -44,10 +44,12 @@ public class Controller extends Observable implements IController {
 		if (isFieldEmpty()) {
 			return false;
 		}
- 		return true;
+
+		return true;
 	}
 
 	public void stonCanOut() {
+
 		if (gamefield.isStartFree(currentplayer.getIdx()) && gamefield.isStoneInBlock(currentplayer.getIdx())
 				&& dice == 6) {
 			int enemy = gamefield.enemyInStart(currentplayer.getIdx(), currentplayer.getColor());
@@ -59,13 +61,16 @@ public class Controller extends Observable implements IController {
 			updateObservers();
 
 		}
+
 	}
 
 	public boolean isFieldEmpty() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
 			updateObservers();
+
 			return true;
 		}
+
 		return false;
 	}
 
@@ -76,17 +81,16 @@ public class Controller extends Observable implements IController {
 			return false;
 		}
 
-	
 		// Steine ins Haus bringen
 		if (gamefield.isRounded(currentplayer.getIdx(), idx, dice)) {
-			if (!gamefield.setStoneInHouse(currentplayer.getIdx(), idx + dice)){
- 				System.out.println("there is a stone in the field house");
- 				return false;
- 				}
- 
+			if (!gamefield.setStoneInHouse(currentplayer.getIdx(), idx + dice)) {
+				System.out.println("there is a stone in the field house");
+				return false;
+			}
+
 			gamefield.setStone(idx, 'x');
 			updateObservers();
-			
+
 			return true;
 		}
 
@@ -104,6 +108,7 @@ public class Controller extends Observable implements IController {
 		gamefield.setStone(idx, 'x');
 		gamefield.setStone(idx + dice, currentplayer.getColor());
 		updateObservers();
+
 		return true;
 	}
 
@@ -113,10 +118,8 @@ public class Controller extends Observable implements IController {
 
 	public int dice() {
 		  return dice = r.nextInt(6) + 1;
-		// return dice = 6;
+		//  return dice = 6;
 	}
-
-
 
 	public boolean isGameEnded() {
 		return gamefield.isGameEnded();
@@ -148,7 +151,6 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void updateObservers() {
 
-		
 		for (IObserver observer : observers) {
 			observer.update(currentplayer, this.isGameEnded());
 			if (isGameEnded()) {
@@ -156,18 +158,18 @@ public class Controller extends Observable implements IController {
 				System.exit(0);
 			}
 		}
-		if (dice != 6) {
+
+		
+		
+	//	if (dice != 6) {
 			setNextPlayer();
 			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
-
-		}
-	dice();
-
-		for (IObserver observer : observers) {
-			observer.showDice(currentplayer, this.dice);
-		}
+	//	}
+			dice();
+			for (IObserver observer : observers) {
+				observer.showDice(currentplayer, this.dice);
+			}
 		createSteps();
-		
 
 	}
 
@@ -197,47 +199,53 @@ public class Controller extends Observable implements IController {
 		manager.doCommand(new SaveSteps(gamefield));
 
 	}
-//	public String myTurn(){
-//		
-//	 	currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
-//	 	if(dice() != 6)
-//			setNextPlayer();
-//	 	return currentplayer.getState().toString();
-//
-// 	}
-//	public String wuerfeln(){
-//	 	return currentplayer.getState().toString() + " hat eine " + this.dice + " gewürfelt";
-//
-// 	}
-	public int playerNr(){
-	  int p = -1;
-	  char  c = currentplayer.getColor();
-	  if(c == 'R'){
-		   p = 0;
-		   return p;
-	  }	  
-	  if(c == 'B'){
-		   p = 1;
-		   return p;
-	  }
-	  if(c == 'G'){
-		   p = 2;
-		   return p;
-	  }
-	  if(c == 'P'){
-		   p = 3;
-		   return p;
-	  }
-	  return p;
-	}
-	public int isStoneHere(int idx){
-		 return gamefield.whichPlayerOnIdx(idx,  currentplayer.getColor());
+
+	public String myTurn() {
+
+		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 		 
+			setNextPlayer();
+		return currentplayer.getState().toString();
+
 	}
-	public boolean rounded(int idx){
+
+	// public String wuerfeln(){
+	// return currentplayer.getState().toString() + " hat eine " + this.dice + "
+	// gewürfelt";
+	//
+	// }
+	public String playerNr() {
+		String p = "";
+
+		if (currentplayer.getIdx() == 0) {
+
+			return "RED";
+		}
+		if (currentplayer.getIdx() == 1) {
+
+			return "BLUE";
+		}
+		if (currentplayer.getIdx() == 2) {
+
+			return "YELLOW";
+		}
+		if (currentplayer.getIdx() == 3) {
+
+			return "PINK";
+		}
+		return p;
+	}
+
+	public int isStoneHere(int idx) {
+		return gamefield.whichPlayerOnIdx(idx, currentplayer.getColor());
+
+	}
+
+	public boolean rounded(int idx) {
 		return gamefield.isRounded(currentplayer.getIdx(), idx, dice);
 	}
-	public boolean canInHaus(int idx){
-		return gamefield.setStoneInHouse(currentplayer.getIdx(), idx);
-	}
+
+//	public boolean canInHaus(int idx) {
+//		return gamefield.setStoneInHouse(currentplayer.getIdx(), idx);
+//	}
 }
