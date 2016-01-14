@@ -356,9 +356,8 @@ public class GUI implements IObserver {
 			}
 			if (c.moveStart())
 				repaint();
-
-			c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40);
-			repaint();
+			if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
+				repaint();
 
 		}
 

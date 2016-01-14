@@ -161,9 +161,10 @@ public class Controller extends Observable implements IController {
 				System.exit(0);
 			}
 		}
-
-		setNextPlayer();
-		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+		if (dice != 6) {
+			setNextPlayer();
+			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+		}
 		dice();
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
