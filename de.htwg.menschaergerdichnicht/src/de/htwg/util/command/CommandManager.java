@@ -1,10 +1,8 @@
 package de.htwg.util.command;
 
-import java.util.Deque;
 import java.util.LinkedList;
 
 import de.htwg.menschaergerdichnicht.controller.SaveSteps;
-import de.htwg.menschaergerdichnicht.model.GameField;
 
 public class CommandManager {
 

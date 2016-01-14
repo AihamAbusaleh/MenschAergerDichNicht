@@ -14,11 +14,6 @@ public class Player implements IPlayer, IState {
 		state = new StatePlayer0();
 	}
 
-	public Player setcurrentplayer() {
-		return state.currentPlayer(this);
-
-	}
-
 	public Player(int idx, String name, char color) {
 		this.idx = idx;
 		this.name = name;
@@ -26,14 +21,22 @@ public class Player implements IPlayer, IState {
 
 	}
 
+	public Player setcurrentplayer() {
+		return state.currentPlayer(this);
+
+	}
+
+	@Override
 	public int getIdx() {
 		return idx;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public char getColor() {
 		return color;
 	}
@@ -50,9 +53,5 @@ public class Player implements IPlayer, IState {
 	public Player currentPlayer(Player player) {
 		return player;
 	}
-
- 
-
-	
 
 }

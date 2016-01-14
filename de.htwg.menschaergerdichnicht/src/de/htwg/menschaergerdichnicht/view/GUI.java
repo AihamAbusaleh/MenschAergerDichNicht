@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -50,9 +49,9 @@ public class GUI implements IObserver {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				  if(e.getActionCommand().equals("würfeln")){
-					  	
- 				 }
+				if (e.getActionCommand().equals("würfeln")) {
+
+				}
 
 			}
 		});
@@ -130,6 +129,7 @@ public class GUI implements IObserver {
 			addMouseListener(this);
 		}
 
+		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			int laenge = this.getWidth() / 11;
@@ -209,11 +209,12 @@ public class GUI implements IObserver {
 
 							break;
 						case 'P':
-							// pink1++;
 							stoneColor = Color.PINK;
 							position.x = this.stoneHause3[pink1++].y;
 							position.y = this.stoneHause3[pink1++].x;
 
+							break;
+						default:
 							break;
 
 						}
@@ -326,6 +327,8 @@ public class GUI implements IObserver {
 			case 'x':
 				currentColor = Color.WHITE;
 				break;
+			default:
+				break;
 
 			}
 
@@ -384,16 +387,12 @@ public class GUI implements IObserver {
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
 
-	 	this.frame.repaint();
+		this.frame.repaint();
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-		// System.out.println(currentplayer.getName() + " hat eine " + dice + "
-		// gewürfelt");
 
 	}
-
-	
 
 }

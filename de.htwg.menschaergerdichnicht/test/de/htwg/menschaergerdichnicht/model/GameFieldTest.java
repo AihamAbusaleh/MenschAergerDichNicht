@@ -19,7 +19,7 @@ public class GameFieldTest {
 	@Test
 	public void testgetStoneColor() {
 		gamefield.setStone(0, 'B');
- 		assertEquals('x', gamefield.getStoneColor(5));
+		assertEquals('x', gamefield.getStoneColor(5));
 		assertEquals('B', gamefield.getStoneColor(0));
 
 	}
@@ -39,13 +39,13 @@ public class GameFieldTest {
 	public void testsetStone() {
 		assertFalse(gamefield.setStone(-5, 'B'));
 		assertTrue(gamefield.setStone(5, 'B'));
- 	}
+	}
 
 	@Test
-	public void testIsStoneInBlock() {  
+	public void testIsStoneInBlock() {
 		assertTrue(gamefield.isStoneInBlock(0));
 
- 	}
+	}
 
 	@Test
 	public void teststoneOnGamefield() {
@@ -53,24 +53,23 @@ public class GameFieldTest {
 		gamefield.getStoneOutOfBlock(0);
 
 		assertEquals(1, 1);
- 
+
 	}
 
 	@Test
-	public void testisGameEnded() {  
+	public void testisGameEnded() {
 
 		gamefield.setStoneInHouse(0, 30);
 		gamefield.setStoneInHouse(0, 31);
 		gamefield.setStoneInHouse(0, 32);
 		gamefield.setStoneInHouse(0, 33);
 		assertTrue(gamefield.isGameEnded());
- 
+
 	}
 
 	@Test
 	public void testisStartFree() {
 
- 
 		gamefield.getStoneOutOfBlock(3);
 		assertFalse(gamefield.isStartFree(3));
 		assertTrue(gamefield.isStartFree(0));
@@ -95,7 +94,7 @@ public class GameFieldTest {
 	}
 
 	@Test
-	public void testsetStoneInHouse() {  
+	public void testsetStoneInHouse() {
 		assertFalse(gamefield.setStoneInHouse(0, 4));
 		assertFalse(gamefield.setStoneInHouse(0, -1));
 		assertTrue(gamefield.setStoneInHouse(0, 30));
@@ -109,30 +108,32 @@ public class GameFieldTest {
 
 	@Test
 	public void testgetStoneOutOfBlock() {
- 
+
 		assertTrue(gamefield.getStoneOutOfBlock(0));
 		assertFalse(gamefield.getStoneOutOfBlock(0));
 
 	}
-	
+
 	@Test
-	public void testIsRounded(){
+	public void testIsRounded() {
 		gamefield.setStone(27, 'R');
 		assertFalse(gamefield.isRounded(0, 27, 1));
 		assertTrue(gamefield.isRounded(0, 27, 6));
-		
+
 	}
+
 	@Test
-	public void testColor(){
+	public void testColor() {
 		gamefield.setStone(20, 'R');
 		assertTrue(gamefield.color(0, 20));
 		assertFalse(gamefield.color(1, 20));
 
 	}
+
 	@Test
-	public void textwhichPlayerOnIdx(){
+	public void textwhichPlayerOnIdx() {
 		gamefield.setStone(5, 'R');
-		assertEquals(0, gamefield.whichPlayerOnIdx(5, 'R'));
- 
+		assertEquals(0, gamefield.whichPlayerOnIdx(5));
+
 	}
 }

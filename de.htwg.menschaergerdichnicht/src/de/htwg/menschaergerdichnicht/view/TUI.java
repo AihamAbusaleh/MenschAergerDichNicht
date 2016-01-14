@@ -12,8 +12,7 @@ public class TUI implements IObserver {
 		this.c = c;
 
 		c.registerObserver(this);
-		// display();
-	}
+ 	}
 
 	public void display() {
 		System.out.println("                                        ");
@@ -88,7 +87,7 @@ public class TUI implements IObserver {
 		}
 
 	}
-
+@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
 
 		if (gameEnded) {
@@ -98,7 +97,7 @@ public class TUI implements IObserver {
 
 		display();
 	}
-
+@Override
 	public void showDice(Player currentplayer, int dice) {
 		System.out.println(currentplayer.getName() + " hat eine " + dice + " gewürfelt");
 	}
