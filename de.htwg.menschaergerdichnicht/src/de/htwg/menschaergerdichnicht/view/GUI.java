@@ -25,8 +25,7 @@ public class GUI implements IObserver {
 
 	private JFrame frame;
 	private JTextField output;
-
-	private JPanel wurfelPanel;
+ 	private JPanel wurfelPanel;
 	private Controller c;
 	private JButton wurfeln;
 	private JPanel container;
@@ -36,7 +35,7 @@ public class GUI implements IObserver {
 		c.registerObserver(this);
 
 		frame = new JFrame("Mensch ärgere dich nicht");
-		this.container = new SpielFeldGUI();
+		this.container = new GamefieldGUI();
 		this.wurfelPanel = new JPanel();
 		wurfelPanel.setLayout(new GridLayout(1, 2));
 
@@ -50,7 +49,7 @@ public class GUI implements IObserver {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equals("würfeln")) {
-
+				 	output.setText(c.wurfeln());
 				}
 
 			}
@@ -68,9 +67,9 @@ public class GUI implements IObserver {
 
 	}
 
-	private class SpielFeldGUI extends JPanel implements MouseListener {
-		private byte[][] feld = null;
-		private MyPoint[] figurenPositionen = null;
+	private class GamefieldGUI extends JPanel implements MouseListener {
+		private byte[][] field = null;
+		private MyPoint[] figurePosition = null;
 		private MyPoint[] stoneBlock0 = null;
 		private MyPoint[] stoneBlock1 = null;
 		private MyPoint[] stoneBlock2 = null;
@@ -82,10 +81,10 @@ public class GUI implements IObserver {
 
 		MyPoint clickedPoint = null;
 
-		public SpielFeldGUI() {
+		public GamefieldGUI() {
 			this.setBackground(Color.WHITE);
 
-			this.feld = new byte[][] { { 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
+			this.field = new byte[][] { { 'R', 'R', '0', '0', 'x', 'x', 'x', '0', '0', 'B', 'B' },
 					{ 'R', 'R', '0', '0', 'x', 'B', 'x', '0', '0', 'B', 'B' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
@@ -115,7 +114,7 @@ public class GUI implements IObserver {
 			this.stoneHause3 = new MyPoint[] { new MyPoint(6, 5, 4000), new MyPoint(7, 5, 4000), // pink
 					new MyPoint(8, 5, 4000), new MyPoint(9, 5, 4000) };
 
-			this.figurenPositionen = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
+			this.figurePosition = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
 					new MyPoint(4, 2, 32), new MyPoint(4, 3, 33), new MyPoint(4, 4, 34), new MyPoint(3, 4, 35),
 					new MyPoint(2, 4, 36), new MyPoint(1, 4, 37), new MyPoint(0, 4, 38), new MyPoint(0, 5, 39),
 					new MyPoint(0, 6, 0), new MyPoint(1, 6, 1), new MyPoint(2, 6, 2), new MyPoint(3, 6, 3),
@@ -136,9 +135,9 @@ public class GUI implements IObserver {
 			Graphics2D g2 = (Graphics2D) g;
 			Color tmpColor = g2.getColor();
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			for (int i = 0; i < this.feld.length; i++) {
-				for (int j = 0; j < feld[i].length; j++) {
-					Color currentColor = myFeldColor(feld[i][j]);
+			for (int i = 0; i < this.field.length; i++) {
+				for (int j = 0; j < field[i].length; j++) {
+					Color currentColor = myFeldColor(field[i][j]);
 					if (currentColor == null)
 						continue;
 					g2.setColor(currentColor);
@@ -154,14 +153,14 @@ public class GUI implements IObserver {
 
 			int indexofcklickedpoint = 0;
 			if (clickedPoint != null) {
-				for (int i = 0; i < this.figurenPositionen.length; i++) {
-					if (clickedPoint.x == this.figurenPositionen[i].x
-							&& clickedPoint.y == this.figurenPositionen[i].y) {
-						clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
+				for (int i = 0; i < this.figurePosition.length; i++) {
+					if (clickedPoint.x == this.figurePosition[i].x
+							&& clickedPoint.y == this.figurePosition[i].y) {
+						clickedPoint.setIdx(this.figurePosition[i].getIdx());
 						indexofcklickedpoint = clickedPoint.getIdx();
 						if (!c.rounded(indexofcklickedpoint)) {
-							position.x = figurenPositionen[(i + c.dice()) % 40].y;
-							position.y = figurenPositionen[(i + c.dice()) % 40].x;
+							position.x = figurePosition[(i + c.dice()) % 40].y;
+							position.y = figurePosition[(i + c.dice()) % 40].x;
 						}
 
 						break;
@@ -170,14 +169,14 @@ public class GUI implements IObserver {
 				}
 
 			}
-			int red = -1;
-			int blue = -1;
-			int yellow = -1;
-			int pink = -1;
-			int red1 = 0;
-			int blue1 = 0;
-			int yellow1 = 0;
-			int pink1 = 0;
+			int redBlock = -1;
+			int blueBlock = -1;
+			int yellowBlock = -1;
+			int pinkBlock = -1;
+			int redHouse = 0;
+			int blueHouse = 0;
+			int yellowHouse = 0;
+			int pinkHouse = 0;
 
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
@@ -190,28 +189,28 @@ public class GUI implements IObserver {
 						case 'R':
 
 							stoneColor = Color.RED;
-							position.x = this.stoneHause0[red1++].y;
-							position.y = this.stoneHause0[red1++].x;
+							position.x = this.stoneHause0[redHouse++].y;
+							position.y = this.stoneHause0[redHouse++].x;
 
 							break;
 						case 'B':
 
 							stoneColor = Color.BLUE;
-							position.x = this.stoneHause1[blue1++].y;
-							position.y = this.stoneHause1[blue1++].x;
+							position.x = this.stoneHause1[blueHouse++].y;
+							position.y = this.stoneHause1[blueHouse++].x;
 
 							break;
 						case 'G':
 
 							stoneColor = Color.YELLOW;
-							position.x = this.stoneHause2[yellow1++].y;
-							position.y = this.stoneHause2[yellow1++].x;
+							position.x = this.stoneHause2[yellowHouse++].y;
+							position.y = this.stoneHause2[yellowHouse++].x;
 
 							break;
 						case 'P':
 							stoneColor = Color.PINK;
-							position.x = this.stoneHause3[pink1++].y;
-							position.y = this.stoneHause3[pink1++].x;
+							position.x = this.stoneHause3[pinkHouse++].y;
+							position.y = this.stoneHause3[pinkHouse++].x;
 
 							break;
 						default:
@@ -230,28 +229,28 @@ public class GUI implements IObserver {
 					if (tokenColorInBlock != ' ') {
 						switch (tokenColorInBlock) {
 						case 'R':
-							red++;
+							redBlock++;
 							stoneColor = Color.RED;
-							position.x = stoneBlock0[red].y;
-							position.y = stoneBlock0[red].x;
+							position.x = stoneBlock0[redBlock].y;
+							position.y = stoneBlock0[redBlock].x;
 							break;
 						case 'B':
-							blue++;
+							blueBlock++;
 							stoneColor = Color.BLUE;
-							position.x = stoneBlock1[blue].y;
-							position.y = stoneBlock1[blue].x;
+							position.x = stoneBlock1[blueBlock].y;
+							position.y = stoneBlock1[blueBlock].x;
 							break;
 						case 'G':
-							yellow++;
+							yellowBlock++;
 							stoneColor = Color.YELLOW;
-							position.x = stoneBlock2[yellow].y;
-							position.y = stoneBlock2[yellow].x;
+							position.x = stoneBlock2[yellowBlock].y;
+							position.y = stoneBlock2[yellowBlock].x;
 							break;
 						case 'P':
-							pink++;
+							pinkBlock++;
 							stoneColor = Color.PINK;
-							position.x = stoneBlock3[pink].y;
-							position.y = stoneBlock3[pink].x;
+							position.x = stoneBlock3[pinkBlock].y;
+							position.y = stoneBlock3[pinkBlock].x;
 							break;
 						default:
 							break;
@@ -264,30 +263,30 @@ public class GUI implements IObserver {
 						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 					}
 
-					for (int i = 0; i < figurenPositionen.length; i++) {
-						if (c.isStoneHere(figurenPositionen[i].getIdx()) != -1) {
-							if (c.isStoneHere(figurenPositionen[i].idx) == 0
-									&& c.getTokenColor(figurenPositionen[i].idx) == 'R') {
+					for (int i = 0; i < figurePosition.length; i++) {
+						if (c.isStoneHere(figurePosition[i].getIdx()) != -1) {
+							if (c.isStoneHere(figurePosition[i].idx) == 0
+									&& c.getTokenColor(figurePosition[i].idx) == 'R') {
 								stoneColor = Color.RED;
 
 							}
-							if (c.isStoneHere(figurenPositionen[i].idx) == 1
-									&& c.getTokenColor(figurenPositionen[i].idx) == 'B') {
+							if (c.isStoneHere(figurePosition[i].idx) == 1
+									&& c.getTokenColor(figurePosition[i].idx) == 'B') {
 								stoneColor = Color.BLUE;
 
 							}
-							if (c.isStoneHere(figurenPositionen[i].idx) == 2
-									&& c.getTokenColor(figurenPositionen[i].idx) == 'G') {
+							if (c.isStoneHere(figurePosition[i].idx) == 2
+									&& c.getTokenColor(figurePosition[i].idx) == 'G') {
 								stoneColor = Color.YELLOW;
 
 							}
-							if (c.isStoneHere(figurenPositionen[i].idx) == 3
-									&& c.getTokenColor(figurenPositionen[i].idx) == 'P') {
+							if (c.isStoneHere(figurePosition[i].idx) == 3
+									&& c.getTokenColor(figurePosition[i].idx) == 'P') {
 								stoneColor = Color.PINK;
 
 							}
-							position.x = figurenPositionen[i].y;
-							position.y = figurenPositionen[i].x;
+							position.x = figurePosition[i].y;
+							position.y = figurePosition[i].x;
 							position.x = position.x * laenge;
 							position.y = position.y * laenge;
 							g2.setColor(stoneColor.darker());
@@ -310,7 +309,6 @@ public class GUI implements IObserver {
 			Color currentColor = null;
 			switch (i) {
 			case '0':
-
 				break;
 			case 'R':
 				currentColor = Color.RED;
@@ -338,17 +336,17 @@ public class GUI implements IObserver {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int indexOfPoint = 0;
-			for (int i = 0; i < this.figurenPositionen.length; i++) {
+			int indexOfClickedPoint = 0;
+			for (int i = 0; i < this.figurePosition.length; i++) {
 
 				int size = this.getWidth();
 				clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
-				int l = e.getY() * 11 / size;
-				int m = e.getX() * 11 / size;
+				int yOfClickedPoint = e.getY() * 11 / size;
+				int xOfClickedPoint = e.getX() * 11 / size;
 
-				if (l == this.figurenPositionen[i].x && m == this.figurenPositionen[i].y) {
-					clickedPoint.setIdx(this.figurenPositionen[i].getIdx());
-					indexOfPoint = clickedPoint.getIdx();
+				if (yOfClickedPoint == this.figurePosition[i].x && xOfClickedPoint == this.figurePosition[i].y) {
+					clickedPoint.setIdx(this.figurePosition[i].getIdx());
+					indexOfClickedPoint = clickedPoint.getIdx();
 
 					break;
 				}
@@ -356,7 +354,7 @@ public class GUI implements IObserver {
 			}
 			if (c.moveStart())
 				repaint();
-			if (c.move((this.figurenPositionen[indexOfPoint].idx + 10) % 40))
+			if (c.move((this.figurePosition[indexOfClickedPoint].idx + 10) % 40))
 				repaint();
 
 		}
@@ -385,13 +383,17 @@ public class GUI implements IObserver {
 
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
-
+		if(currentPlayer.getColor() == 'R'){
+			
+			
+		}
 		this.frame.repaint();
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-
+		
+		
 	}
-
+ 
 }

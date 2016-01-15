@@ -171,7 +171,19 @@ public class Controller extends Observable implements IController {
 		}
 
 	}
-
+	public String wurfeln(){
+		for (IObserver observer : observers) {
+			observer.showDice(currentplayer, this.dice);
+			 
+		}
+		return  " " + currentplayer.getName() + " hat eine " +  this.dice + " gewürfelt";
+		 
+	}
+//	public String wurfelnfake(){
+//		wurfeln();
+//		return ;
+//	
+//	}
 	@Override
 	public char getTokenColor(int idx) {
 		return gamefield.getStoneColor(idx);
