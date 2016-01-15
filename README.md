@@ -61,7 +61,7 @@ Es gelten folgende Regeln:
 
 ______________________________________________________________________________
 
- ##4.Mitwirkende
+##4.Miwirkende
 ___________________________________________________________________________
 
 Das Spiel wurde von Studenten der Angewandten Informatik an der HTWG in Konstanz Programmiert.
