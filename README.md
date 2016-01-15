@@ -1,4 +1,4 @@
-Dieses Dokument enthält Informationen zu dem SE Projekt
+*Dieses Dokument enthält Informationen zu dem SE Projekt*
 
 ________________________________________________________________________________
 Inhalt
@@ -25,6 +25,7 @@ Designpattern und selbsterklärenden Code gelegt.
 __________________________________________________________________________________
 
 2. Spielprinzip
+
 __________________________________________________________________________________
 
 Das Spiel lässt sich von Github herunterladen und in Eclipse, oder auch IDEA einbinden.
@@ -43,6 +44,7 @@ Gewinner ist der, der zuerst seine vier Spielfiguren von der Startposition in di
 _________________________________________________________________________
 
 3. Spielregeln
+
 _______________________________________________________________________
 
 Es gelten folgende Regeln:
