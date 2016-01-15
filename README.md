@@ -1,7 +1,7 @@
-*Dieses Dokument enthält Informationen zu dem SE Projekt*
+#*Dieses Dokument enthält Informationen zu dem SE Projekt*
 
 ________________________________________________________________________________
-Inhalt
+##Inhalt
 __________________________________________________________________________________
 1.Allgemeine Informationen
 
