@@ -12,7 +12,7 @@ ________________________________________________________________________________
 4.Mitwirkende
 _____________________________________________________________________________________
 
-1. ALLGEMEINE INFORMATION
+1.ALLGEMEINE INFORMATION
 _________________________________________________________________________________
 
 Der Name des Projektes ist MenschAergereDichNicht vom gleichnamigen Spiel.
@@ -22,9 +22,10 @@ Das Projekt enthält das bekannte Brettspiel Mensch Aergere Dich nicht. Als Zeit
 Ziel des Projektes war es, die Umsetzung einer agilen Software. Hierbei wurde Wert auf eine MVC-Schicht (Model, View, Controller),
 Designpattern und selbsterklärenden Code gelegt.
 
+
 __________________________________________________________________________________
 
-2. Spielprinzip
+2.Spielprinzip
 
 __________________________________________________________________________________
 
@@ -43,7 +44,7 @@ Gewinner ist der, der zuerst seine vier Spielfiguren von der Startposition in di
 
 _________________________________________________________________________
 
-3. Spielregeln
+3.Spielregeln
 
 _______________________________________________________________________
 
