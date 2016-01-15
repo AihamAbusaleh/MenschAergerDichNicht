@@ -1,3 +1,62 @@
-# MenschAergerDichNicht
+Dieses Dokument enthält Informationen zu dem SE Projekt
 
-this is our SE game-project at the htwg in WS15
+____________________________________________________________________________________________________________
+Inhalt
+____________________________________________________________________________________________________________
+1.Allgemeine Informationen
+2.Spielprinzip
+3.Spielregeln
+4.Mitwirkende
+____________________________________________________________________________________________________________
+
+1. ALLGEMEINE INFORMATION
+____________________________________________________________________________________________________________
+
+Der Name des Projektes ist MenschAergereDichNicht vom gleichnamigen Spiel.
+Das Projekt enthält das bekannte Brettspiel Mensch Aergere Dich nicht. Als Zeitfenster wurde hier ein Semester
+(Also 6 Monate) vorgesehn. Das Spiel wurde mit Java und Eclipse Programmiert.
+Ziel des Projektes war die Umsetzung einer agilen Software. Hierbei wurde Wert auf eine MVC-Schicht (Model, View, Controller),
+Designpattern und selbsterklärenden Code gelegt.
+
+____________________________________________________________________________________________________________
+
+2. Spielprinzip
+____________________________________________________________________________________________________________
+
+Das Spiel lässt sich von Github herunterladen und in Eclipse, oder auch IDEA einbinden.
+
+Das Spiel lässt sich für bis zu vier Spieler spielen. Jeder dieser Spieler hat 4 Spielfiguren auf seinem Startfeld.
+Ziel des Spiels ist es, mit allen vier Spielfiguren eine Runde zu laufen und dann in die Zielposition, genannt Haus,
+zu bringen. Gespielt wird mit einem handelsüblichen Würfel.
+Zu Begin des Spieles hat jeder Spieler seine Spielfiguren auf seinem Startfeld. Wenn der Spieler an der Reihe ist,
+muss er eine 6 würfeln, damit eine seiner Spielfiguren auf das Spielfeld kann. Jeder Spieler hat hierfür eine
+Startposition die in seiner Farbe gekennzeichnet ist. Es darf nur drei mal gewürfelt werden, wenn der Spieler noch
+keine Spielfigur auf dem Spielfeld hat und die Spielfiguren entweder in der Startposition oder in der Zielposition sind.
+
+Gewinner ist der, der zuerst seine vier Spielfiguren von der Startposition in die Zielposition bringt.
+
+____________________________________________________________________________________________________________
+
+3. Spielregeln
+____________________________________________________________________________________________________________
+
+Es gelten folgende Regeln:
+-Der jüngste Spieler darf anfangen
+-Gespielt wird im Uhrzeigersinn
+-Es darf drei mal gewürfelt werden, sofern sich keine eigene Spielfigur auf dem Spielfeld befindet
+-Wird eine sechs gewürfelt muss eine Spielfigur von der Startposition auf die Startposition gelegt werden, außer auf der
+ Startposition befindet sich schon eine eigene Spielfigur
+-In die Zielposition muss genau gezogen werden. Spielfiguren in der Zielposition dürfen nicht bewegt werden.
+-Geht eine Spielfigur auf das gleiche Feld einer anderen wird die Spielfigur die bereits auf dem Feld steht "geschlagen"
+ und somit in ihre Startposition zurück geworfen.
+-Befinden sich mehrere Spielfiguren eines Spielers auf dem Spielfeld, darff gewählt werden mit welcher er ziehen will,
+ außer es befindet sich eine eigene Spielfigur auf der eigenen Startposition
+
+____________________________________________________________________________________________________________
+
+ 4.Mitwirkende
+____________________________________________________________________________________________________________
+
+Das Spiel wurde von Studenten der Angewandten Informatik an der HTWG in Konstanz Programmiert.
+Beteiligt an diesem Spiel waren Patrick Fiur und Aiham Abusaleh. Betreuender Professor war
+Prof. Dr. Marko Boger, der Professor mit dem Hut.
