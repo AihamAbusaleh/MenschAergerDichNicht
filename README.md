@@ -1,18 +1,18 @@
-#*Dieses Dokument enthält Informationen zu dem SE Projekt*
+#*Dieses Dokument enthält Infos zu dem SE Projekt WS15*
 
 ________________________________________________________________________________
 ##Inhalt
 __________________________________________________________________________________
-1.Allgemeine Informationen
+*1.Allgemeine Informationen*
 
-2.Spielprinzip
+*2.Spielprinzip*
 
-3.Spielregeln
+*3.Spielregeln*
 
-4.Mitwirkende
+*4.Mitwirkende*
 _____________________________________________________________________________________
 
-1.ALLGEMEINE INFORMATION
+##1.ALLGEMEINE INFORMATION
 _________________________________________________________________________________
 
 Der Name des Projektes ist MenschAergereDichNicht vom gleichnamigen Spiel.
@@ -25,7 +25,7 @@ Designpattern und selbsterklärenden Code gelegt.
 
 __________________________________________________________________________________
 
-2.Spielprinzip
+##2.Spielprinzip
 
 __________________________________________________________________________________
 
@@ -44,7 +44,7 @@ Gewinner ist der, der zuerst seine vier Spielfiguren von der Startposition in di
 
 _________________________________________________________________________
 
-3.Spielregeln
+##3.Spielregeln
 
 _______________________________________________________________________
 
@@ -61,9 +61,9 @@ Es gelten folgende Regeln:
 
 ______________________________________________________________________________
 
- 4.Mitwirkende
+ ##4.Mitwirkende
 ___________________________________________________________________________
 
 Das Spiel wurde von Studenten der Angewandten Informatik an der HTWG in Konstanz Programmiert.
-Beteiligt an diesem Spiel waren Patrick Fiur und Aiham Abusaleh. Betreuender Professor war
-Prof. Dr. Marko Boger, der Professor mit dem Hut. ;) 
+Beteiligt an diesem Spiel waren *Patrick Fiur* und *Aiham Abusaleh*. Betreuender Professor war
+*Prof. Dr. Marko Boger, der Professor mit dem Hut*. ;) 
