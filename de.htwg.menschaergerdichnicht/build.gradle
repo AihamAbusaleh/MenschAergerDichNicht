@@ -23,8 +23,8 @@ idea {
 }
 
 dependencies {
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api',  version: '2.2'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api',  version: '2.5'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.5'
     compile group: 'com.google.inject',        name: 'guice',      version: '3.0'
     testCompile "junit:junit:4.11"
 }
@@ -35,7 +35,7 @@ sourceSets {
 }
 
 jar {
-    manifest.attributes "Main-Class":"de.htwg.menschaergerdichnicht.Main"
+    manifest.attributes "Main-Class":"de.htwg.menschaergerdichnicht.MenschAergereDichNicht"
 }
 
 task pom << {
