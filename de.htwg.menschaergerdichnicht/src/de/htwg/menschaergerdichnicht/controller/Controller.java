@@ -145,14 +145,17 @@ public class Controller extends Observable implements IController {
 		}
 	}
 
+	@Override
 	public void registerObserver(IObserver observer) {
 		observers.add(observer);
 	}
 
+	@Override
 	public void unregisterObserver(IObserver observer) {
 		observers.remove(observer);
 	}
 
+	@Override
 	public void updateObservers() {
 
 		for (IObserver observer : observers) {

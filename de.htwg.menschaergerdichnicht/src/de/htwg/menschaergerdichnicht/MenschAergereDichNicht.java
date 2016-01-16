@@ -5,14 +5,14 @@ import java.util.Scanner;
 import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.view.GUI;
 import de.htwg.menschaergerdichnicht.view.TUI;
-
+import org.apache.log4j.PropertyConfigurator;
 public class MenschAergereDichNicht {
 
 	private static Scanner sc;
 
 	public static void main(String[] args) {
 		sc = new Scanner(System.in);
-
+        PropertyConfigurator.configure("log4j.properties");
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
