@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
-import de.htwg.menschaergerdichnicht.controller.SaveSteps;
 import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.util.command.CommandManager;
+import de.htwg.util.command.SaveSteps;
 
 public class CommandTest {
 

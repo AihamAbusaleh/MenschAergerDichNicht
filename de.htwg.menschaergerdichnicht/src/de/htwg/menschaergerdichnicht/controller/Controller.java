@@ -8,6 +8,7 @@ import de.htwg.menschaergerdichnicht.state.StatePlayer1;
 import de.htwg.menschaergerdichnicht.state.StatePlayer2;
 import de.htwg.menschaergerdichnicht.state.StatePlayer3;
 import de.htwg.util.command.CommandManager;
+import de.htwg.util.command.SaveSteps;
 import de.htwg.util.observer.IObserver;
 import de.htwg.util.observer.Observable;
 

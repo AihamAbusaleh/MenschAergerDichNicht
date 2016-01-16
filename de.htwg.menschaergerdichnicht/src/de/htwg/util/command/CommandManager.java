@@ -2,8 +2,6 @@ package de.htwg.util.command;
 
 import java.util.LinkedList;
 
-import de.htwg.menschaergerdichnicht.controller.SaveSteps;
-
 public class CommandManager {
 
 	public LinkedList<IDoUndoCommand> undo = new LinkedList<IDoUndoCommand>();

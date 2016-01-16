@@ -1,7 +1,6 @@
-package de.htwg.menschaergerdichnicht.controller;
+package de.htwg.util.command;
 
 import de.htwg.menschaergerdichnicht.model.GameField;
-import de.htwg.util.command.IDoUndoCommand;
 
 public class SaveSteps implements IDoUndoCommand {
 	private GameField gamefield;
