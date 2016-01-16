@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
-import de.htwg.menschaergerdichnicht.model.GameField;
-import de.htwg.menschaergerdichnicht.model.Player;
-import de.htwg.util.command.CommandManager;
 
 public class ControllerTest {
 
@@ -108,11 +105,7 @@ public class ControllerTest {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
 	}
 
-	@Test
-	public void testIsStoneHere(){
-		if(controller.getTokenColor(30) == 'R')
-		assertEquals(0, controller.isStoneHere(30)); 
-	}
+
 	@Test
 	public void testRounded(){
 		
@@ -130,5 +123,13 @@ public class ControllerTest {
 		assertFalse(controller.isFieldEmpty()); 
 
 	}
+	@Test 
+	public void testDice(){
+		int dice = controller.dice();
+		if(dice == 5)
+			assertEquals(5, dice); 
+	}
+	
+	
 
 }

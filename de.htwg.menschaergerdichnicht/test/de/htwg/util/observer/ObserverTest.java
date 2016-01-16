@@ -15,12 +15,11 @@ public class ObserverTest {
 	private Observable testObservable;
 
 	class TestObserver implements IObserver {
-		// @Override
+	 
 		public void showDice(Player currentplayer, int dice) {
 			e = true;
 		}
-		// @Override
-
+ 
 		public void update(Player currentPlayer, boolean gameEnded) {
 			e = true;
 

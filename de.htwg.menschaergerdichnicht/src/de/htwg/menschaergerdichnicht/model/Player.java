@@ -21,6 +21,7 @@ public class Player implements IPlayer, IState {
 
 	}
 
+	@Override
 	public Player setcurrentplayer() {
 		return state.currentPlayer(this);
 
@@ -41,9 +42,13 @@ public class Player implements IPlayer, IState {
 		return color;
 	}
 
+	@Override
+
 	public IState getState() {
 		return state;
 	}
+
+	@Override
 
 	public void setState(IState state) {
 		this.state = state;

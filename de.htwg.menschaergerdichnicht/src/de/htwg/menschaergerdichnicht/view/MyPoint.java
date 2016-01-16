@@ -41,8 +41,5 @@ public class MyPoint {
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}
- 
-
-	 
 
 }

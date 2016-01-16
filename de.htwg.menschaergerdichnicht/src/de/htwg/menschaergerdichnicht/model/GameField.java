@@ -5,7 +5,7 @@ public class GameField {
 	private Token[] gamefield;
 	private Token[][] block;
 	private Token[][] house;
-	private final static char color[] = { 'R', 'B', 'G', 'P' };
+	private final char color[] = { 'R', 'B', 'G', 'P' };
 	private final static int startposition[] = { 30, 0, 10, 20 };
 
 	private final static int Positions = 40;

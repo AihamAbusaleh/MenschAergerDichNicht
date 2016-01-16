@@ -33,6 +33,7 @@ public class Controller extends Observable implements IController {
 		dice();
 	}
 
+	@Override
 	public boolean moveStart() {
 		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 		createSteps();
@@ -41,6 +42,7 @@ public class Controller extends Observable implements IController {
 
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
 		if (isFieldEmpty()) {
+
 			return false;
 		}
 
@@ -59,7 +61,6 @@ public class Controller extends Observable implements IController {
 
 			gamefield.getStoneOutOfBlock(currentplayer.getIdx());
 			updateObservers();
-
 		}
 
 	}
@@ -71,7 +72,6 @@ public class Controller extends Observable implements IController {
 
 			return true;
 		}
-
 		return false;
 	}
 
@@ -120,14 +120,17 @@ public class Controller extends Observable implements IController {
 		return gamefield.getStoneOutOfBlock(currentplayer.getIdx());
 	}
 
+	@Override
 	public int dice() {
 		return dice = r.nextInt(6) + 1;
 	}
 
+	@Override
 	public boolean isGameEnded() {
 		return gamefield.isGameEnded();
 	}
 
+	@Override
 	public void setNextPlayer() {
 
 		if (currentplayer.getState().toString() == "Rot")
@@ -141,29 +144,30 @@ public class Controller extends Observable implements IController {
 		}
 	}
 
-	@Override
 	public void registerObserver(IObserver observer) {
 		observers.add(observer);
 	}
 
-	@Override
 	public void unregisterObserver(IObserver observer) {
 		observers.remove(observer);
 	}
 
-	@Override
 	public void updateObservers() {
 
 		for (IObserver observer : observers) {
+
 			observer.update(currentplayer, this.isGameEnded());
+
 			if (isGameEnded()) {
 				unregisterObserver(observer);
 				System.exit(0);
 			}
+			break;
 		}
 		if (dice != 6) {
 			setNextPlayer();
 			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+
 		}
 		dice();
 		for (IObserver observer : observers) {
@@ -171,19 +175,17 @@ public class Controller extends Observable implements IController {
 		}
 
 	}
-	public String wurfeln(){
+
+	@Override
+	public String wurfeln() {
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
-			 
+
 		}
-		return  " " + currentplayer.getName() + " hat eine " +  this.dice + " gewürfelt";
-		 
+		return " " + currentplayer.getName() + " threw [" + this.dice + "]";
+
 	}
-//	public String wurfelnfake(){
-//		wurfeln();
-//		return ;
-//	
-//	}
+
 	@Override
 	public char getTokenColor(int idx) {
 		return gamefield.getStoneColor(idx);
@@ -215,11 +217,7 @@ public class Controller extends Observable implements IController {
 
 	}
 
-	public int isStoneHere(int idx) {
-		return gamefield.whichPlayerOnIdx(idx);
-
-	}
-
+	@Override
 	public boolean rounded(int idx) {
 		return gamefield.isRounded(currentplayer.getIdx(), idx, dice);
 	}

@@ -12,7 +12,7 @@ public class TUI implements IObserver {
 		this.c = c;
 
 		c.registerObserver(this);
- 	}
+	}
 
 	public void display() {
 		System.out.println("                                        ");
@@ -77,7 +77,7 @@ public class TUI implements IObserver {
 
 		} catch (NumberFormatException e) {
 
-			  if (token.equals("u")) {
+			if (token.equals("u")) {
 				c.undo();
 				return false;
 			} else {
@@ -87,7 +87,8 @@ public class TUI implements IObserver {
 		}
 
 	}
-@Override
+
+	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
 
 		if (gameEnded) {
@@ -97,9 +98,10 @@ public class TUI implements IObserver {
 
 		display();
 	}
-@Override
+
+	@Override
 	public void showDice(Player currentplayer, int dice) {
-		System.out.println(currentplayer.getName() + " hat eine " + dice + " gewürfelt");
+		System.out.println(currentplayer.getName() + " threw  [" + dice + "]");
 	}
 
 }

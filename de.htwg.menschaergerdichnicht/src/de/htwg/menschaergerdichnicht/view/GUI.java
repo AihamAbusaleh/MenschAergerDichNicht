@@ -2,9 +2,11 @@ package de.htwg.menschaergerdichnicht.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +27,7 @@ public class GUI implements IObserver {
 
 	private JFrame frame;
 	private JTextField output;
- 	private JPanel wurfelPanel;
+	private JPanel wurfelPanel;
 	private Controller c;
 	private JButton wurfeln;
 	private JPanel container;
@@ -43,13 +45,16 @@ public class GUI implements IObserver {
 
 		output.setEditable(false);
 
-		this.wurfeln = new JButton("würfeln");
+		this.wurfeln = new JButton("Throw Dice");
 		this.wurfeln.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (e.getActionCommand().equals("würfeln")) {
-				 	output.setText(c.wurfeln());
+
+				if (e.getActionCommand().equals("Throw Dice")) {
+
+					output.setText(c.wurfeln());
+
 				}
 
 			}
@@ -61,7 +66,6 @@ public class GUI implements IObserver {
 		frame.getContentPane().add(container);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 700);
-
 		frame.setVisible(true);
 		frame.setResizable(false);
 
@@ -114,18 +118,19 @@ public class GUI implements IObserver {
 			this.stoneHause3 = new MyPoint[] { new MyPoint(6, 5, 4000), new MyPoint(7, 5, 4000), // pink
 					new MyPoint(8, 5, 4000), new MyPoint(9, 5, 4000) };
 
-			this.figurePosition = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31),
-					new MyPoint(4, 2, 32), new MyPoint(4, 3, 33), new MyPoint(4, 4, 34), new MyPoint(3, 4, 35),
-					new MyPoint(2, 4, 36), new MyPoint(1, 4, 37), new MyPoint(0, 4, 38), new MyPoint(0, 5, 39),
-					new MyPoint(0, 6, 0), new MyPoint(1, 6, 1), new MyPoint(2, 6, 2), new MyPoint(3, 6, 3),
-					new MyPoint(4, 6, 4), new MyPoint(4, 7, 5), new MyPoint(4, 8, 6), new MyPoint(4, 9, 7),
-					new MyPoint(4, 10, 8), new MyPoint(5, 10, 9), new MyPoint(6, 10, 10), new MyPoint(6, 9, 11),
-					new MyPoint(6, 8, 12), new MyPoint(6, 7, 13), new MyPoint(6, 6, 14), new MyPoint(7, 6, 15),
-					new MyPoint(8, 6, 16), new MyPoint(9, 6, 17), new MyPoint(10, 6, 18), new MyPoint(10, 5, 19),
-					new MyPoint(10, 4, 20), new MyPoint(9, 4, 21), new MyPoint(8, 4, 22), new MyPoint(7, 4, 23),
-					new MyPoint(6, 4, 24), new MyPoint(6, 3, 25), new MyPoint(6, 2, 26), new MyPoint(6, 1, 27),
-					new MyPoint(6, 0, 28), new MyPoint(5, 0, 29) };
+			this.figurePosition = new MyPoint[] { new MyPoint(4, 0, 30), new MyPoint(4, 1, 31), new MyPoint(4, 2, 32),
+					new MyPoint(4, 3, 33), new MyPoint(4, 4, 34), new MyPoint(3, 4, 35), new MyPoint(2, 4, 36),
+					new MyPoint(1, 4, 37), new MyPoint(0, 4, 38), new MyPoint(0, 5, 39), new MyPoint(0, 6, 0),
+					new MyPoint(1, 6, 1), new MyPoint(2, 6, 2), new MyPoint(3, 6, 3), new MyPoint(4, 6, 4),
+					new MyPoint(4, 7, 5), new MyPoint(4, 8, 6), new MyPoint(4, 9, 7), new MyPoint(4, 10, 8),
+					new MyPoint(5, 10, 9), new MyPoint(6, 10, 10), new MyPoint(6, 9, 11), new MyPoint(6, 8, 12),
+					new MyPoint(6, 7, 13), new MyPoint(6, 6, 14), new MyPoint(7, 6, 15), new MyPoint(8, 6, 16),
+					new MyPoint(9, 6, 17), new MyPoint(10, 6, 18), new MyPoint(10, 5, 19), new MyPoint(10, 4, 20),
+					new MyPoint(9, 4, 21), new MyPoint(8, 4, 22), new MyPoint(7, 4, 23), new MyPoint(6, 4, 24),
+					new MyPoint(6, 3, 25), new MyPoint(6, 2, 26), new MyPoint(6, 1, 27), new MyPoint(6, 0, 28),
+					new MyPoint(5, 0, 29) };
 			addMouseListener(this);
+
 		}
 
 		@Override
@@ -154,10 +159,10 @@ public class GUI implements IObserver {
 			int indexofcklickedpoint = 0;
 			if (clickedPoint != null) {
 				for (int i = 0; i < this.figurePosition.length; i++) {
-					if (clickedPoint.x == this.figurePosition[i].x
-							&& clickedPoint.y == this.figurePosition[i].y) {
+					if (clickedPoint.x == this.figurePosition[i].x && clickedPoint.y == this.figurePosition[i].y) {
 						clickedPoint.setIdx(this.figurePosition[i].getIdx());
 						indexofcklickedpoint = clickedPoint.getIdx();
+
 						if (!c.rounded(indexofcklickedpoint)) {
 							position.x = figurePosition[(i + c.dice()) % 40].y;
 							position.y = figurePosition[(i + c.dice()) % 40].x;
@@ -169,6 +174,7 @@ public class GUI implements IObserver {
 				}
 
 			}
+
 			int redBlock = -1;
 			int blueBlock = -1;
 			int yellowBlock = -1;
@@ -264,27 +270,24 @@ public class GUI implements IObserver {
 					}
 
 					for (int i = 0; i < figurePosition.length; i++) {
-						if (c.isStoneHere(figurePosition[i].getIdx()) != -1) {
-							if (c.isStoneHere(figurePosition[i].idx) == 0
-									&& c.getTokenColor(figurePosition[i].idx) == 'R') {
+						if (c.getTokenColor(figurePosition[i].idx) != 'x') {
+							if (c.getTokenColor(figurePosition[i].idx) == 'R') {
 								stoneColor = Color.RED;
 
 							}
-							if (c.isStoneHere(figurePosition[i].idx) == 1
-									&& c.getTokenColor(figurePosition[i].idx) == 'B') {
+							if (c.getTokenColor(figurePosition[i].idx) == 'B') {
 								stoneColor = Color.BLUE;
 
 							}
-							if (c.isStoneHere(figurePosition[i].idx) == 2
-									&& c.getTokenColor(figurePosition[i].idx) == 'G') {
+							if (c.getTokenColor(figurePosition[i].idx) == 'G') {
 								stoneColor = Color.YELLOW;
 
 							}
-							if (c.isStoneHere(figurePosition[i].idx) == 3
-									&& c.getTokenColor(figurePosition[i].idx) == 'P') {
+							if (c.getTokenColor(figurePosition[i].idx) == 'P') {
 								stoneColor = Color.PINK;
 
 							}
+
 							position.x = figurePosition[i].y;
 							position.y = figurePosition[i].x;
 							position.x = position.x * laenge;
@@ -296,6 +299,10 @@ public class GUI implements IObserver {
 						}
 
 					}
+
+					// if( c.noPlayerOnField())
+					// System.out.println("NONONONO ");
+					//
 
 				}
 
@@ -349,13 +356,20 @@ public class GUI implements IObserver {
 					indexOfClickedPoint = clickedPoint.getIdx();
 
 					break;
+				} else {
+					clickedPoint.setIdx(-1);
+					indexOfClickedPoint = clickedPoint.getIdx();
+
 				}
 
 			}
 			if (c.moveStart())
 				repaint();
-			if (c.move((this.figurePosition[indexOfClickedPoint].idx + 10) % 40))
+			if (indexOfClickedPoint != -1 && c.move((this.figurePosition[indexOfClickedPoint].idx + 10) % 40))
 				repaint();
+
+			if (indexOfClickedPoint == -1)
+				System.out.println("AAA");
 
 		}
 
@@ -383,17 +397,13 @@ public class GUI implements IObserver {
 
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
-		if(currentPlayer.getColor() == 'R'){
-			
-			
-		}
 		this.frame.repaint();
+
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-		
-		
+
 	}
- 
+
 }
