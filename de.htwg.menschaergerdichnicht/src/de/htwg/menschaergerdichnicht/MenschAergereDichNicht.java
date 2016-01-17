@@ -2,7 +2,7 @@ package de.htwg.menschaergerdichnicht;
 
 import java.util.Scanner;
 
-import org.apache.log4j.PropertyConfigurator;
+
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.view.GUI;
@@ -13,7 +13,7 @@ import de.htwg.menschaergerdichnicht.view.TUI;
 
 	public static void main(String[] args) {
 		sc = new Scanner(System.in);
-        PropertyConfigurator.configure("log4j.properties");
+     //   PropertyConfigurator.configure("log4j.properties");
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
