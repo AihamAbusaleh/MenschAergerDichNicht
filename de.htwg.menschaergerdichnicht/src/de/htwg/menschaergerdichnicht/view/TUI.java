@@ -109,7 +109,7 @@ public class TUI implements IObserver {
 	public void update(Player currentPlayer, boolean gameEnded) {
 
 		if (gameEnded) {
-			print(currentPlayer.getName() + " hat gewonnen!");
+			print(currentPlayer.getName() + " has won!");
 
 		}
 

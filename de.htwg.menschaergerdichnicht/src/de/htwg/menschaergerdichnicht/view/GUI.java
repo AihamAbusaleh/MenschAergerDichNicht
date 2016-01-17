@@ -83,7 +83,8 @@ public class GUI implements IObserver {
 		MyPoint clickedPoint = null;
 		MyPoint position = null;
 		Color stoneColor = Color.WHITE;
-
+		Graphics2D g2 ;
+		int laenge;
 		public GamefieldGUI() {
 			this.setBackground(Color.WHITE);
 
@@ -135,8 +136,8 @@ public class GUI implements IObserver {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			int laenge = this.getWidth() / 11;
-			Graphics2D g2 = (Graphics2D) g;
+			  laenge = this.getWidth() / 11;
+			  g2 = (Graphics2D) g;
 			Color tmpColor = g2.getColor();
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			for (int i = 0; i < this.field.length; i++) {
@@ -155,35 +156,9 @@ public class GUI implements IObserver {
 
 			position = new MyPoint();
 
-			// draw stones in block and house
-			for (int player = 0; player < 4; player++) {
-				for (int block = 0; block < 4; block++) {
-
-					char tokenColorInBlock = c.getTokenColorBlock(player, block);
-					char tokenColorInHouse = c.getTokenColorHouse(player, block);
-
-					if (tokenColorInHouse != ' ') {
-						tokenColorHouse(tokenColorInHouse, block);
-						position.x = position.x * laenge;
-						position.y = position.y * laenge;
-						g2.setColor(stoneColor.darker());
-						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-						g2.setColor(stoneColor.darker().darker());
-						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
-					}
-
-					if (tokenColorInBlock != ' ') {
-						tokenColorBlock(tokenColorInBlock, block);
-						position.x = position.x * laenge;
-						position.y = position.y * laenge;
-						g2.setColor(stoneColor.darker());
-						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-						g2.setColor(stoneColor.darker().darker());
-						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
-					}
-				}
-
-			}
+			// draw stones in block and in house
+			drawColorsHaousAndBlock();
+			
 			// draw all the stones on the game field
 			for (int i = 0; i < figurePosition.length; i++) {
 				if (c.getTokenColor(figurePosition[i].idx) != 'x') {
@@ -217,7 +192,36 @@ public class GUI implements IObserver {
 			}
 			g2.setColor(tmpColor);
 		}
+		private void drawColorsHaousAndBlock(){
+			for (int player = 0; player < 4; player++) {
+				for (int block = 0; block < 4; block++) {
 
+					char tokenColorInBlock = c.getTokenColorBlock(player, block);
+					char tokenColorInHouse = c.getTokenColorHouse(player, block);
+
+					if (tokenColorInHouse != ' ') {
+						tokenColorHouse(tokenColorInHouse, block);
+						position.x = position.x * laenge;
+						position.y = position.y * laenge;
+						g2.setColor(stoneColor.darker());
+						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+						g2.setColor(stoneColor.darker().darker());
+						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					}
+
+					if (tokenColorInBlock != ' ') {
+						tokenColorBlock(tokenColorInBlock, block);
+						position.x = position.x * laenge;
+						position.y = position.y * laenge;
+						g2.setColor(stoneColor.darker());
+						g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+						g2.setColor(stoneColor.darker().darker());
+						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+					}
+				}
+
+			}
+		}
 		private void tokenColorBlock(char tokenBlock, int block) {
 			switch (tokenBlock) {
 			case 'R':

@@ -8,14 +8,14 @@ import de.htwg.menschaergerdichnicht.view.TUI;
 
 public class MenschAergereDichNicht {
 
-	private static Scanner sc;
+	private static Scanner input;
 
 	private MenschAergereDichNicht() {
 	}
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		sc = new Scanner(System.in);
+		input = new Scanner(System.in);
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
@@ -23,7 +23,7 @@ public class MenschAergereDichNicht {
 		do {
 			while (!tui.noInput())
 				;
-			tui.handleInput(sc.next());
+			tui.handleInput(input.next());
 
 		} while (true);
 

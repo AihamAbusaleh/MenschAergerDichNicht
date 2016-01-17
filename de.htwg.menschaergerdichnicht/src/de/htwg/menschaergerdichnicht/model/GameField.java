@@ -87,17 +87,22 @@ public class GameField {
 	public int enemyInStart(int player, char color) {
 
 		if (myGameField[STARTPOSITION[player]].color != color && myGameField[STARTPOSITION[player]].color != 'x') {
-			if (myGameField[STARTPOSITION[player]].color == 'R')
-				return 0;
-			if (myGameField[STARTPOSITION[player]].color == 'B')
-				return 1;
-			if (myGameField[STARTPOSITION[player]].color == 'Y')
-				return 2;
-			if (myGameField[STARTPOSITION[player]].color == 'P')
-				return 3;
+			enemyInStart(player);
 
 		}
 
+		return -1;
+	}
+
+	private int enemyInStart(int player) {
+		if (myGameField[STARTPOSITION[player]].color == 'R')
+			return 0;
+		if (myGameField[STARTPOSITION[player]].color == 'B')
+			return 1;
+		if (myGameField[STARTPOSITION[player]].color == 'Y')
+			return 2;
+		if (myGameField[STARTPOSITION[player]].color == 'P')
+			return 3;
 		return -1;
 	}
 
