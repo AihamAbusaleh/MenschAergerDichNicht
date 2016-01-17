@@ -87,14 +87,13 @@ public class GameField {
 	public int enemyInStart(int player, char color) {
 
 		if (myGameField[STARTPOSITION[player]].color != color && myGameField[STARTPOSITION[player]].color != 'x') {
-			enemyInStart(player);
+			return enemyInStart(player);
 
 		}
 
 		return -1;
 	}
-
-	private int enemyInStart(int player) {
+	private int enemyInStart(int player){
 		if (myGameField[STARTPOSITION[player]].color == 'R')
 			return 0;
 		if (myGameField[STARTPOSITION[player]].color == 'B')
@@ -105,7 +104,6 @@ public class GameField {
 			return 3;
 		return -1;
 	}
-
 	public boolean getStoneOutOfBlock(int player) {
 		for (int i = 0; i < BLOCKSIZE; i++) {
 			if (block[player][i].color == color[player] && myGameField[STARTPOSITION[player]].color != color[player]) {
