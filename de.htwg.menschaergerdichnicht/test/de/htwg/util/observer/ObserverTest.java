@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.util.observer.IObserver;
 import de.htwg.util.observer.Observable;
@@ -31,7 +32,7 @@ public class ObserverTest {
 	public void setUp() throws Exception {
 
 		testObserver = new TestObserver();
-		testObservable = new Observable();
+		testObservable = new Controller();
 		testObservable.registerObserver(testObserver);
 
 	}

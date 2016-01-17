@@ -28,7 +28,6 @@ public class Controller extends Observable implements IController {
 
 	public Controller() {
 		gamefield = new GameField();
-
 		r = new Random();
 		state = new StatePlayer0();
 		dice();
@@ -43,10 +42,8 @@ public class Controller extends Observable implements IController {
 
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
 		if (isFieldEmpty()) {
-
 			return false;
 		}
-
 		return true;
 	}
 
@@ -70,7 +67,6 @@ public class Controller extends Observable implements IController {
 	public boolean isFieldEmpty() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
 			updateObservers();
-
 			return true;
 		}
 		return false;
@@ -123,8 +119,8 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public int dice() {
-		return this.dice = r.nextInt(6) + 1;
-	
+		 this.dice = r.nextInt(6) + 1;
+		 return this.dice;
 	}
 
 	@Override

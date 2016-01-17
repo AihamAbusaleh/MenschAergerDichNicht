@@ -15,7 +15,7 @@ public class TUI implements IObserver {
 	private static final String EDGE = "|       |";
 	private static final String ICENTER = "|";
 	private static final String IRIGHT = "    |";
-	private static final String ILEFT =  "|        ";
+	private static final String ILEFT =  "|    ";
 	private static final String MIN ="-";
 	
 	private static final String ORIGHT =  "|     O |";
@@ -44,7 +44,7 @@ public class TUI implements IObserver {
 				+ c.getTokenColor(37) + ICENTER + c.getTokenColorHouse(1, 0) + ICENTER + c.getTokenColor(1) + ILEFT
 				+ c.getTokenColorBlock(1, 2) + " " + c.getTokenColorBlock(1, 3) + " ");
 		 print("						|37    1|        ");
-		 print("        |" + c.getTokenColor(36) + ICENTER + c.getTokenColorHouse(1, 1) + ICENTER + c.getTokenColor(2)
+		 print("    "+ IRIGHT + c.getTokenColor(36) + ICENTER + c.getTokenColorHouse(1, 1) + ICENTER + c.getTokenColor(2)
 				+ ILEFT);
 		 print("						|36    2|        ");
 		 print(" _______|" + c.getTokenColor(35) + ICENTER + c.getTokenColorHouse(1, 2) + ICENTER + c.getTokenColor(3)
@@ -65,10 +65,10 @@ public class TUI implements IObserver {
 				+ c.getTokenColor(14) + MIN + c.getTokenColor(13) + MIN + c.getTokenColor(12) + MIN
 				+ c.getTokenColor(11) + MIN + c.getTokenColor(10) + ICENTER);
 		 print("			            |28-27-26-25-24    14-13-12-11-10|");
-		 print("        |" + c.getTokenColor(23) + ICENTER + c.getTokenColorHouse(3, 2) + ICENTER
+		 print("    "+IRIGHT + c.getTokenColor(23) + ICENTER + c.getTokenColorHouse(3, 2) + ICENTER
 				+ c.getTokenColor(15) + ILEFT);
 		 print("						|23    15| ");
-		 print("        |" + c.getTokenColor(22) + ICENTER + c.getTokenColorHouse(3, 1) + ICENTER
+		 print("    "+ IRIGHT + c.getTokenColor(22) + ICENTER + c.getTokenColorHouse(3, 1) + ICENTER
 				+ c.getTokenColor(16) + ILEFT);
 		 print("		                	        |22    16|        ");
 		 print(" " + c.getTokenColorBlock(3, 0) + " " + c.getTokenColorBlock(3, 1) + IRIGHT
@@ -156,6 +156,8 @@ public class TUI implements IObserver {
 			print(OLEFTRIGHT);
 			print(OLEFTRIGHT);
  			break;
+ 			default:
+ 				break;
 		}
 	}
 
