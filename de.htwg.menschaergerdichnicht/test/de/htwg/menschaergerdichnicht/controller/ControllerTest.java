@@ -36,7 +36,7 @@ public class ControllerTest {
 				assertFalse(controller.move(20));
 			}
 
-			if (controller.getTokenColor(2) == 'G') {
+			if (controller.getTokenColor(2) == 'Y') {
 				assertTrue(controller.move(10));
 				assertFalse(controller.move(20));
 			}
@@ -78,10 +78,10 @@ public class ControllerTest {
 
 		if (controller.getTokenColor(1) == 'B') {
 			controller.setNextPlayer();
-			assertEquals('G', controller.getTokenColor(2));
+			assertEquals('Y', controller.getTokenColor(2));
 		}
 
-		if (controller.getTokenColor(2) == 'G') {
+		if (controller.getTokenColor(2) == 'Y') {
 			controller.setNextPlayer();
 			assertEquals('S', controller.getTokenColor(3));
 		}

@@ -15,12 +15,12 @@ public class StatePlayer2Test {
 	@Before
 	public void setUp() {
 		state2 = new StatePlayer2();
-		player = new Player(2, "Gelb", 'G');
+		player = new Player(2, "YELLOW", 'Y');
  	}
 
 	@Test
 	public void testCurrentPlayer() {
-		assertEquals('G', player.getColor()); 
+		assertEquals('Y', player.getColor()); 
 		assertNotEquals('B', player.getColor() );
  		player.equals(state2.currentPlayer(player)); 
 		  
@@ -28,8 +28,8 @@ public class StatePlayer2Test {
  	}
 	@Test
 	public void testToString() {
-     assertEquals("Gelb", state2.toString()); 
-     assertNotEquals("Blau", state2.toString()); 
+     assertEquals("YELLOW", state2.toString()); 
+     assertNotEquals("BLUE", state2.toString()); 
 
  	}
 }

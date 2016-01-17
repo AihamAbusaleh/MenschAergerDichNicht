@@ -3,7 +3,7 @@ package de.htwg.menschaergerdichnicht.model;
 import de.htwg.menschaergerdichnicht.state.IState;
 import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 
-public class Player implements IPlayer, IState {
+public class Player implements IPlayer {
 
 	private int idx;
 	private String name;
@@ -54,9 +54,5 @@ public class Player implements IPlayer, IState {
 		this.state = state;
 	}
 
-	@Override
-	public Player currentPlayer(Player player) {
-		return player;
-	}
 
 }

@@ -36,7 +36,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public boolean moveStart() {
-		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+		currentplayer = state.currentPlayer(currentplayer);
 		createSteps();
 		// Raus kommen
 		stonCanOut();
@@ -123,7 +123,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public int dice() {
-		return dice = r.nextInt(6) + 1;
+		return this.dice = r.nextInt(6) + 1;
 	}
 
 	@Override
@@ -134,11 +134,11 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void setNextPlayer() {
 
-		if (currentplayer.getState().toString() == "Rot")
+		if (currentplayer.getState().toString() == "RED")
 			state = new StatePlayer1();
-		else if (currentplayer.getState().toString() == "Blau")
+		else if (currentplayer.getState().toString() == "BLUE")
 			state = new StatePlayer2();
-		else if (currentplayer.getState().toString() == "Gelb")
+		else if (currentplayer.getState().toString() == "YELLOW")
 			state = new StatePlayer3();
 		else {
 			state = new StatePlayer0();
@@ -163,8 +163,8 @@ public class Controller extends Observable implements IController {
 			observer.update(currentplayer, this.isGameEnded());
 
 			if (isGameEnded()) {
-				unregisterObserver(observer);
-				System.exit(0);
+				unregisterObserver(observer); // than system exit 0, but it's
+												// not allowd in sonar
 			}
 			break;
 		}

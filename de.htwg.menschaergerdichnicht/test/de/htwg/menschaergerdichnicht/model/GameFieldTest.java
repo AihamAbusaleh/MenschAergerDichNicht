@@ -79,7 +79,7 @@ public class GameFieldTest {
 	@Test
 	public void testEnemyInStart() {
 		assertEquals(-1, gamefield.enemyInStart(0, 'B'));
-		gamefield.setStone(30, 'G');
+		gamefield.setStone(30, 'Y');
 
 		assertEquals(2, gamefield.enemyInStart(0, 'B'));
 	}

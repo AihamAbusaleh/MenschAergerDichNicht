@@ -15,7 +15,7 @@ public class StatePlayer0Test {
 	@Before
 	public void setUp() {
 		state0 = new StatePlayer0();
-		player = new Player(0, "Rot", 'R');
+		player = new Player(0, "RED", 'R');
  	}
 
 	@Test
@@ -28,8 +28,8 @@ public class StatePlayer0Test {
  	}
 	@Test
 	public void testToString() {
-     assertEquals("Rot", state0.toString()); 
-     assertNotEquals("Blau", state0.toString()); 
+     assertEquals("RED", state0.toString()); 
+     assertNotEquals("BLUE", state0.toString()); 
 
  	}
 }

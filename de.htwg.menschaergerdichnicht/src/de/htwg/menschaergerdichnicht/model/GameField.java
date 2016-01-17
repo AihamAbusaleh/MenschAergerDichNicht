@@ -5,16 +5,16 @@ public class GameField {
 	private Token[] gamefield;
 	private Token[][] block;
 	private Token[][] house;
-	private final char color[] = { 'R', 'B', 'G', 'P' };
-	private final static int startposition[] = { 30, 0, 10, 20 };
+	private final char[] color = { 'R', 'B', 'Y', 'P' };
+	private final static int[] STARTPOSITION = { 30, 0, 10, 20 };
 
-	private final static int Positions = 40;
-	private final static int Players = 4;
-	private final static int HousSize = 4;
-	private final static int BlockSize = 4;
+	private final static int POSITIONS = 40;
+	private final static int PLAYERS = 4;
+	private final static int HOUSESIZE = 4;
+	private final static int BLOCKSIZE = 4;
 
 	public class Token {
-		public char color;
+		private char color;
 
 		public Token(char color) {
 			this.color = color;
@@ -22,9 +22,9 @@ public class GameField {
 	}
 
 	public GameField() {
-		gamefield = new Token[Positions];
-		block = new Token[Players][BlockSize];
-		house = new Token[Players][HousSize];
+		gamefield = new Token[POSITIONS];
+		block = new Token[PLAYERS][BLOCKSIZE];
+		house = new Token[PLAYERS][HOUSESIZE];
 
 		fillGameField();
 		fillHouse();
@@ -32,19 +32,19 @@ public class GameField {
 	}
 
 	private void fillBlock() {
-		for (int i = 0; i < Players; i++)
-			for (int k = 0; k < BlockSize; k++)
+		for (int i = 0; i < PLAYERS; i++)
+			for (int k = 0; k < BLOCKSIZE; k++)
 				block[i][k] = new Token(color[i]);
 	}
 
 	private void fillHouse() {
-		for (int i = 0; i < Players; i++)
-			for (int k = 0; k < HousSize; k++)
+		for (int i = 0; i < PLAYERS; i++)
+			for (int k = 0; k < HOUSESIZE; k++)
 				house[i][k] = new Token(' ');
 	}
 
 	private void fillGameField() {
-		for (int i = 0; i < Positions; i++) {
+		for (int i = 0; i < POSITIONS; i++) {
 			gamefield[i] = new Token('x');
 		}
 	}
@@ -62,22 +62,23 @@ public class GameField {
 	}
 
 	public boolean setStone(int idx, char color) {
-		idx = idx % Positions;
+		int newIdx;
+		newIdx = idx % POSITIONS;
 
-		if (0 > idx || gamefield[idx].color == color)
+		if (0 > newIdx || gamefield[newIdx].color == color)
 			return false;
 
-		gamefield[idx].color = color;
+		gamefield[newIdx].color = color;
 
 		return true;
 	}
 
 	public int whichPlayerOnIdx(int idx) {
 
-		idx = idx % Positions;
-
-		for (int i = 0; i < Players; i++)
-			if (this.color[i] == gamefield[idx].color)
+		int newIdx;
+		newIdx = idx % POSITIONS;
+		for (int i = 0; i < PLAYERS; i++)
+			if (this.color[i] == gamefield[newIdx].color)
 				return i;
 
 		return -1;
@@ -85,14 +86,14 @@ public class GameField {
 
 	public int enemyInStart(int player, char color) {
 
-		if (gamefield[startposition[player]].color != color && gamefield[startposition[player]].color != 'x') {
-			if (gamefield[startposition[player]].color == 'R')
+		if (gamefield[STARTPOSITION[player]].color != color && gamefield[STARTPOSITION[player]].color != 'x') {
+			if (gamefield[STARTPOSITION[player]].color == 'R')
 				return 0;
-			if (gamefield[startposition[player]].color == 'B')
+			if (gamefield[STARTPOSITION[player]].color == 'B')
 				return 1;
-			if (gamefield[startposition[player]].color == 'G')
+			if (gamefield[STARTPOSITION[player]].color == 'Y')
 				return 2;
-			if (gamefield[startposition[player]].color == 'P')
+			if (gamefield[STARTPOSITION[player]].color == 'P')
 				return 3;
 
 		}
@@ -101,10 +102,10 @@ public class GameField {
 	}
 
 	public boolean getStoneOutOfBlock(int player) {
-		for (int i = 0; i < BlockSize; i++) {
-			if (block[player][i].color == color[player] && gamefield[startposition[player]].color != color[player]) {
+		for (int i = 0; i < BLOCKSIZE; i++) {
+			if (block[player][i].color == color[player] && gamefield[STARTPOSITION[player]].color != color[player]) {
 				block[player][i].color = ' ';
-				gamefield[startposition[player]].color = color[player];
+				gamefield[STARTPOSITION[player]].color = color[player];
 				return true;
 			}
 		}
@@ -122,19 +123,21 @@ public class GameField {
 	}
 
 	public boolean setStoneInHouse(int player, int idx) {
-		idx = (idx - startposition[player]) % 40;
+		int newIdx;
 
-		if (0 > idx || idx > 3 || house[player][idx].color == color[player]) {
+		newIdx = (idx - STARTPOSITION[player]) % 40;
+
+		if (0 > newIdx || newIdx > 3 || house[player][newIdx].color == color[player]) {
 			return false;
 		}
 
-		house[player][idx].color = color[player];
+		house[player][newIdx].color = color[player];
 		return true;
 	}
 
 	public int stoneOnGamefield(int player) {
 		int count = 0;
-		for (int idx = 0; idx < Positions; idx++)
+		for (int idx = 0; idx < POSITIONS; idx++)
 			if (gamefield[idx].color == color[player])
 				count++;
 
@@ -143,15 +146,15 @@ public class GameField {
 
 	public boolean isStoneInBlock(int player) {
 		boolean stone = false;
-		for (int i = 0; i < BlockSize; i++)
+		for (int i = 0; i < BLOCKSIZE; i++)
 			stone = stone || block[player][i].color == color[player];
 		return stone;
 	}
 
 	public boolean isGameEnded() {
 		boolean win = true;
-		for (int player = 0; player < Players; player++) {
-			for (int idx = 0; idx < HousSize; idx++)
+		for (int player = 0; player < PLAYERS; player++) {
+			for (int idx = 0; idx < HOUSESIZE; idx++)
 				win = win && house[player][idx].color == color[player];
 			if (win)
 				return true;
@@ -160,16 +163,16 @@ public class GameField {
 	}
 
 	public boolean color(int player, int idx) {
-		return gamefield[idx % Positions].color == color[player];
+		return gamefield[idx % POSITIONS].color == color[player];
 	}
 
 	public boolean isStartFree(int player) {
-		return gamefield[startposition[player]].color != color[player];
+		return gamefield[STARTPOSITION[player]].color != color[player];
 	}
 
 	public boolean isRounded(int player, int idx, int dice) {
 
-		if (idx < startposition[player] && idx + dice >= startposition[player])
+		if (idx < STARTPOSITION[player] && idx + dice >= STARTPOSITION[player])
 			return true;
 
 		if (player == 1 && idx + dice > 39)

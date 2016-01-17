@@ -51,8 +51,7 @@ public class GUI implements IObserver {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (e.getActionCommand().equals("Throw Dice")) {
-
+				if ("Throw Dice".equals(e.getActionCommand())) {
 					output.setText(c.wurfeln());
 
 				}
@@ -84,6 +83,8 @@ public class GUI implements IObserver {
 		private MyPoint[] stoneHause3 = null;
 
 		MyPoint clickedPoint = null;
+		MyPoint position = null;
+		Color stoneColor = Color.WHITE;
 
 		public GamefieldGUI() {
 			this.setBackground(Color.WHITE);
@@ -93,12 +94,12 @@ public class GUI implements IObserver {
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
 					{ '0', '0', '0', '0', 'x', 'B', 'x', '0', '0', '0', '0' },
 					{ 'x', 'x', 'x', 'x', 'x', 'B', 'x', 'x', 'x', 'x', 'x' },
-					{ 'x', 'R', 'R', 'R', 'R', '0', 'G', 'G', 'G', 'G', 'x' },
+					{ 'x', 'R', 'R', 'R', 'R', '0', 'Y', 'Y', 'Y', 'Y', 'x' },
 					{ 'x', 'x', 'x', 'x', 'x', 'P', 'x', 'x', 'x', 'x', 'x' },
 					{ '0', '0', '0', '0', 'x', 'P', 'x', '0', '0', '0', '0' },
 					{ '0', '0', '0', '0', 'x', 'P', 'x', '0', '0', '0', '0' },
-					{ 'P', 'P', '0', '0', 'x', 'P', 'x', '0', '0', 'G', 'G' },
-					{ 'P', 'P', '0', '0', 'x', 'x', 'x', '0', '0', 'G', 'G' } };
+					{ 'P', 'P', '0', '0', 'x', 'P', 'x', '0', '0', 'Y', 'Y' },
+					{ 'P', 'P', '0', '0', 'x', 'x', 'x', '0', '0', 'Y', 'Y' } };
 
 			this.stoneBlock0 = new MyPoint[] { new MyPoint(0, 0, 100), new MyPoint(1, 0, 100), new MyPoint(0, 1, 100),
 					new MyPoint(1, 1, 100) };
@@ -154,7 +155,7 @@ public class GUI implements IObserver {
 				}
 			}
 
-			MyPoint position = new MyPoint();
+			position = new MyPoint();
 
 			int indexofcklickedpoint = 0;
 			if (clickedPoint != null) {
@@ -167,63 +168,20 @@ public class GUI implements IObserver {
 							position.x = figurePosition[(i + c.dice()) % 40].y;
 							position.y = figurePosition[(i + c.dice()) % 40].x;
 						}
-
 						break;
 					}
-
 				}
-
 			}
 
-			int redBlock = -1;
-			int blueBlock = -1;
-			int yellowBlock = -1;
-			int pinkBlock = -1;
-			int redHouse = 0;
-			int blueHouse = 0;
-			int yellowHouse = 0;
-			int pinkHouse = 0;
-
+			// draw stones in block and house
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
-					Color stoneColor = Color.WHITE;
+
 					char tokenColorInBlock = c.getTokenColorBlock(player, block);
 					char tokenColorInHouse = c.getTokenColorHouse(player, block);
+
 					if (tokenColorInHouse != ' ') {
-
-						switch (tokenColorInHouse) {
-						case 'R':
-
-							stoneColor = Color.RED;
-							position.x = this.stoneHause0[redHouse++].y;
-							position.y = this.stoneHause0[redHouse++].x;
-
-							break;
-						case 'B':
-
-							stoneColor = Color.BLUE;
-							position.x = this.stoneHause1[blueHouse++].y;
-							position.y = this.stoneHause1[blueHouse++].x;
-
-							break;
-						case 'G':
-
-							stoneColor = Color.YELLOW;
-							position.x = this.stoneHause2[yellowHouse++].y;
-							position.y = this.stoneHause2[yellowHouse++].x;
-
-							break;
-						case 'P':
-							stoneColor = Color.PINK;
-							position.x = this.stoneHause3[pinkHouse++].y;
-							position.y = this.stoneHause3[pinkHouse++].x;
-
-							break;
-						default:
-							break;
-
-						}
-
+						tokenColorHouse(tokenColorInHouse, block);
 						position.x = position.x * laenge;
 						position.y = position.y * laenge;
 						g2.setColor(stoneColor.darker());
@@ -233,34 +191,7 @@ public class GUI implements IObserver {
 					}
 
 					if (tokenColorInBlock != ' ') {
-						switch (tokenColorInBlock) {
-						case 'R':
-							redBlock++;
-							stoneColor = Color.RED;
-							position.x = stoneBlock0[redBlock].y;
-							position.y = stoneBlock0[redBlock].x;
-							break;
-						case 'B':
-							blueBlock++;
-							stoneColor = Color.BLUE;
-							position.x = stoneBlock1[blueBlock].y;
-							position.y = stoneBlock1[blueBlock].x;
-							break;
-						case 'G':
-							yellowBlock++;
-							stoneColor = Color.YELLOW;
-							position.x = stoneBlock2[yellowBlock].y;
-							position.y = stoneBlock2[yellowBlock].x;
-							break;
-						case 'P':
-							pinkBlock++;
-							stoneColor = Color.PINK;
-							position.x = stoneBlock3[pinkBlock].y;
-							position.y = stoneBlock3[pinkBlock].x;
-							break;
-						default:
-							break;
-						}
+						tokenColorBlock(tokenColorInBlock, block);
 						position.x = position.x * laenge;
 						position.y = position.y * laenge;
 						g2.setColor(stoneColor.darker());
@@ -268,47 +199,96 @@ public class GUI implements IObserver {
 						g2.setColor(stoneColor.darker().darker());
 						g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
 					}
-
-					for (int i = 0; i < figurePosition.length; i++) {
-						if (c.getTokenColor(figurePosition[i].idx) != 'x') {
-							if (c.getTokenColor(figurePosition[i].idx) == 'R') {
-								stoneColor = Color.RED;
-
-							}
-							if (c.getTokenColor(figurePosition[i].idx) == 'B') {
-								stoneColor = Color.BLUE;
-
-							}
-							if (c.getTokenColor(figurePosition[i].idx) == 'G') {
-								stoneColor = Color.YELLOW;
-
-							}
-							if (c.getTokenColor(figurePosition[i].idx) == 'P') {
-								stoneColor = Color.PINK;
-
-							}
-
-							position.x = figurePosition[i].y;
-							position.y = figurePosition[i].x;
-							position.x = position.x * laenge;
-							position.y = position.y * laenge;
-							g2.setColor(stoneColor.darker());
-							g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
-							g2.setColor(stoneColor.darker().darker());
-							g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
-						}
-
-					}
-
-					// if( c.noPlayerOnField())
-					// System.out.println("NONONONO ");
-					//
-
 				}
 
 			}
+			// draw all the stones on the game field
+			for (int i = 0; i < figurePosition.length; i++) {
+				if (c.getTokenColor(figurePosition[i].idx) != 'x') {
+					if (c.getTokenColor(figurePosition[i].idx) == 'R') {
+						stoneColor = Color.RED;
 
+					}
+					if (c.getTokenColor(figurePosition[i].idx) == 'B') {
+						stoneColor = Color.BLUE;
+
+					}
+					if (c.getTokenColor(figurePosition[i].idx) == 'Y') {
+						stoneColor = Color.YELLOW;
+
+					}
+					if (c.getTokenColor(figurePosition[i].idx) == 'P') {
+						stoneColor = Color.PINK;
+
+					}
+
+					position.x = figurePosition[i].y;
+					position.y = figurePosition[i].x;
+					position.x = position.x * laenge;
+					position.y = position.y * laenge;
+					g2.setColor(stoneColor.darker());
+					g2.fillOval(position.x + laenge / 4, position.y + laenge / 4, laenge / 2, laenge / 2);
+					g2.setColor(stoneColor.darker().darker());
+					g2.fillOval(position.x + laenge / 3, position.y + laenge / 3, laenge / 3, laenge / 3);
+				}
+
+			}
 			g2.setColor(tmpColor);
+		}
+
+		private void tokenColorBlock(char tokenBlock, int block) {
+			switch (tokenBlock) {
+			case 'R':
+				stoneColor = Color.RED;
+				position.x = stoneBlock0[block].y;
+				position.y = stoneBlock0[block].x;
+				break;
+			case 'B':
+				stoneColor = Color.BLUE;
+				position.x = stoneBlock1[block].y;
+				position.y = stoneBlock1[block].x;
+				break;
+			case 'Y':
+				stoneColor = Color.YELLOW;
+				position.x = stoneBlock2[block].y;
+				position.y = stoneBlock2[block].x;
+				break;
+			case 'P':
+				stoneColor = Color.PINK;
+				position.x = stoneBlock3[block].y;
+				position.y = stoneBlock3[block].x;
+				break;
+			default:
+				break;
+			}
+		}
+
+		private void tokenColorHouse(char tokenHouse, int block) {
+
+			switch (tokenHouse) {
+			case 'R':
+				stoneColor = Color.RED;
+				position.x = this.stoneHause0[block].y;
+				position.y = this.stoneHause0[block].x;
+				break;
+			case 'B':
+				stoneColor = Color.BLUE;
+				position.x = this.stoneHause1[block].y;
+				position.y = this.stoneHause1[block].x;
+				break;
+			case 'Y':
+				stoneColor = Color.YELLOW;
+				position.x = this.stoneHause2[block].y;
+				position.y = this.stoneHause2[block].x;
+				break;
+			case 'P':
+				stoneColor = Color.PINK;
+				position.x = this.stoneHause3[block].y;
+				position.y = this.stoneHause3[block].x;
+				break;
+			default:
+				break;
+			}
 
 		}
 
@@ -323,7 +303,7 @@ public class GUI implements IObserver {
 			case 'B':
 				currentColor = Color.BLUE;
 				break;
-			case 'G':
+			case 'Y':
 				currentColor = Color.YELLOW;
 				break;
 			case 'P':
@@ -375,21 +355,21 @@ public class GUI implements IObserver {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
- 		}
+		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
- 
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
- 
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
- 
+
 		}
 
 	}
