@@ -2,7 +2,6 @@ package de.htwg.menschaergerdichnicht.view;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class TuiTest {
 			 assertTrue(tui.handleInput("0")); 
 			  
 		 }
-		 if( c.getOutOfBlock() &&  c.getTokenColor(10) == 'G'){
+		 if( c.getOutOfBlock() &&  c.getTokenColor(10) == 'Y'){
 			 assertTrue(tui.handleInput("10")); 
 			  
 		 }

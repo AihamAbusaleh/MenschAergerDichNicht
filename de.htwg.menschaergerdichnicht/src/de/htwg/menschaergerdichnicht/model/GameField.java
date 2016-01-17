@@ -6,12 +6,12 @@ public class GameField {
 	private Token[][] block;
 	private Token[][] house;
 	private final char[] color = { 'R', 'B', 'Y', 'P' };
-	private final static int[] STARTPOSITION = { 30, 0, 10, 20 };
+	private static final int[] STARTPOSITION = { 30, 0, 10, 20 };
 
-	private final static int POSITIONS = 40;
-	private final static int PLAYERS = 4;
-	private final static int HOUSESIZE = 4;
-	private final static int BLOCKSIZE = 4;
+	private static final int POSITIONS = 40;
+	private static final int PLAYERS = 4;
+	private static final int HOUSESIZE = 4;
+	private static final int BLOCKSIZE = 4;
 
 	public class Token {
 		private char color;

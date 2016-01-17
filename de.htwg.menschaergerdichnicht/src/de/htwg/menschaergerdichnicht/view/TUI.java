@@ -9,9 +9,11 @@ import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.util.observer.IObserver;
 
 public class TUI implements IObserver {
-	private Logger logger = LogManager.getLogger(TUI.class);
+	private static final Logger LOGGER = LogManager.getLogger(TUI.class);
 
 	private Controller c;
+	private static final String EDGE = "|       |";
+	private static final String LINE = "|";
 
 	public TUI(Controller c) {
 		this.c = c;
@@ -19,7 +21,7 @@ public class TUI implements IObserver {
 		c.registerObserver(this);
 	}
 	public void print(String tui){
-		logger.info(tui);
+		LOGGER.info(tui);
 	}
 
 	public void display() {
@@ -29,38 +31,38 @@ public class TUI implements IObserver {
 				+ c.getTokenColorBlock(1, 0) + " " + c.getTokenColorBlock(1, 1) + " ");
 	   	 print("						|38-39-0|        ");
 		 print(" " + c.getTokenColorBlock(0, 2) + " " + c.getTokenColorBlock(0, 3) + "    |"
-				+ c.getTokenColor(37) + "|" + c.getTokenColorHouse(1, 0) + "|" + c.getTokenColor(1) + "|    "
+				+ c.getTokenColor(37) + LINE + c.getTokenColorHouse(1, 0) + LINE + c.getTokenColor(1) + "|    "
 				+ c.getTokenColorBlock(1, 2) + " " + c.getTokenColorBlock(1, 3) + " ");
 		 print("						|37    1|        ");
-		 print("        |" + c.getTokenColor(36) + "|" + c.getTokenColorHouse(1, 1) + "|" + c.getTokenColor(2)
+		 print("        |" + c.getTokenColor(36) + LINE + c.getTokenColorHouse(1, 1) + LINE + c.getTokenColor(2)
 				+ "|        ");
 		 print("						|36    2|        ");
-		 print(" _______|" + c.getTokenColor(35) + "|" + c.getTokenColorHouse(1, 2) + "|" + c.getTokenColor(3)
+		 print(" _______|" + c.getTokenColor(35) + LINE + c.getTokenColorHouse(1, 2) + LINE + c.getTokenColor(3)
 				+ "|_______ ");
 		 print("				    ____________|35    3|____________");
 		 print("|" + c.getTokenColor(30) + "-" + c.getTokenColor(31) + "-" + c.getTokenColor(32) + "-"
-				+ c.getTokenColor(33) + "-" + c.getTokenColor(34) + "|" + c.getTokenColorHouse(1, 3) + "|"
+				+ c.getTokenColor(33) + "-" + c.getTokenColor(34) + LINE + c.getTokenColorHouse(1, 3) + LINE
 				+ c.getTokenColor(4) + "-" + c.getTokenColor(5) + "-" + c.getTokenColor(6) + "-" + c.getTokenColor(7)
-				+ "-" + c.getTokenColor(8) + "|");
+				+ "-" + c.getTokenColor(8) + LINE);
 		 print("				    |30-31-32-33-34    04-05-06-07-08|");
 		 print("|" + c.getTokenColor(29) + " " + c.getTokenColorHouse(0, 0) + " " + c.getTokenColorHouse(0, 1)
 				+ " " + c.getTokenColorHouse(0, 2) + " " + c.getTokenColorHouse(0, 3) + "   "
 				+ c.getTokenColorHouse(2, 0) + " " + c.getTokenColorHouse(2, 1) + " " + c.getTokenColorHouse(2, 2) + " "
-				+ c.getTokenColorHouse(2, 3) + " " + c.getTokenColor(9) + "|");
+				+ c.getTokenColorHouse(2, 3) + " " + c.getTokenColor(9) + LINE);
 		 print("				    |29                            09|");
 		 print("|" + c.getTokenColor(28) + "-" + c.getTokenColor(27) + "-" + c.getTokenColor(26) + "-"
-				+ c.getTokenColor(25) + "-" + c.getTokenColor(24) + "|" + c.getTokenColorHouse(3, 3) + "|"
+				+ c.getTokenColor(25) + "-" + c.getTokenColor(24) + LINE + c.getTokenColorHouse(3, 3) + LINE
 				+ c.getTokenColor(14) + "-" + c.getTokenColor(13) + "-" + c.getTokenColor(12) + "-"
-				+ c.getTokenColor(11) + "-" + c.getTokenColor(10) + "|");
+				+ c.getTokenColor(11) + "-" + c.getTokenColor(10) + LINE);
 		 print("			            |28-27-26-25-24    14-13-12-11-10|");
-		 print("        |" + c.getTokenColor(23) + "|" + c.getTokenColorHouse(3, 2) + "|"
+		 print("        |" + c.getTokenColor(23) + LINE + c.getTokenColorHouse(3, 2) + LINE
 				+ c.getTokenColor(15) + "|        ");
 		 print("						|23    15| ");
-		 print("        |" + c.getTokenColor(22) + "|" + c.getTokenColorHouse(3, 1) + "|"
+		 print("        |" + c.getTokenColor(22) + LINE + c.getTokenColorHouse(3, 1) + LINE
 				+ c.getTokenColor(16) + "|        ");
 		 print("		                	        |22    16|        ");
 		 print(" " + c.getTokenColorBlock(3, 0) + " " + c.getTokenColorBlock(3, 1) + "    |"
-				+ c.getTokenColor(21) + "|" + c.getTokenColorHouse(3, 0) + "|" + c.getTokenColor(17) + "|    "
+				+ c.getTokenColor(21) + LINE + c.getTokenColorHouse(3, 0) + "|" + c.getTokenColor(17) + "|    "
 				+ c.getTokenColorBlock(2, 0) + " " + c.getTokenColorBlock(2, 1) + " ");
 		 print("		                 	        |21    17|        ");
 		 print(" " + c.getTokenColorBlock(3, 2) + " " + c.getTokenColorBlock(3, 3) + "    |"
@@ -113,15 +115,15 @@ public class TUI implements IObserver {
 		print(currentplayer.getName() + " threw :   " );
 		switch (dice){
 		case 1:
-			print("|       |");
+			print(EDGE);
  			print("|   O   |");
-			print("|       |");
+			print(EDGE);
 
  			break;
 
 		case 2:
 			print("|     O |");
-			print("|       |");
+			print(EDGE);
 			print("| O     |");
  			break;
 		case 3:
@@ -131,7 +133,7 @@ public class TUI implements IObserver {
  			break;
 		case 4:
 			print("| O   O |");
-			print("|       |");
+			print(EDGE);
 			print("| O   O |");
  			break;
 		case 5:
