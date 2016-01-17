@@ -2,10 +2,10 @@ package de.htwg.menschaergerdichnicht.model;
 
 public class GameField {
 
-	private Token[] gamefield;
+	private Token[] myGameField;
 	private Token[][] block;
 	private Token[][] house;
-	private final char[] color = { 'R', 'B', 'Y', 'P' };
+	private static final char[] color = { 'R', 'B', 'Y', 'P' };
 	private static final int[] STARTPOSITION = { 30, 0, 10, 20 };
 
 	private static final int POSITIONS = 40;
@@ -22,7 +22,7 @@ public class GameField {
 	}
 
 	public GameField() {
-		gamefield = new Token[POSITIONS];
+		myGameField = new Token[POSITIONS];
 		block = new Token[PLAYERS][BLOCKSIZE];
 		house = new Token[PLAYERS][HOUSESIZE];
 
@@ -45,12 +45,12 @@ public class GameField {
 
 	private void fillGameField() {
 		for (int i = 0; i < POSITIONS; i++) {
-			gamefield[i] = new Token('x');
+			myGameField[i] = new Token('x');
 		}
 	}
 
 	public char getStoneColor(int idx) {
-		return gamefield[idx].color;
+		return myGameField[idx].color;
 	}
 
 	public char getStoneColorBlock(int player, int idx) {
@@ -65,10 +65,10 @@ public class GameField {
 		int newIdx;
 		newIdx = idx % POSITIONS;
 
-		if (0 > newIdx || gamefield[newIdx].color == color)
+		if (0 > newIdx || myGameField[newIdx].color == color)
 			return false;
 
-		gamefield[newIdx].color = color;
+		myGameField[newIdx].color = color;
 
 		return true;
 	}
@@ -78,7 +78,7 @@ public class GameField {
 		int newIdx;
 		newIdx = idx % POSITIONS;
 		for (int i = 0; i < PLAYERS; i++)
-			if (this.color[i] == gamefield[newIdx].color)
+			if (GameField.color[i] == myGameField[newIdx].color)
 				return i;
 
 		return -1;
@@ -86,14 +86,14 @@ public class GameField {
 
 	public int enemyInStart(int player, char color) {
 
-		if (gamefield[STARTPOSITION[player]].color != color && gamefield[STARTPOSITION[player]].color != 'x') {
-			if (gamefield[STARTPOSITION[player]].color == 'R')
+		if (myGameField[STARTPOSITION[player]].color != color && myGameField[STARTPOSITION[player]].color != 'x') {
+			if (myGameField[STARTPOSITION[player]].color == 'R')
 				return 0;
-			if (gamefield[STARTPOSITION[player]].color == 'B')
+			if (myGameField[STARTPOSITION[player]].color == 'B')
 				return 1;
-			if (gamefield[STARTPOSITION[player]].color == 'Y')
+			if (myGameField[STARTPOSITION[player]].color == 'Y')
 				return 2;
-			if (gamefield[STARTPOSITION[player]].color == 'P')
+			if (myGameField[STARTPOSITION[player]].color == 'P')
 				return 3;
 
 		}
@@ -103,9 +103,9 @@ public class GameField {
 
 	public boolean getStoneOutOfBlock(int player) {
 		for (int i = 0; i < BLOCKSIZE; i++) {
-			if (block[player][i].color == color[player] && gamefield[STARTPOSITION[player]].color != color[player]) {
+			if (block[player][i].color == color[player] && myGameField[STARTPOSITION[player]].color != color[player]) {
 				block[player][i].color = ' ';
-				gamefield[STARTPOSITION[player]].color = color[player];
+				myGameField[STARTPOSITION[player]].color = color[player];
 				return true;
 			}
 		}
@@ -138,7 +138,7 @@ public class GameField {
 	public int stoneOnGamefield(int player) {
 		int count = 0;
 		for (int idx = 0; idx < POSITIONS; idx++)
-			if (gamefield[idx].color == color[player])
+			if (myGameField[idx].color == color[player])
 				count++;
 
 		return count;
@@ -163,11 +163,11 @@ public class GameField {
 	}
 
 	public boolean color(int player, int idx) {
-		return gamefield[idx % POSITIONS].color == color[player];
+		return myGameField[idx % POSITIONS].color == color[player];
 	}
 
 	public boolean isStartFree(int player) {
-		return gamefield[STARTPOSITION[player]].color != color[player];
+		return myGameField[STARTPOSITION[player]].color != color[player];
 	}
 
 	public boolean isRounded(int player, int idx, int dice) {
