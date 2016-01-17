@@ -124,6 +124,7 @@ public class Controller extends Observable implements IController {
 	@Override
 	public int dice() {
 		return this.dice = r.nextInt(6) + 1;
+	
 	}
 
 	@Override

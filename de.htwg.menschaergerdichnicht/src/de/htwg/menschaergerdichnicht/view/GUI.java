@@ -157,22 +157,6 @@ public class GUI implements IObserver {
 
 			position = new MyPoint();
 
-			int indexofcklickedpoint = 0;
-			if (clickedPoint != null) {
-				for (int i = 0; i < this.figurePosition.length; i++) {
-					if (clickedPoint.x == this.figurePosition[i].x && clickedPoint.y == this.figurePosition[i].y) {
-						clickedPoint.setIdx(this.figurePosition[i].getIdx());
-						indexofcklickedpoint = clickedPoint.getIdx();
-
-						if (!c.rounded(indexofcklickedpoint)) {
-							position.x = figurePosition[(i + c.dice()) % 40].y;
-							position.y = figurePosition[(i + c.dice()) % 40].x;
-						}
-						break;
-					}
-				}
-			}
-
 			// draw stones in block and house
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
@@ -345,11 +329,9 @@ public class GUI implements IObserver {
 			}
 			if (c.moveStart())
 				repaint();
-			if (indexOfClickedPoint != -1 && c.move((this.figurePosition[indexOfClickedPoint].idx + 10) % 40))
+			if (indexOfClickedPoint != -1 && c.move(indexOfClickedPoint % 40))
 				repaint();
 
-			if (indexOfClickedPoint == -1)
-				System.out.println("AAA");
 
 		}
 
