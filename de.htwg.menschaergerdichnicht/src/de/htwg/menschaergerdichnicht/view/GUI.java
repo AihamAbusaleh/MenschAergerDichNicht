@@ -335,20 +335,25 @@ public class GUI implements IObserver {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
+			/*can be empty*/
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
+			/*can be empty*/
 
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			/*can be empty*/
 
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			/*can be empty*/
 
 		}
 
@@ -362,6 +367,7 @@ public class GUI implements IObserver {
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
+		/*can be empty*/
 
 	}
 
