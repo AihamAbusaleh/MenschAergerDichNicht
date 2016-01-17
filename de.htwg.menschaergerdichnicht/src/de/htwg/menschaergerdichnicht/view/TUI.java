@@ -1,13 +1,15 @@
 package de.htwg.menschaergerdichnicht.view;
 
-import org.apache.log4j.Logger;
 
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.util.observer.IObserver;
 
 public class TUI implements IObserver {
-	private Logger logger = Logger.getLogger(TUI.class);
+	private Logger logger = LogManager.getLogger(TUI.class);
 
 	private Controller c;
 

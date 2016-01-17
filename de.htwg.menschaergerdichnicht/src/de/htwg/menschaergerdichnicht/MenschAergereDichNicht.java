@@ -2,11 +2,12 @@ package de.htwg.menschaergerdichnicht;
 
 import java.util.Scanner;
 
+import org.apache.log4j.PropertyConfigurator;
+
 import de.htwg.menschaergerdichnicht.controller.Controller;
 import de.htwg.menschaergerdichnicht.view.GUI;
 import de.htwg.menschaergerdichnicht.view.TUI;
-import org.apache.log4j.PropertyConfigurator;
-public class MenschAergereDichNicht {
+ public class MenschAergereDichNicht {
 
 	private static Scanner sc;
 
