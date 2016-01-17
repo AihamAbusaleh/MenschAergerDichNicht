@@ -5,14 +5,13 @@ import de.htwg.menschaergerdichnicht.model.GameField;
 public class SaveSteps implements IDoUndoCommand {
 	private GameField gamefield;
 
+	public SaveSteps(GameField gamefield) { // addCommand
+		this.gamefield = gamefield;
+	}
+
 	@Override
 	public GameField getGamefield() {
 		return gamefield;
-	}
-
-	public SaveSteps(GameField gamefield) { // addCommand
-
-		this.gamefield = gamefield;
 	}
 
 	@Override

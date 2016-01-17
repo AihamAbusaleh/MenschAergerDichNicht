@@ -6,9 +6,9 @@ public class StatePlayer1 implements IState {
 
 	@Override
 	public Player currentPlayer(Player player) {
-		player = new Player(1, "BLUE", 'B');
-		player.setState(this);
- 		return player;
+		Player p = new Player(1, "BLUE", 'B');
+		p.setState(this);
+ 		return p;
 
 	}
 

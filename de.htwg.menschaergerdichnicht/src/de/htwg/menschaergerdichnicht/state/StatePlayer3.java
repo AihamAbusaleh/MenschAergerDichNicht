@@ -5,9 +5,9 @@ import de.htwg.menschaergerdichnicht.model.Player;
 public class StatePlayer3 implements IState {
 	@Override
 	public Player currentPlayer(Player player) {
-		player = new Player(3, "PINK", 'P');
- 		player.setState(this);
- 		return player;
+		Player p = new Player(3, "PINK", 'P');
+ 		p.setState(this);
+ 		return p;
 	}
 
 	@Override
