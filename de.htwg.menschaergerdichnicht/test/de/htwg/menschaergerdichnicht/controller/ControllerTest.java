@@ -2,6 +2,8 @@ package de.htwg.menschaergerdichnicht.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,11 +12,13 @@ import de.htwg.menschaergerdichnicht.state.IState;
 import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 import de.htwg.menschaergerdichnicht.state.StatePlayer1;
 import de.htwg.menschaergerdichnicht.state.StatePlayer2;
+import de.htwg.util.observer.IObserver;
  
 public class ControllerTest {
 
 	private Controller controller;
 	private IState state;
+	private IObserver o;
 
 	@Before
 	public void setUp() throws Exception {
@@ -46,7 +50,7 @@ public class ControllerTest {
 				assertFalse(controller.move(20));
 			}
 
-			if (controller.getTokenColor(3) == 'S') {
+			if (controller.getTokenColor(3) == 'P') {
 				assertTrue(controller.move(20));
 				assertFalse(controller.move(10));
 			}
@@ -123,10 +127,10 @@ public class ControllerTest {
 
 	@Test
 	public void testStoneCanOut() {
-		if (controller.isFieldEmpty() == true) {
+		if (controller.emptyField() == true) {
 			if (controller.dice() == 6) {
 				controller.stoneCanOut();
-				assertFalse(controller.isFieldEmpty());
+				assertFalse(controller.emptyField());
 			}
 		}
 	}
@@ -146,5 +150,19 @@ public class ControllerTest {
 		controller.getOutOfBlock();
 		assertFalse(controller.emptyField());
 
+	}
+	@Test
+	public void testgetOutOfBlock(){
+		assertTrue(controller.getOutOfBlock());
+	}
+	@Test
+	public void testRegister(){
+		controller.registerObserver(o); 
+		
+	}
+	@Test
+	public void testUnRegister(){
+		controller.unregisterObserver(o); 
+		
 	}
 }

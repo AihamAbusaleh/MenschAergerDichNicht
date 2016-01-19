@@ -1,4 +1,4 @@
-package de.htwg.menschaergerdichnicht.command;
+package de.htwg.util.command;
 
 import static org.junit.Assert.*;
 

@@ -18,7 +18,6 @@ public class ObserverTest {
 	class TestObserver implements IObserver {
 	 
 		public void showDice(Player currentplayer, int dice) {
-			//e = true;
 		}
  
 		public void update(Player currentPlayer, boolean gameEnded) {

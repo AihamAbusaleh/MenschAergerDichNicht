@@ -1,5 +1,9 @@
 package de.htwg.menschaergerdichnicht.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import de.htwg.menschaergerdichnicht.model.GameField;
 import de.htwg.menschaergerdichnicht.model.Player;
 import de.htwg.menschaergerdichnicht.state.IState;
@@ -11,10 +15,6 @@ import de.htwg.util.command.CommandManager;
 import de.htwg.util.command.SaveSteps;
 import de.htwg.util.observer.IObserver;
 import de.htwg.util.observer.Observable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Controller extends Observable implements IController {
 
@@ -29,7 +29,7 @@ public class Controller extends Observable implements IController {
 	public Controller() {
 		gamefield = new GameField();
 		r = new Random();
-		state = new StatePlayer3();
+		state = new StatePlayer0();
 		dice();
 	}
 
@@ -48,7 +48,6 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public void stoneCanOut() {
-
 		if (gamefield.isStartFree(currentplayer.getIdx()) && gamefield.isStoneInBlock(currentplayer.getIdx())
 				&& dice == 6) {
 			int enemy = gamefield.enemyInStart(currentplayer.getIdx(), currentplayer.getColor());
@@ -60,14 +59,18 @@ public class Controller extends Observable implements IController {
 			updateObservers();
 		}
 
+		if (dice == 6)
+			updateObservers();
 	}
 
 	@Override
 	public boolean isFieldEmpty() {
-		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
+
+		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0 && dice != 6) {
 			updateObservers();
 			return true;
 		}
+
 		return false;
 	}
 
@@ -119,6 +122,7 @@ public class Controller extends Observable implements IController {
 	@Override
 	public int dice() {
 		this.dice = r.nextInt(6) + 1;
+		// this.dice =6;
 		return this.dice;
 	}
 
@@ -169,9 +173,11 @@ public class Controller extends Observable implements IController {
 			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
 		}
+
 		dice();
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
+
 		}
 
 	}
@@ -180,6 +186,7 @@ public class Controller extends Observable implements IController {
 	public String throwDiceGUI() {
 		String mydice;
 		for (IObserver observer : observers) {
+
 			observer.showDice(currentplayer, this.dice);
 
 		}

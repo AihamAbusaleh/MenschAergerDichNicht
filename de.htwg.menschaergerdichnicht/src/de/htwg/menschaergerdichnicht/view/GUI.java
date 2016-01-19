@@ -29,7 +29,7 @@ public class GUI implements IObserver {
 	private Controller c;
 	private JButton throwDice;
 	private JPanel container;
-	
+
 	public GUI(Controller c) {
 		this.c = c;
 		c.registerObserver(this);
@@ -44,7 +44,7 @@ public class GUI implements IObserver {
 
 		this.throwDice = new JButton("Throw Dice");
 		this.throwDice.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
@@ -312,6 +312,7 @@ public class GUI implements IObserver {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			int indexOfClickedPoint = 0;
+
 			boolean disabled = true;
 			for (int i = 0; i < this.figurePosition.length; i++) {
 
@@ -336,7 +337,7 @@ public class GUI implements IObserver {
 			if (!disabled) {
 				if (c.moveStart())
 					repaint();
-				if (indexOfClickedPoint != -1 && c.move(indexOfClickedPoint % 40))
+				if (c.move(indexOfClickedPoint % 40))
 					repaint();
 			}
 		}
@@ -369,17 +370,19 @@ public class GUI implements IObserver {
 
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
-		/* can be empty */
+		this.frame.repaint();
 
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-
-		if (dice == 6)
+		if (dice == 6) {
 			c.getOutOfBlock();
-		frame.repaint();
+		//	frame.repaint();
+		}
 
+	
+		frame.repaint();
 	}
 
 }
