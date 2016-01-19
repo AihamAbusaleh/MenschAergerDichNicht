@@ -8,7 +8,7 @@ public interface IDoUndoCommand {
 	 * 
 	 * @return the current gamefield
 	 */
-	public GameField doMyCommand();
+	public void doMyCommand();
 
 	/**
 	 * to undo the last saved gamefield
@@ -16,12 +16,6 @@ public interface IDoUndoCommand {
 	 * @return the saved gamefield
 	 */
 	public GameField undoMyStep();
-
-	/**
-	 * to get the saved gamefield
-	 * 
-	 * @return the saved gamefield
-	 */
-	public GameField getGamefield();
+ 
 
 }

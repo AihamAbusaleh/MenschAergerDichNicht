@@ -102,6 +102,11 @@ public interface IController {
 	/**
 	 * This function give the current player and its thrown dice
 	 */
-	String wurfeln();
+	String throwDiceGUI();
+
+	/**
+	 * This function checks if any stone of the current Player on the field
+	 */
+	boolean emptyField();
 
 }

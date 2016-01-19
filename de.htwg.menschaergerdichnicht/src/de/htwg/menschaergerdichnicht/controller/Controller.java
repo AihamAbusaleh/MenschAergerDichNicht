@@ -36,7 +36,6 @@ public class Controller extends Observable implements IController {
 	@Override
 	public boolean moveStart() {
 		currentplayer = state.currentPlayer(currentplayer);
-		createSteps();
 		// Raus kommen
 		stoneCanOut();
 
@@ -119,8 +118,8 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public int dice() {
-		 this.dice = r.nextInt(6) + 1;
-		 return this.dice;
+		this.dice = r.nextInt(6) + 1;
+		return this.dice;
 	}
 
 	@Override
@@ -139,7 +138,7 @@ public class Controller extends Observable implements IController {
 			state = new StatePlayer3();
 		if (currentplayer.getState().toString() == "PINK")
 			state = new StatePlayer0();
-		
+
 	}
 
 	@Override
@@ -178,14 +177,30 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public String wurfeln() {
-		 
+	public String throwDiceGUI() {
+		String mydice;
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
-		 
-		}
-		return " " + currentplayer.getName() + " threw [" + this.dice + "]";
 
+		}
+		mydice = " " + currentplayer.getName() + " threw [" + this.dice + "]";
+
+		if (emptyField()) {
+			setNextPlayer();
+			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
+			dice();
+		}
+
+		return mydice;
+
+	}
+
+	@Override
+	public boolean emptyField() {
+		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -213,7 +228,6 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-
 	public void createSteps() {
 		manager.doCommand(new SaveSteps(gamefield));
 

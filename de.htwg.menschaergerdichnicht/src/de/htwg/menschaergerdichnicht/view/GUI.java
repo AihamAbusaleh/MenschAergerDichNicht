@@ -25,41 +25,40 @@ public class GUI implements IObserver {
 
 	private JFrame frame;
 	private JTextField output;
-	private JPanel wurfelPanel;
+	private JPanel dicePanel;
 	private Controller c;
-	private JButton wurfeln;
+	private JButton throwDice;
 	private JPanel container;
-
+	
 	public GUI(Controller c) {
 		this.c = c;
 		c.registerObserver(this);
 
 		frame = new JFrame("Mensch ärgere dich nicht");
 		this.container = new GamefieldGUI();
-		this.wurfelPanel = new JPanel();
-		wurfelPanel.setLayout(new GridLayout(1, 2));
+		this.dicePanel = new JPanel();
+		dicePanel.setLayout(new GridLayout(1, 2));
 
 		output = new JTextField();
-
 		output.setEditable(false);
 
-		this.wurfeln = new JButton("Throw Dice");
-		this.wurfeln.addActionListener(new ActionListener() {
-
+		this.throwDice = new JButton("Throw Dice");
+		this.throwDice.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				if ("Throw Dice".equals(e.getActionCommand())) {
-					output.setText(c.wurfeln());
+					output.setText(c.throwDiceGUI());
 
 				}
 
 			}
 		});
-		this.wurfelPanel.add(wurfeln);
-		this.wurfelPanel.add(output);
+		this.dicePanel.add(throwDice);
+		this.dicePanel.add(output);
 		frame.getContentPane().setLayout(new BorderLayout());
-		frame.getContentPane().add(wurfelPanel, BorderLayout.NORTH);
+		frame.getContentPane().add(dicePanel, BorderLayout.NORTH);
 		frame.getContentPane().add(container);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(600, 700);
@@ -83,8 +82,9 @@ public class GUI implements IObserver {
 		MyPoint clickedPoint = null;
 		MyPoint position = null;
 		Color stoneColor = Color.WHITE;
-		Graphics2D g2 ;
+		Graphics2D g2;
 		int laenge;
+
 		public GamefieldGUI() {
 			this.setBackground(Color.WHITE);
 
@@ -136,8 +136,8 @@ public class GUI implements IObserver {
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			  laenge = this.getWidth() / 11;
-			  g2 = (Graphics2D) g;
+			laenge = this.getWidth() / 11;
+			g2 = (Graphics2D) g;
 			Color tmpColor = g2.getColor();
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			for (int i = 0; i < this.field.length; i++) {
@@ -158,7 +158,7 @@ public class GUI implements IObserver {
 
 			// draw stones in block and in house
 			drawColorsHaousAndBlock();
-			
+
 			// draw all the stones on the game field
 			for (int i = 0; i < figurePosition.length; i++) {
 				if (c.getTokenColor(figurePosition[i].idx) != 'x') {
@@ -192,7 +192,8 @@ public class GUI implements IObserver {
 			}
 			g2.setColor(tmpColor);
 		}
-		private void drawColorsHaousAndBlock(){
+
+		private void drawColorsHaousAndBlock() {
 			for (int player = 0; player < 4; player++) {
 				for (int block = 0; block < 4; block++) {
 
@@ -222,6 +223,7 @@ public class GUI implements IObserver {
 
 			}
 		}
+
 		private void tokenColorBlock(char tokenBlock, int block) {
 			switch (tokenBlock) {
 			case 'R':
@@ -310,6 +312,7 @@ public class GUI implements IObserver {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			int indexOfClickedPoint = 0;
+			boolean disabled = true;
 			for (int i = 0; i < this.figurePosition.length; i++) {
 
 				int size = this.getWidth();
@@ -320,44 +323,45 @@ public class GUI implements IObserver {
 				if (yOfClickedPoint == this.figurePosition[i].x && xOfClickedPoint == this.figurePosition[i].y) {
 					clickedPoint.setIdx(this.figurePosition[i].getIdx());
 					indexOfClickedPoint = clickedPoint.getIdx();
-
+					if (c.getTokenColor(figurePosition[i].idx) != 'x')
+						disabled = false;
 					break;
 				} else {
 					clickedPoint.setIdx(-1);
 					indexOfClickedPoint = clickedPoint.getIdx();
-
+					disabled = true;
 				}
 
 			}
-			if (c.moveStart())
-				repaint();
-			if (indexOfClickedPoint != -1 && c.move(indexOfClickedPoint % 40))
-				repaint();
-
-
+			if (!disabled) {
+				if (c.moveStart())
+					repaint();
+				if (indexOfClickedPoint != -1 && c.move(indexOfClickedPoint % 40))
+					repaint();
+			}
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			/*can be empty*/
+			/* can be empty */
 
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			/*can be empty*/
+			/* can be empty */
 
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			/*can be empty*/
+			/* can be empty */
 
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			/*can be empty*/
+			/* can be empty */
 
 		}
 
@@ -365,13 +369,16 @@ public class GUI implements IObserver {
 
 	@Override
 	public void update(Player currentPlayer, boolean gameEnded) {
-		this.frame.repaint();
+		/* can be empty */
 
 	}
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-		/*can be empty*/
+
+		if (dice == 6)
+			c.getOutOfBlock();
+		frame.repaint();
 
 	}
 

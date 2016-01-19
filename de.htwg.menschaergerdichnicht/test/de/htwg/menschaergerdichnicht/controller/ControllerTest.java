@@ -135,7 +135,7 @@ public class ControllerTest {
 		state = new StatePlayer0();
  		if(state.toString().equals("RED") && controller.dice() == 6){
 			controller.moveStart();
-			assertEquals("  BLUE threw [6]", controller.wurfeln());
+			assertEquals("  BLUE threw [6]", controller.throwDiceGUI());
 		}
 			
 	}
