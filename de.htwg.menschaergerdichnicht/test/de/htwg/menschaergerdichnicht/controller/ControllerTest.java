@@ -165,4 +165,13 @@ public class ControllerTest {
 		controller.unregisterObserver(o); 
 		
 	}
+	
+	@Test
+	public void testUpdateObserver(){
+		boolean e = false;
+		controller.updateObservers();
+		assertFalse(e);
+	}
+	
+
 }
