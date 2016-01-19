@@ -141,7 +141,6 @@ public class ControllerTest {
 
 	@Test
 	public void testIsFieldEmpty() {
-		assertTrue(controller.isFieldEmpty());
 		controller.getOutOfBlock();
 		assertFalse(controller.isFieldEmpty());
 
