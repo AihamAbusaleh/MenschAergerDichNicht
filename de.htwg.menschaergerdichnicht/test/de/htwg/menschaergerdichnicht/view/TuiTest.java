@@ -16,6 +16,7 @@ public class TuiTest {
 	private TUI tui;
 	private Controller c;
 	
+	
 	@Before
 	public void setUp() throws Exception {
 		c = new Controller();
@@ -53,4 +54,6 @@ public class TuiTest {
 			  
 		 }
 	}
+	
+ 
 }
