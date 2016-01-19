@@ -7,7 +7,7 @@ public interface IController {
 	/**
 	 * This function check if the stone from currentPlayer can leave the block
 	 */
-	void stonCanOut();
+	void stoneCanOut();
 
 	/**
 	 * This function return true if no stone from currentPlayer on the field

@@ -18,7 +18,7 @@ public class ObserverTest {
 	class TestObserver implements IObserver {
 	 
 		public void showDice(Player currentplayer, int dice) {
-			e = true;
+			//e = true;
 		}
  
 		public void update(Player currentPlayer, boolean gameEnded) {
@@ -41,15 +41,14 @@ public class ObserverTest {
 	public void testUpdateObservers() {
 		assertFalse(e);
 		testObservable.updateObservers();
+		assertTrue(e);
 
 	}
 
 	@Test
 	public void testUnregisterObserver() {
 		assertFalse(e);
-
 		testObservable.unregisterObserver(testObserver);
-
 		testObservable.updateObservers();
 		assertFalse(e);
 

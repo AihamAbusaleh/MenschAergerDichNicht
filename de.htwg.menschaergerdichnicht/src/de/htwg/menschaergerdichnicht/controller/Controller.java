@@ -29,7 +29,7 @@ public class Controller extends Observable implements IController {
 	public Controller() {
 		gamefield = new GameField();
 		r = new Random();
-		state = new StatePlayer0();
+		state = new StatePlayer3();
 		dice();
 	}
 
@@ -38,7 +38,7 @@ public class Controller extends Observable implements IController {
 		currentplayer = state.currentPlayer(currentplayer);
 		createSteps();
 		// Raus kommen
-		stonCanOut();
+		stoneCanOut();
 
 		// Man kann nicht fahren wenn true, nextPlayer ist dran
 		if (isFieldEmpty()) {
@@ -48,7 +48,7 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public void stonCanOut() {
+	public void stoneCanOut() {
 
 		if (gamefield.isStartFree(currentplayer.getIdx()) && gamefield.isStoneInBlock(currentplayer.getIdx())
 				&& dice == 6) {
@@ -133,13 +133,13 @@ public class Controller extends Observable implements IController {
 
 		if (currentplayer.getState().toString() == "RED")
 			state = new StatePlayer1();
-		else if (currentplayer.getState().toString() == "BLUE")
+		if (currentplayer.getState().toString() == "BLUE")
 			state = new StatePlayer2();
-		else if (currentplayer.getState().toString() == "YELLOW")
+		if (currentplayer.getState().toString() == "YELLOW")
 			state = new StatePlayer3();
-		else {
+		if (currentplayer.getState().toString() == "PINK")
 			state = new StatePlayer0();
-		}
+		
 	}
 
 	@Override
@@ -179,9 +179,10 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public String wurfeln() {
+		 
 		for (IObserver observer : observers) {
 			observer.showDice(currentplayer, this.dice);
-
+		 
 		}
 		return " " + currentplayer.getName() + " threw [" + this.dice + "]";
 

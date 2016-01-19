@@ -6,15 +6,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
-
+import de.htwg.menschaergerdichnicht.state.IState;
+import de.htwg.menschaergerdichnicht.state.StatePlayer0;
+import de.htwg.menschaergerdichnicht.state.StatePlayer1;
+import de.htwg.menschaergerdichnicht.state.StatePlayer2;
+ 
 public class ControllerTest {
 
 	private Controller controller;
+	private IState state;
 
 	@Before
 	public void setUp() throws Exception {
 		controller = new Controller();
-
+		state = new StatePlayer1();
 	}
 
 	@Test
@@ -58,7 +63,7 @@ public class ControllerTest {
 			controller.moveStart();
 			controller.move(0);
 
-		} 
+		}
 
 	}
 
@@ -69,26 +74,10 @@ public class ControllerTest {
 
 	@Test
 	public void testsetNextPlayer() {
-		controller.dice();
-		if (controller.getTokenColor(0) == 'R') {
+		if(state.toString().equals("BLUE") ){ 
 			controller.setNextPlayer();
-			assertEquals('B', controller.getTokenColor(1));
-
-		}
-
-		if (controller.getTokenColor(1) == 'B') {
-			controller.setNextPlayer();
-			assertEquals('Y', controller.getTokenColor(2));
-		}
-
-		if (controller.getTokenColor(2) == 'Y') {
-			controller.setNextPlayer();
-			assertEquals('S', controller.getTokenColor(3));
-		}
-
-		if (controller.getTokenColor(3) == 'S') {
-			controller.setNextPlayer();
-			assertEquals('R', controller.getTokenColor(0));
+			state = new StatePlayer2();
+			assertEquals("YELLOW", state.toString()); 
 		}
 
 	}
@@ -105,31 +94,49 @@ public class ControllerTest {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
 	}
 
-
 	@Test
-	public void testRounded(){
-		
+	public void testRounded() {
+
 		assertFalse(controller.rounded(11));
 	}
+
 	@Test
-	public void testIsGameEnded(){
-		assertFalse(controller.isGameEnded()); 
-		
+	public void testIsGameEnded() {
+		assertFalse(controller.isGameEnded());
+
 	}
+
 	@Test
-	public void testIsFieldEmpty(){
-		assertTrue(controller.isFieldEmpty()); 
+	public void testIsFieldEmpty() {
+		assertTrue(controller.isFieldEmpty());
 		controller.getOutOfBlock();
-		assertFalse(controller.isFieldEmpty()); 
+		assertFalse(controller.isFieldEmpty());
 
 	}
-	@Test 
-	public void testDice(){
+
+	@Test
+	public void testDice() {
 		int dice = controller.dice();
-		if(dice == 5)
-			assertEquals(5, dice); 
+		if (dice == 5)
+			assertEquals(5, dice);
 	}
-	
-	
 
+	@Test
+	public void testStoneCanOut() {
+		if (controller.isFieldEmpty() == true) {
+			if (controller.dice() == 6) {
+				controller.stoneCanOut();
+				assertFalse(controller.isFieldEmpty());
+			}
+		}
+	}
+	@Test
+	public void testWurfeln(){
+		state = new StatePlayer0();
+ 		if(state.toString().equals("RED") && controller.dice() == 6){
+			controller.moveStart();
+			assertEquals("  BLUE threw [6]", controller.wurfeln());
+		}
+			
+	}
 }
