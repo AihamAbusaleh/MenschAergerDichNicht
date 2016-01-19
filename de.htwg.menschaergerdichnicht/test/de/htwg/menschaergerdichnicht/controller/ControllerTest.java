@@ -131,12 +131,20 @@ public class ControllerTest {
 		}
 	}
 	@Test
-	public void testWurfeln(){
+	public void testthrowDiceGUI(){
 		state = new StatePlayer0();
- 		if(state.toString().equals("RED") && controller.dice() == 6){
+ 		if(state.toString().equals("RED") && controller.dice() == 6 && !controller.emptyField()){
 			controller.moveStart();
 			assertEquals("  BLUE threw [6]", controller.throwDiceGUI());
 		}
 			
+	}
+	
+	@Test
+	public void testemptyField(){
+		assertTrue(controller.isFieldEmpty());
+		controller.getOutOfBlock();
+		assertFalse(controller.isFieldEmpty());
+
 	}
 }
