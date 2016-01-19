@@ -13,7 +13,7 @@ import de.htwg.menschaergerdichnicht.state.StatePlayer0;
 import de.htwg.menschaergerdichnicht.state.StatePlayer1;
 import de.htwg.menschaergerdichnicht.state.StatePlayer2;
 import de.htwg.util.observer.IObserver;
- 
+
 public class ControllerTest {
 
 	private Controller controller;
@@ -33,34 +33,18 @@ public class ControllerTest {
 
 	@Test
 	public void testmove() {
-		controller.dice();
-		if (!controller.isFieldEmpty()) {
-			if (controller.getTokenColor(0) == 'R') {
-				assertTrue(controller.move(30));
-				assertFalse(controller.move(20));
-			}
 
-			if (controller.getTokenColor(1) == 'B') {
-				assertTrue(controller.move(0));
-				assertFalse(controller.move(20));
-			}
-
-			if (controller.getTokenColor(2) == 'Y') {
-				assertTrue(controller.move(10));
-				assertFalse(controller.move(20));
-			}
-
-			if (controller.getTokenColor(3) == 'P') {
-				assertTrue(controller.move(20));
-				assertFalse(controller.move(10));
-			}
+		if (controller.getTokenColor(30) == 'R' || controller.getTokenColor(30) == 'B'
+				|| controller.getTokenColor(30) == 'Y' || controller.getTokenColor(30) == 'P') {
+			assertTrue(controller.move(30));
+			assertFalse(controller.move(20));
 		}
+
 	}
 
 	@Test
 	public void testmoveStart() {
-		if (!controller.isFieldEmpty()) {
-			controller.moveStart();
+		if (!controller.emptyField()) {
 			assertTrue(controller.moveStart());
 			controller.move(30);
 			controller.setNextPlayer();
@@ -74,14 +58,16 @@ public class ControllerTest {
 	@Test
 	public void testgetTokenColor() {
 		assertEquals('x', controller.getTokenColor(0));
+		assertEquals('x', controller.getTokenColor(6));
+		assertEquals('x', controller.getTokenColor(9));
 	}
 
 	@Test
 	public void testsetNextPlayer() {
-		if(state.toString().equals("BLUE") ){ 
+		if (state.toString().equals("BLUE")) {
 			controller.setNextPlayer();
 			state = new StatePlayer2();
-			assertEquals("YELLOW", state.toString()); 
+			assertEquals("YELLOW", state.toString());
 		}
 
 	}
@@ -89,13 +75,20 @@ public class ControllerTest {
 	@Test
 	public void testgetTokenColorBlock() {
 		controller.dice();
-		if (controller.isFieldEmpty())
+		if (controller.isFieldEmpty()) {
 			assertEquals('R', controller.getTokenColorBlock(0, 0));
+		}
+		assertEquals('B', controller.getTokenColorBlock(1, 1));
+
 	}
 
 	@Test
 	public void testgetTokenColorHouse() {
 		assertEquals(' ', controller.getTokenColorHouse(0, 0));
+		assertEquals(' ', controller.getTokenColorHouse(0, 1));
+		assertEquals(' ', controller.getTokenColorHouse(0, 2));
+		assertEquals(' ', controller.getTokenColorHouse(0, 3));
+
 	}
 
 	@Test
@@ -123,6 +116,16 @@ public class ControllerTest {
 		int dice = controller.dice();
 		if (dice == 5)
 			assertEquals(5, dice);
+		if (dice == 1)
+			assertEquals(1, dice);
+		if (dice == 2)
+			assertEquals(2, dice);
+		if (dice == 3)
+			assertEquals(3, dice);
+		if (dice == 4)
+			assertEquals(4, dice);
+		if (dice == 6)
+			assertEquals(6, dice);
 	}
 
 	@Test
@@ -134,44 +137,47 @@ public class ControllerTest {
 			}
 		}
 	}
+
 	@Test
-	public void testthrowDiceGUI(){
+	public void testthrowDiceGUI() {
 		state = new StatePlayer0();
- 		if(state.toString().equals("RED") && controller.dice() == 6 && !controller.emptyField()){
+		if (state.toString().equals("RED") && controller.dice() == 6 && !controller.emptyField()) {
 			controller.moveStart();
 			assertEquals("  BLUE threw [6]", controller.throwDiceGUI());
 		}
-			
+
 	}
-	
+
 	@Test
-	public void testemptyField(){
+	public void testemptyField() {
 		assertTrue(controller.emptyField());
 		controller.getOutOfBlock();
 		assertFalse(controller.emptyField());
 
 	}
+
 	@Test
-	public void testgetOutOfBlock(){
+	public void testgetOutOfBlock() {
 		assertTrue(controller.getOutOfBlock());
 	}
+
 	@Test
-	public void testRegister(){
-		controller.registerObserver(o); 
-		
+	public void testRegister() {
+		controller.registerObserver(o);
+
 	}
+
 	@Test
-	public void testUnRegister(){
-		controller.unregisterObserver(o); 
-		
+	public void testUnRegister() {
+		controller.unregisterObserver(o);
+
 	}
-	
+
 	@Test
-	public void testUpdateObserver(){
+	public void testUpdateObserver() {
 		boolean e = false;
 		controller.updateObservers();
 		assertFalse(e);
 	}
-	
 
 }

@@ -59,8 +59,7 @@ public class Controller extends Observable implements IController {
 			updateObservers();
 		}
 
-		if (dice == 6)
-			updateObservers();
+		
 	}
 
 	@Override
@@ -78,14 +77,12 @@ public class Controller extends Observable implements IController {
 	public boolean move(int idx) {
 		// Falscher Stein
 		if (!gamefield.color(currentplayer.getIdx(), idx)) {
-			System.out.println("wrong idx! no match");
 			return false;
 		}
 
 		// Steine ins Haus bringen
 		if (gamefield.isRounded(currentplayer.getIdx(), idx, dice)) {
 			if (!gamefield.setStoneInHouse(currentplayer.getIdx(), idx + dice)) {
-				System.out.println("there is a stone in the field house");
 				return false;
 			}
 
@@ -100,7 +97,6 @@ public class Controller extends Observable implements IController {
 		int player = gamefield.whichPlayerOnIdx(idx + dice);
 
 		if (player == currentplayer.getIdx()) {
-			System.out.println(" choose another stone to move\n");
 			return false;
 		}
 		if (player >= 0)
@@ -122,7 +118,6 @@ public class Controller extends Observable implements IController {
 	@Override
 	public int dice() {
 		this.dice = r.nextInt(6) + 1;
-		// this.dice =6;
 		return this.dice;
 	}
 

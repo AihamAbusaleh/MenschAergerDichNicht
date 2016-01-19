@@ -376,10 +376,10 @@ public class GUI implements IObserver {
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-		if (dice == 6) {
-			c.getOutOfBlock();
-		//	frame.repaint();
-		}
+//		if (dice == 6) {
+//			c.getOutOfBlock();
+//			frame.repaint();
+//		}
 
 	
 		frame.repaint();

@@ -1,6 +1,6 @@
 package de.htwg.menschaergerdichnicht.view;
 
-public class MyPoint {
+public class MyPoint implements IMyPoint{
 	int x, y, idx;
 
 	public MyPoint(int x, int y, int idx) {
