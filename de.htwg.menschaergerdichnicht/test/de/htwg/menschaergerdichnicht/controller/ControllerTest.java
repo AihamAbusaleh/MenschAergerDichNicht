@@ -28,16 +28,31 @@ public class ControllerTest {
 
 	@Test
 	public void testdice() {
-		controller.dice();
+		if (controller.dice() == 6)
+			assertEquals(6, controller.dice());
 	}
 
 	@Test
 	public void testmove() {
+		if (!controller.emptyField()) {
+			if (controller.getTokenColor(30) == 'R') {
+				assertTrue(controller.move(30));
+				assertFalse(controller.move(20));
+			}
+			if (controller.getTokenColor(30) == 'B') {
+				assertTrue(controller.move(30));
+				assertFalse(controller.move(20));
+			}
 
-		if (controller.getTokenColor(30) == 'R' || controller.getTokenColor(30) == 'B'
-				|| controller.getTokenColor(30) == 'Y' || controller.getTokenColor(30) == 'P') {
-			assertTrue(controller.move(30));
-			assertFalse(controller.move(20));
+			if (controller.getTokenColor(30) == 'Y') {
+				assertTrue(controller.move(30));
+				assertFalse(controller.move(20));
+			}
+
+			if (controller.getTokenColor(30) == 'P') {
+				assertTrue(controller.move(30));
+				assertFalse(controller.move(20));
+			}
 		}
 
 	}
@@ -49,6 +64,11 @@ public class ControllerTest {
 			controller.move(30);
 			controller.setNextPlayer();
 			controller.moveStart();
+			controller.moveStart();
+
+			controller.moveStart();
+			controller.moveStart();
+
 			controller.move(0);
 
 		}
@@ -60,6 +80,11 @@ public class ControllerTest {
 		assertEquals('x', controller.getTokenColor(0));
 		assertEquals('x', controller.getTokenColor(6));
 		assertEquals('x', controller.getTokenColor(9));
+		assertEquals('x', controller.getTokenColor(7));
+		assertEquals('x', controller.getTokenColor(8));
+		assertEquals('x', controller.getTokenColor(11));
+		assertEquals('x', controller.getTokenColor(12));
+
 	}
 
 	@Test
@@ -79,6 +104,10 @@ public class ControllerTest {
 			assertEquals('R', controller.getTokenColorBlock(0, 0));
 		}
 		assertEquals('B', controller.getTokenColorBlock(1, 1));
+		assertEquals('B', controller.getTokenColorBlock(1, 2));
+		assertEquals('Y', controller.getTokenColorBlock(2, 3));
+		assertEquals('Y', controller.getTokenColorBlock(2, 0));
+
 
 	}
 
@@ -88,6 +117,8 @@ public class ControllerTest {
 		assertEquals(' ', controller.getTokenColorHouse(0, 1));
 		assertEquals(' ', controller.getTokenColorHouse(0, 2));
 		assertEquals(' ', controller.getTokenColorHouse(0, 3));
+		assertEquals(' ', controller.getTokenColorHouse(1, 3));
+
 
 	}
 
@@ -95,11 +126,16 @@ public class ControllerTest {
 	public void testRounded() {
 
 		assertFalse(controller.rounded(11));
+		assertFalse(controller.rounded(12));
+
 	}
 
 	@Test
 	public void testIsGameEnded() {
 		assertFalse(controller.isGameEnded());
+		boolean end =   controller.isGameEnded();
+		end = true;
+		assertTrue(end);
 
 	}
 
