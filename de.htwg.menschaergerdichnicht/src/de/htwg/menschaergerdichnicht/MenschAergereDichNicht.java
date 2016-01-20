@@ -13,13 +13,12 @@ public class MenschAergereDichNicht {
 	private MenschAergereDichNicht() {
 	}
 
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		input = new Scanner(System.in);
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
- 		GUI gui = new GUI(c);
+		new GUI(c);
 		do {
 			while (!tui.noInput())
 				;
