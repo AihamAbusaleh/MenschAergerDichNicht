@@ -18,7 +18,7 @@ public class MenschAergereDichNicht {
 		Controller c = new Controller();
 
 		TUI tui = new TUI(c);
-		new GUI(c);
+		GUI gui = new GUI(c);
 		do {
 			while (!tui.noInput())
 				;

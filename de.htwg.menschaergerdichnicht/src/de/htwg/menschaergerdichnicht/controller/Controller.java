@@ -23,7 +23,7 @@ public class Controller extends Observable implements IController {
 	private CommandManager manager = new CommandManager();
 	private IState state;
 	private Random r;
-	private int dice;
+	public int dice;
 	private final List<IObserver> observers = new ArrayList<IObserver>();
 
 	public Controller() {
