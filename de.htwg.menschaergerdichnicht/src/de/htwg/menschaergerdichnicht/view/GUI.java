@@ -84,6 +84,9 @@ public class GUI implements IObserver {
 		Color stoneColor = Color.WHITE;
 		Graphics2D g2;
 		int laenge;
+		int indexOfClickedPoint;
+		int yOfClickedPoint;
+		int xOfClickedPoint;
 
 		public GamefieldGUI() {
 			this.setBackground(Color.WHITE);
@@ -311,15 +314,19 @@ public class GUI implements IObserver {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			int indexOfClickedPoint = 0;
+			int size = this.getWidth();
+			clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
+			yOfClickedPoint = e.getY() * 11 / size;
+			xOfClickedPoint = e.getX() * 11 / size;
+			klickOnBlock();
 
 			boolean disabled = true;
-			for (int i = 0; i < this.figurePosition.length; i++) {
+			if (indexOfClickedPoint == 100 || indexOfClickedPoint == 200 || indexOfClickedPoint == 300
+					|| indexOfClickedPoint == 400) {
 
-				int size = this.getWidth();
-				clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
-				int yOfClickedPoint = e.getY() * 11 / size;
-				int xOfClickedPoint = e.getX() * 11 / size;
+				disabled = false;
+			}
+			for (int i = 0; i < this.figurePosition.length; i++) {
 
 				if (yOfClickedPoint == this.figurePosition[i].x && xOfClickedPoint == this.figurePosition[i].y) {
 					clickedPoint.setIdx(this.figurePosition[i].getIdx());
@@ -327,10 +334,6 @@ public class GUI implements IObserver {
 					if (c.getTokenColor(figurePosition[i].idx) != 'x')
 						disabled = false;
 					break;
-				} else {
-					clickedPoint.setIdx(-1);
-					indexOfClickedPoint = clickedPoint.getIdx();
-					disabled = true;
 				}
 
 			}
@@ -366,6 +369,40 @@ public class GUI implements IObserver {
 
 		}
 
+		private void klickOnBlock() {
+
+			if ((yOfClickedPoint == 0 && xOfClickedPoint == 0) || (yOfClickedPoint == 1 && xOfClickedPoint == 0)
+					|| (yOfClickedPoint == 1 && xOfClickedPoint == 1)
+					|| (yOfClickedPoint == 0 && xOfClickedPoint == 1)) {
+				clickedPoint.setIdx(100);
+				indexOfClickedPoint = clickedPoint.getIdx();
+			}
+
+			if ((yOfClickedPoint == 0 && xOfClickedPoint == 9) || (yOfClickedPoint == 1 && xOfClickedPoint == 9)
+					|| (yOfClickedPoint == 1 && xOfClickedPoint == 10)
+					|| (yOfClickedPoint == 0 && xOfClickedPoint == 10)) {
+				clickedPoint.setIdx(200);
+				indexOfClickedPoint = clickedPoint.getIdx();
+
+			}
+
+			if ((yOfClickedPoint == 9 && xOfClickedPoint == 9) || (yOfClickedPoint == 9 && xOfClickedPoint == 10)
+					|| (yOfClickedPoint == 10 && xOfClickedPoint == 10)
+					|| (yOfClickedPoint == 10 && xOfClickedPoint == 9)) {
+				clickedPoint.setIdx(300);
+				indexOfClickedPoint = clickedPoint.getIdx();
+
+			}
+
+			if ((yOfClickedPoint == 9 && xOfClickedPoint == 0) || (yOfClickedPoint == 10 && xOfClickedPoint == 0)
+					|| (yOfClickedPoint == 10 && xOfClickedPoint == 1)
+					|| (yOfClickedPoint == 9 && xOfClickedPoint == 1)) {
+				clickedPoint.setIdx(400);
+				indexOfClickedPoint = clickedPoint.getIdx();
+
+			}
+		}
+
 	}
 
 	@Override
@@ -376,12 +413,7 @@ public class GUI implements IObserver {
 
 	@Override
 	public void showDice(Player currentplayer, int dice) {
-//		if (dice == 6) {
-//			c.getOutOfBlock();
-//			frame.repaint();
-//		}
 
-	
 		frame.repaint();
 	}
 

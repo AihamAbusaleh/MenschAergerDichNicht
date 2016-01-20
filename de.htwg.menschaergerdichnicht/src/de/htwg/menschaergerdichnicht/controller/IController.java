@@ -108,5 +108,9 @@ public interface IController {
 	 * This function checks if any stone of the current Player on the field
 	 */
 	boolean emptyField();
+	/**
+	 * This function checks who is the curent player
+	 */
+	String getCurrentPlayer();
 
 }

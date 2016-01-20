@@ -35,7 +35,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public boolean moveStart() {
-		currentplayer = state.currentPlayer(currentplayer);
+		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 		// Raus kommen
 		stoneCanOut();
 
@@ -180,23 +180,24 @@ public class Controller extends Observable implements IController {
 	@Override
 	public String throwDiceGUI() {
 		String mydice;
-		for (IObserver observer : observers) {
-
-			observer.showDice(currentplayer, this.dice);
-
-		}
 		mydice = " " + currentplayer.getName() + " threw [" + this.dice + "]";
-
+		if(this.dice == 6)
+			getOutOfBlock();
 		if (emptyField()) {
 			setNextPlayer();
 			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 			dice();
 		}
-
+		
 		return mydice;
 
 	}
+	@Override
+	public String getCurrentPlayer(){
+		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
+		return currentplayer.getName();
+	}
 	@Override
 	public boolean emptyField() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {

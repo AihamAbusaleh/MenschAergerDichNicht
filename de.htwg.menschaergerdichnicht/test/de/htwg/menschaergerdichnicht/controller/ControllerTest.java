@@ -2,85 +2,103 @@ package de.htwg.menschaergerdichnicht.controller;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.menschaergerdichnicht.controller.Controller;
-import de.htwg.menschaergerdichnicht.state.IState;
-import de.htwg.menschaergerdichnicht.state.StatePlayer0;
-import de.htwg.menschaergerdichnicht.state.StatePlayer1;
-import de.htwg.menschaergerdichnicht.state.StatePlayer2;
 import de.htwg.util.observer.IObserver;
 
 public class ControllerTest {
 
 	private Controller controller;
-	private IState state;
 	private IObserver o;
 
 	@Before
 	public void setUp() throws Exception {
 		controller = new Controller();
-		state = new StatePlayer1();
-	}
+		controller.getCurrentPlayer();
 
-	@Test
-	public void testdice() {
-		if (controller.dice() == 6)
-			assertEquals(6, controller.dice());
 	}
 
 	@Test
 	public void testmove() {
-		if (!controller.emptyField()) {
-			if (controller.getTokenColor(30) == 'R') {
-				assertTrue(controller.move(30));
-				assertFalse(controller.move(20));
-			}
-			if (controller.getTokenColor(30) == 'B') {
-				assertTrue(controller.move(30));
-				assertFalse(controller.move(20));
-			}
 
-			if (controller.getTokenColor(30) == 'Y') {
-				assertTrue(controller.move(30));
-				assertFalse(controller.move(20));
-			}
-
-			if (controller.getTokenColor(30) == 'P') {
-				assertTrue(controller.move(30));
-				assertFalse(controller.move(20));
-			}
+		if (controller.getTokenColor(30) == 'R' && controller.moveStart()) {
+			assertTrue(controller.move(30));
+			assertFalse(controller.move(5));
+			controller.setNextPlayer();
 		}
+		if (controller.getTokenColor(0) == 'B' && controller.moveStart()) {
+			assertTrue(controller.move(0));
+			assertFalse(controller.move(6));
+			controller.setNextPlayer();
+
+		}
+
+		if (controller.getTokenColor(10) == 'Y' && controller.moveStart()) {
+			assertTrue(controller.move(10));
+			assertFalse(controller.move(7));
+			controller.setNextPlayer();
+
+		}
+
+		if (controller.getTokenColor(20) == 'P' && controller.moveStart()) {
+			assertTrue(controller.move(20));
+			assertFalse(controller.move(8));
+			controller.setNextPlayer();
+
+		}
+
+		assertFalse(controller.move(0));
 
 	}
 
 	@Test
 	public void testmoveStart() {
-		if (!controller.emptyField()) {
+
+		if (controller.getCurrentPlayer() == "RED" && controller.dice() == 6) {
 			assertTrue(controller.moveStart());
-			controller.move(30);
 			controller.setNextPlayer();
-			controller.moveStart();
-			controller.moveStart();
-
-			controller.moveStart();
-			controller.moveStart();
-
-			controller.move(0);
 
 		}
+		if (controller.getCurrentPlayer() == "BLUE" && controller.dice() == 6) {
+			assertFalse(controller.moveStart());
+			controller.setNextPlayer();
+
+		}
+
+		if (controller.getCurrentPlayer() == "YELLOW" && controller.dice() == 6) {
+			assertTrue(controller.moveStart());
+			controller.setNextPlayer();
+
+		}
+		if (controller.getCurrentPlayer() == "PINK" && controller.dice() == 6) {
+			assertTrue(controller.moveStart());
+			controller.setNextPlayer();
+
+		}
+
+		if (controller.dice() != 6)
+			assertFalse(controller.moveStart());
 
 	}
 
 	@Test
 	public void testgetTokenColor() {
-		assertEquals('x', controller.getTokenColor(0));
-		assertEquals('x', controller.getTokenColor(6));
-		assertEquals('x', controller.getTokenColor(9));
-		assertEquals('x', controller.getTokenColor(7));
+		boolean moveStart = controller.moveStart();
+
+		if (controller.getCurrentPlayer() == "RED" && moveStart) {
+			assertEquals('R', controller.getTokenColor(30));
+			controller.setNextPlayer();
+
+		}
+	
+		if (!moveStart) {
+			assertEquals('x', controller.getTokenColor(10));
+			assertEquals('x', controller.getTokenColor(20));
+			assertEquals('x', controller.getTokenColor(30));
+			assertEquals('x', controller.getTokenColor(0));
+		}
 		assertEquals('x', controller.getTokenColor(8));
 		assertEquals('x', controller.getTokenColor(11));
 		assertEquals('x', controller.getTokenColor(12));
@@ -89,26 +107,33 @@ public class ControllerTest {
 
 	@Test
 	public void testsetNextPlayer() {
-		if (state.toString().equals("BLUE")) {
+		if (controller.getCurrentPlayer() == "RED") {
 			controller.setNextPlayer();
-			state = new StatePlayer2();
-			assertEquals("YELLOW", state.toString());
+			assertTrue(controller.getCurrentPlayer() == "BLUE");
+			assertFalse(controller.getCurrentPlayer() == "PINK");
+			controller.setNextPlayer();
+			assertTrue(controller.getCurrentPlayer() == "YELLOW");
+			controller.setNextPlayer();
+			assertTrue(controller.getCurrentPlayer() == "PINK");
+			controller.setNextPlayer();
+			assertTrue(controller.getCurrentPlayer() == "RED");
+
 		}
 
 	}
 
 	@Test
 	public void testgetTokenColorBlock() {
-		controller.dice();
-		if (controller.isFieldEmpty()) {
-			assertEquals('R', controller.getTokenColorBlock(0, 0));
+		assertEquals('R', controller.getTokenColorBlock(0, 0));
+		assertEquals('R', controller.getTokenColorBlock(0, 1));
+		assertEquals('R', controller.getTokenColorBlock(0, 2));
+		assertEquals('R', controller.getTokenColorBlock(0, 3));
+		if (controller.moveStart()) {
+			assertEquals(' ', controller.getTokenColorBlock(0, 0));
+			assertEquals('R', controller.getTokenColorBlock(0, 1));
+			assertEquals('R', controller.getTokenColorBlock(0, 2));
+			assertEquals('R', controller.getTokenColorBlock(0, 3));
 		}
-		assertEquals('B', controller.getTokenColorBlock(1, 1));
-		assertEquals('B', controller.getTokenColorBlock(1, 2));
-		assertEquals('Y', controller.getTokenColorBlock(2, 3));
-		assertEquals('Y', controller.getTokenColorBlock(2, 0));
-
-
 	}
 
 	@Test
@@ -118,7 +143,6 @@ public class ControllerTest {
 		assertEquals(' ', controller.getTokenColorHouse(0, 2));
 		assertEquals(' ', controller.getTokenColorHouse(0, 3));
 		assertEquals(' ', controller.getTokenColorHouse(1, 3));
-
 
 	}
 
@@ -133,17 +157,17 @@ public class ControllerTest {
 	@Test
 	public void testIsGameEnded() {
 		assertFalse(controller.isGameEnded());
-		boolean end =   controller.isGameEnded();
-		end = true;
-		assertTrue(end);
 
 	}
 
 	@Test
 	public void testIsFieldEmpty() {
-		controller.getOutOfBlock();
-		assertFalse(controller.isFieldEmpty());
-
+		boolean empty = controller.isFieldEmpty();
+		if (empty) {
+			assertTrue(empty);
+		} else {
+			assertFalse(empty);
+		}
 	}
 
 	@Test
@@ -165,7 +189,7 @@ public class ControllerTest {
 
 	@Test
 	public void testStoneCanOut() {
-		if (controller.emptyField() == true) {
+		if (controller.emptyField()) {
 			if (controller.dice() == 6) {
 				controller.stoneCanOut();
 				assertFalse(controller.emptyField());
@@ -175,19 +199,44 @@ public class ControllerTest {
 
 	@Test
 	public void testthrowDiceGUI() {
-		state = new StatePlayer0();
-		if (state.toString().equals("RED") && controller.dice() == 6 && !controller.emptyField()) {
-			controller.moveStart();
-			assertEquals("  BLUE threw [6]", controller.throwDiceGUI());
-		}
+		String s = controller.throwDiceGUI();
+		int dice = controller.dice();
+		if (controller.getCurrentPlayer() == "RED") {
+			if (dice == 1) {
+				assertEquals(" RED threw [2]", s);
 
+			}
+			if (dice == 2) {
+				assertEquals(" RED threw [2]", s);
+
+			}
+			if (dice == 3) {
+				assertEquals(" RED threw [3]", s);
+
+			}
+			if (dice == 4) {
+				assertEquals(" RED threw [4]", s);
+
+			}
+			if (dice== 5) {
+				assertEquals(" RED threw [5]", s);
+
+			}
+			if (dice== 6) {
+				assertEquals(" RED threw [6]", s);
+
+			}
+		}
 	}
 
 	@Test
 	public void testemptyField() {
-		assertTrue(controller.emptyField());
-		controller.getOutOfBlock();
-		assertFalse(controller.emptyField());
+		if (!controller.moveStart()) {
+			assertTrue(controller.emptyField());
+		} else {
+			controller.getOutOfBlock();
+			assertFalse(controller.emptyField());
+		}
 
 	}
 
@@ -214,5 +263,11 @@ public class ControllerTest {
 		controller.updateObservers();
 		assertFalse(e);
 	}
-
+	@Test
+	public void testGetCurrentPlayer(){
+		if(controller.getCurrentPlayer() == "RED"){
+			controller.setNextPlayer();
+			assertEquals("BLUE", controller.getCurrentPlayer());
+		}
+	}
 }
