@@ -59,7 +59,6 @@ public class Controller extends Observable implements IController {
 			updateObservers();
 		}
 
-		
 	}
 
 	@Override
@@ -181,23 +180,27 @@ public class Controller extends Observable implements IController {
 	public String throwDiceGUI() {
 		String mydice;
 		mydice = " " + currentplayer.getName() + " threw [" + this.dice + "]";
-		if(this.dice == 6)
+		if (this.dice == 6) {
 			getOutOfBlock();
+			updateObservers();
+		}
 		if (emptyField()) {
 			setNextPlayer();
 			currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 			dice();
+
 		}
-		
+
 		return mydice;
 
 	}
-	@Override
-	public String getCurrentPlayer(){
-		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 
+	@Override
+	public String getCurrentPlayer() {
+		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
 		return currentplayer.getName();
 	}
+
 	@Override
 	public boolean emptyField() {
 		if (gamefield.stoneOnGamefield(currentplayer.getIdx()) == 0) {

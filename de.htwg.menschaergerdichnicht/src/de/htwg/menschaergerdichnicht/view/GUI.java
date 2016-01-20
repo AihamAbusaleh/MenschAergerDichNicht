@@ -318,14 +318,9 @@ public class GUI implements IObserver {
 			clickedPoint = new MyPoint(e.getY() * 11 / size, e.getX() * 11 / size);
 			yOfClickedPoint = e.getY() * 11 / size;
 			xOfClickedPoint = e.getX() * 11 / size;
-			klickOnBlock();
 
 			boolean disabled = true;
-			if (indexOfClickedPoint == 100 || indexOfClickedPoint == 200 || indexOfClickedPoint == 300
-					|| indexOfClickedPoint == 400) {
-
-				disabled = false;
-			}
+		
 			for (int i = 0; i < this.figurePosition.length; i++) {
 
 				if (yOfClickedPoint == this.figurePosition[i].x && xOfClickedPoint == this.figurePosition[i].y) {
@@ -369,39 +364,7 @@ public class GUI implements IObserver {
 
 		}
 
-		private void klickOnBlock() {
-
-			if ((yOfClickedPoint == 0 && xOfClickedPoint == 0) || (yOfClickedPoint == 1 && xOfClickedPoint == 0)
-					|| (yOfClickedPoint == 1 && xOfClickedPoint == 1)
-					|| (yOfClickedPoint == 0 && xOfClickedPoint == 1)) {
-				clickedPoint.setIdx(100);
-				indexOfClickedPoint = clickedPoint.getIdx();
-			}
-
-			if ((yOfClickedPoint == 0 && xOfClickedPoint == 9) || (yOfClickedPoint == 1 && xOfClickedPoint == 9)
-					|| (yOfClickedPoint == 1 && xOfClickedPoint == 10)
-					|| (yOfClickedPoint == 0 && xOfClickedPoint == 10)) {
-				clickedPoint.setIdx(200);
-				indexOfClickedPoint = clickedPoint.getIdx();
-
-			}
-
-			if ((yOfClickedPoint == 9 && xOfClickedPoint == 9) || (yOfClickedPoint == 9 && xOfClickedPoint == 10)
-					|| (yOfClickedPoint == 10 && xOfClickedPoint == 10)
-					|| (yOfClickedPoint == 10 && xOfClickedPoint == 9)) {
-				clickedPoint.setIdx(300);
-				indexOfClickedPoint = clickedPoint.getIdx();
-
-			}
-
-			if ((yOfClickedPoint == 9 && xOfClickedPoint == 0) || (yOfClickedPoint == 10 && xOfClickedPoint == 0)
-					|| (yOfClickedPoint == 10 && xOfClickedPoint == 1)
-					|| (yOfClickedPoint == 9 && xOfClickedPoint == 1)) {
-				clickedPoint.setIdx(400);
-				indexOfClickedPoint = clickedPoint.getIdx();
-
-			}
-		}
+	
 
 	}
 
@@ -414,7 +377,7 @@ public class GUI implements IObserver {
 	@Override
 	public void showDice(Player currentplayer, int dice) {
 
-		frame.repaint();
+		this.frame.repaint();
 	}
 
 }
