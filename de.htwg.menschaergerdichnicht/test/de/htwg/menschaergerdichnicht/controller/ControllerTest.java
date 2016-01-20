@@ -220,6 +220,9 @@ public class ControllerTest {
 			if (controller.dice() == 6) {
 				controller.stoneCanOut();
 				assertFalse(controller.emptyField());
+			}else{
+				controller.stoneCanOut();
+				assertTrue(controller.emptyField());
 			}
 		}
 	}
@@ -296,6 +299,18 @@ public class ControllerTest {
 		if (controller.getCurrentPlayer() == "RED") {
 			controller.setNextPlayer();
 			assertEquals("BLUE", controller.getCurrentPlayer());
+		}
+		if (controller.getCurrentPlayer() == "BLUE") {
+			controller.setNextPlayer();
+			assertEquals("YELLOW", controller.getCurrentPlayer());
+		}
+		if (controller.getCurrentPlayer() == "YELLOW") {
+			controller.setNextPlayer();
+			assertEquals("PINK", controller.getCurrentPlayer());
+		}
+		if (controller.getCurrentPlayer() == "PINK") {
+			controller.setNextPlayer();
+			assertEquals("RED", controller.getCurrentPlayer());
 		}
 	}
 }
