@@ -42,6 +42,10 @@ keine Spielfigur auf dem Spielfeld hat und die Spielfiguren entweder in der Star
 
 Gewinner ist der, der zuerst seine vier Spielfiguren von der Startposition in die Zielposition bringt.
 
+Unsere TUI Zeigt das Spielfeld an und die gewürfelten Würfelaugen. Wenn man an der Reihe ist, kannt man über einen Index seine Spielfigur bewegen. Die Indexe für das Spielfeld ist auch auf der TUI zu sehen. Man kann nur seine eigenen Spielfiguren bewegen und auch nur wenn man an der Reihe ist. Würfelt man eine 6 geht automatisch eine Spielfigur auf das Spielfeld. Aber nur wenn sich in dem eigenen Haus noch eine Spielfigur befindet.
+
+Unsere GUI zeigt das Spielfeld in einer grafischen Oberfläche. Hier steht einem ein Würfelbutton zur verfügung. Ist ein Spieler an der Reihe klickt er einfach seine Spielfigur an mit der er fahren möchte. Ist der nächste an der Reihe muss er als erstes Würfeln. Der Spieler kann sich frei entscheiden mit welcher Spielfigur er ziehen möchte.
+
 _________________________________________________________________________
 
 ##3.Spielregeln
