@@ -112,5 +112,10 @@ public interface IController {
 	 * This function checks who is the curent player
 	 */
 	String getCurrentPlayer();
+	/**
+	 * This function lets a player to throw dice 3 time if the 4 stones of this player 
+	 * are still in his block
+	 */
+	void repeatDice();
 
 }

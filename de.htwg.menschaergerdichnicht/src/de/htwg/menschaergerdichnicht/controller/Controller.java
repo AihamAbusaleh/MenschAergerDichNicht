@@ -158,7 +158,7 @@ public class Controller extends Observable implements IController {
 
 			if (isGameEnded()) {
 				unregisterObserver(observer); // than system exit 0, but it's
-												// not allowd in sonar
+												// not allowd coz of sonarissues
 			}
 			break;
 		}
@@ -183,6 +183,13 @@ public class Controller extends Observable implements IController {
 		if (this.dice == 6) {
 			getOutOfBlock();
 			updateObservers();
+		}else{
+			repeatDice();
+			if(dice == 6){
+				updateObservers();
+				mydice = " " + currentplayer.getName() + " threw [" + this.dice + "]";
+			
+			}
 		}
 		if (emptyField()) {
 			setNextPlayer();
@@ -194,7 +201,24 @@ public class Controller extends Observable implements IController {
 		return mydice;
 
 	}
+	@Override
+	public void repeatDice(){
+		int counter = 2;
+		if(emptyField() && this.dice != 6 ){
+			do {
+				 dice();
+				 for (IObserver observer : observers) {
+						observer.showDice(currentplayer, this.dice);
 
+					}
+				 counter--;
+			} while (counter != 0 && dice != 6);
+			
+		}
+		if(dice == 6){
+			getOutOfBlock();
+		}
+	}
 	@Override
 	public String getCurrentPlayer() {
 		currentplayer = state.currentPlayer(currentplayer.setcurrentplayer());
